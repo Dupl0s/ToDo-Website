@@ -6,6 +6,7 @@ https://dupl0s.github.io/ToDo-Website/
 Idee?? -> https://habitica.com/
 
 Tutorial -> https://v17.angular.io/tutorial/tour-of-heroes
+https://www.youtube.com/watch?v=oUmVFHlwZsI Master Angular in 90 Minutes
 
 Elemente -> https://material.angular.io/components/categories
 
