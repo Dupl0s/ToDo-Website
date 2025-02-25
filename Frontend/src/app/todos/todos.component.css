@@ -1,0 +1,16 @@
+.card {
+    background-color: #ed6276;
+    color:black;
+}
+h1{
+    padding: 1rem;
+}
+.btn{
+    background-color: #5fbe85;
+    color: black;
+    width: 4rem;
+    border-color: #4ab073;
+}
+.btn:hover{
+    background-color: #4ab073;
+}

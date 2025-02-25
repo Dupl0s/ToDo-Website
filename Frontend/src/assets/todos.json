@@ -1,0 +1,102 @@
+[
+    {
+        "userId": 1, 
+        "id": 1,
+        "title": "delectus aut autem",
+        "completed": false,
+        "niveau": 3,
+        "importance": 5,
+        "deadline": "05.10.2025",
+        "bereichsId": 1
+    },
+    {
+        "userId": 1,
+        "id": 2,
+        "title": "quis ut nam facilis",
+        "completed": false,
+        "niveau": 3,
+        "importance": 5,
+        "deadline": "05.10.2025",
+        "bereichsId": 1
+    },
+    {
+        "userId": 1,
+        "id": 3,
+        "title": "fugiat veniam minus",
+        "completed": false,
+        "niveau": 3,
+        "importance": 5,
+        "deadline": "05.10.2025",
+        "bereichsId": 1
+    },
+    {
+        "userId": 1,
+        "id": 4,
+        "title": "et porro tempora",
+        "completed": true,
+        "niveau": 3,
+        "importance": 5,
+        "deadline": "05.10.2025",
+        "bereichsId": 1
+    },
+    {
+        "userId": 1,
+        "id": 5,
+        "title": "laboriosam mollitia",
+        "completed": false,
+        "niveau": 3,
+        "importance": 5,
+        "deadline": "05.10.2025",
+        "bereichsId": 1
+    },
+    {
+        "userId": 1,
+        "id": 6,
+        "title": "qui ullam ratione quibusda",
+        "completed": false,
+        "niveau": 3,
+        "importance": 5,
+        "deadline": "05.10.2025",
+        "bereichsId": 1
+    },
+    {
+        "userId": 1,
+        "id": 7,
+        "title": "illo expedita consequatur quia",
+        "completed": false,
+        "niveau": 3,
+        "importance": 5,
+        "deadline": "05.10.2025",
+        "bereichsId": 1
+    },
+    {
+        "userId": 1,
+        "id": 8,
+        "title": "quo adipisci enim quam ut ab",
+        "completed": true,
+        "niveau": 3,
+        "importance": 5,
+        "deadline": "05.10.2025",
+        "bereichsId": 1
+    },
+    {
+        "userId": 1,
+        "id": 9,
+        "title": "molestiae perspiciatis ipsa",
+        "completed": false,
+        "niveau": 3,
+        "importance": 5,
+        "deadline": "05.10.2025",
+        "bereichsId": 1
+    },
+    {
+        "userId": 1,
+        "id": 10,
+        "title": "illo est ratione doloremque quia ",
+        "completed": true,
+        "niveau": 3,
+        "importance": 5,
+        "deadline": "05.10.2025",
+        "bereichsId": 1
+    }
+]
