@@ -1,1 +1,14 @@
-<p>todoitem works!</p>
+<div class="card h-100" [ngClass]="{'completed': todo().completed}"> <!-- festgelegte Höhe -->
+    
+    <div class="card-body d-flex flex-column">
+        <h4 class="card-title">{{todo().title}}</h4>
+        <p class="card-text flex-grow-1">Deadline: {{todo().deadline}}</p>
+        <p class="card-text flex-grow-1">Schwierigkeit: {{todo().niveau}}</p>
+        <p class="card-text flex-grow-1">Priorität: {{todo().importance}}</p>
+        <button #popoverButton (click)="toggleCompleted(todo())" class="btn btn-primary" type="button"
+        data-bs-toggle="popover" 
+        data-bs-title="Woohooo!" 
+        data-bs-content="Du hast ein Todo erledigt! Weiter so!"
+        >Done</button>
+    </div>
+</div>

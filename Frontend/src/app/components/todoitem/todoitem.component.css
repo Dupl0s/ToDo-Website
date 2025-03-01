@@ -1,0 +1,19 @@
+.card {
+    background-color: #ed6276;
+    color:black;
+}
+h1{
+    padding: 1rem;
+}
+.btn{
+    background-color: #f4e9ae;
+    color: black;
+    width: 4rem;
+    border-color: #b8ab5e;
+}
+.btn:hover{
+    background-color: #c9bb6a;
+}
+.completed{
+    background-color:#4ab073;
+}
