@@ -10,8 +10,10 @@
                     <p class="card-text flex-grow-1">Deadline: {{todo.deadline}}</p>
                     <p class="card-text flex-grow-1">Schwierigkeit: {{todo.niveau}}</p>
                     <p class="card-text flex-grow-1">Priorität: {{todo.importance}}</p>
-                    <button class="btn btn-primary" type="submit">Done</button>                </div>
-            </div>
+                    <button class="btn btn-primary" type="submit">Done</button>
+                    <button class="delete" (click)="deleteTodo(todo.id)">Remove</button>
+                </div>
+            </div>  
         </div>
         }
     </div>
