@@ -14,3 +14,14 @@ h1{
 .btn:hover{
     background-color: #4ab073;
 }
+.delete{
+    background-color: #5fbe85;
+    color: black;
+    width: 5rem;
+    height: 2rem;
+    border:0;
+    border-radius: 10%;
+}
+.delete:hover{
+    background-color: #4ab073;
+}
