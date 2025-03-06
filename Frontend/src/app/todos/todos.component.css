@@ -5,23 +5,22 @@
 h1{
     padding: 1rem;
 }
-.btn{
-    background-color: #5fbe85;
+/* .btn{
+    background-color: #f4e9ae;
     color: black;
     width: 4rem;
-    border-color: #4ab073;
+    border-color: #c7bb76;
+} */
+.btn:hover, .delete:hover{
+    background-color: #c7bb76;
 }
-.btn:hover{
-    background-color: #4ab073;
-}
-.delete{
-    background-color: #5fbe85;
+.delete, .btn{
+    background-color: #f4e9ae;
     color: black;
     width: 5rem;
-    height: 2rem;
+    height: 3rem;
     border:0;
     border-radius: 10%;
-}
-.delete:hover{
-    background-color: #4ab073;
+    margin: 0.2rem;
+    margin-top: 0.5rem;
 }
