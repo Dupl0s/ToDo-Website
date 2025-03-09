@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './todoitem.component.html',
   styleUrl: './todoitem.component.css'
 })
+
 export class TodoitemComponent{
   todo = input.required<Todo>();
-
 }
