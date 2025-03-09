@@ -1,0 +1,242 @@
+body {    
+    background-color: #484443;
+    height:130%;
+    margin:0;
+    padding:0;
+    display: flex;
+    justify-content: center;
+    /*justify-content:center;
+    align-items: center;*/
+}
+
+/* /*This is the styling of the text*/
+.main-text{
+    position: absolute;
+    font-family: Elephant, Arial, Helvetica, sans-serifal Black;
+    
+    color: white;
+}
+
+h1{
+    position: absolute;
+    left: -100px;
+    top: 120px;
+    font-size:60px;
+}
+h2{
+    position: absolute;
+    left:30px;
+    top:370px;
+    font-size:50px;
+    
+}
+h3{
+    position: absolute;
+    left:320px;
+    top:320px;
+    font-size:50px;
+}
+h4{
+    position: absolute;
+    left:40px;
+    top:250px;
+    font-size:30px;
+}
+h5{
+    position: absolute;
+    right:230px;
+    top:310px;
+    font-size:30px;
+}
+
+
+/*This is the code for the flipping card*/
+.card-container{
+    display:flex;
+    perspective: 1000xh;
+}
+.card1{
+    position:relative;
+    top:100px;
+    right:-10px;
+    width:140px;
+    height:180px;
+    transform-style:preserve-3d;
+    transition:transform 1.5s;
+}
+
+.card2{
+    position:relative;
+    top:130px;
+    left:480px;
+    width:140px;
+    height:180px;
+    transform-style:preserve-3d;
+    transition:transform 1.5s;
+}
+
+.card3{
+    position:relative;
+    top:320px;
+    right:450px;
+    width:140px;
+    height:180px;
+    transform-style:preserve-3d;
+    transition:transform 1.5s;
+}
+
+.card4{
+    position:relative;
+    top:350px;
+    right:245px;
+    width:140px;
+    height:180px;
+    transform-style:preserve-3d;
+    transition:transform 1.5s;
+}
+
+.card5{
+    position:relative;
+    top:380px;
+    right:60px;
+    width:140px;
+    height:180px;
+    transform-style:preserve-3d;
+    transition:transform 1.5s;
+}
+
+.front, .back{
+    position: absolute;
+    width:100%;
+    height:100%;
+    justify-content:center;
+    border-radius:8px;
+    backface-visibility:hidden;
+}
+
+.front{
+    background-color: #FFEC9F;
+    display: flex;
+    align-items: center;
+    transform: rotateY(0deg);
+}
+
+.back{
+    background-color: #FA8072;
+    display: flex;
+    align-items: center;
+    transform: rotateY(180deg);
+}
+
+.card-container:hover .card1{
+    transform: rotateY(180deg);
+}
+
+/*2nd card*/
+.front2, .back2{
+    position: absolute;
+    width:100%;
+    height:100%;
+    justify-content:center;
+    border-radius:8px;
+    backface-visibility:hidden;
+}
+
+.front2{
+    background-color: #FFEC9F;
+    display: flex;
+    align-items: center;
+    transform: rotateY(0deg);
+}
+
+.back2{
+    background-color: #FA8072;
+    display: flex;
+    align-items: center;
+    transform: rotateY(180deg);
+}
+
+.card-container2:hover .card2{
+    transform: rotateY(180deg);
+}
+
+
+/*3rd card*/
+.front3, .back3{
+    position: absolute;
+    width:100%;
+    height:100%;
+    justify-content:center;
+    border-radius:8px;
+    backface-visibility:hidden;
+}
+
+.front3{
+    background-color: #FA8072;
+    display: flex;
+    align-items: center;
+    transform: rotateY(0deg);
+}
+
+.back3{
+    background-color: #FFEC9F;
+    display: flex;
+    align-items: center;
+    transform: rotateY(180deg);
+}
+.card-container3:hover .card3{
+    transform: rotateY(180deg);
+}
+
+/*4th card*/
+.front4, .back4{
+    position: absolute;
+    width:100%;
+    height:100%;
+    justify-content:center;
+    border-radius:8px;
+    backface-visibility:hidden;
+}
+
+.front4{
+    background-color:#FFEC9F;
+    display: flex;
+    align-items: center;
+    transform: rotateY(0deg);
+}
+
+.back4{
+    background-color: #FA8072;
+    display: flex;
+    align-items: center;
+    transform: rotateY(180deg);
+}
+.card-container4:hover .card4{
+    transform: rotateY(180deg);
+}
+
+/*5th card*/
+.front5, .back5{
+    position: absolute;
+    width:100%;
+    height:100%;
+    justify-content:center;
+    border-radius:8px;
+    backface-visibility:hidden;
+}
+
+.front5{
+    background-color:#FA8072;
+    display: flex;
+    align-items: center;
+    transform: rotateY(0deg);
+}
+
+.back5{
+    background-color: #FFEC9F;
+    align-items: center;
+    transform: rotateY(180deg);
+}
+.card-container5:hover .card5{
+    transform: rotateY(180deg);
+}
