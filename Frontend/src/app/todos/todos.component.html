@@ -1,5 +1,8 @@
 <div class="container-fluid">
     <h1>Projekt</h1>
+    <div>
+        <h1>                                          </h1>
+    </div>
     @if(todos().length === 0) {
     <h5>Keine Todos angelegt!</h5>
     }
@@ -36,8 +39,16 @@
                         </button>
                     </div>
                 </div>
-            </div>
+            </div>-->
+            
+            <app-todoitem [todo]="todo"
+            [deleteTodos]="deleteTodo"/>
+            <button class="delete" (click)="deleteTodo(todo.id)">Remove</button>
+            
         </div>
         }
+        <a routerLink="/dustbin">
+            <button class="papkorb">Papierkorb</button>
+        </a>
     </div>
 </div>
