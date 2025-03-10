@@ -1,4 +1,5 @@
 import {Component, input } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, input, ViewChild } from '@angular/core';
 import { Todo } from '../../model/todo.type';
 import { CommonModule } from '@angular/common';
 
@@ -11,5 +12,13 @@ import { CommonModule } from '@angular/common';
 })
 export class TodoitemComponent{
   todo = input.required<Todo>();
+  deleteTodos = input.required<(id: number) => void>();
+
+  /* remove(id:number) {
+    this.deleteTodos(this.todo().id);
+  } */
+  toggleCompleted(todo: Todo) {
+    todo.completed = true;
+  }
 
 }
