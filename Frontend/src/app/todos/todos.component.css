@@ -9,39 +9,33 @@ h1{
     color:white;
     padding: 1rem;
 }
-/* .btn{
-    background-color: #f4e9ae;
-    color: black;
-    width: 4rem;
-    border-color: #c7bb76;
-} */
 .btn:hover, .delete:hover{
     background-color: #c7bb76;
 }
-.delete{
+.delete, .btn {
     position: relative;
     background-color: #f4e9ae;
     color: black;
     width: 5rem;
-    height: 2.5rem;
-    z-index:1;
+    height: 3rem;
     border:0;
     border-radius: 10%;
-    
-}
-.delete:hover{
-    background-color: #f7e78c;
+    margin: 0.2rem;
+    margin-top: 0.5rem;
 }
 .papkorb{
     top:0;
     right:0;
     position:absolute;
     background-color: #f4e9ae;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
     width: 7rem;
     height:3rem;
     border-radius: 10%;
     border:0;
     font-size:16.5px;
+    margin-top:0.5rem;
 }
 .papkorb:hover{
     background-color: #f7e78c;
