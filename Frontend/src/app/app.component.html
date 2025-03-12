@@ -1,3 +1,16 @@
+<header>
+  <nav>
+    <a routerLink="/" routerLinkActive="active" class="home" href="/home">Home</a>
+    <div class="nav-links">
+      <a routerLink="/todo" routerLinkActive="active" href="/todos">To-Do</a>
+      <a routerLink="/about" routerLinkActive="active" href="/aboutus">About Us</a>
+      <a routerLink="/login" routerLinkActive="active" href="/login">
+        <i class="fas fa-sign-in-alt"></i> Login
+      </a>
+    </div>
+  </nav>
+</header>
+
 <main >
   <router-outlet/>
 </main>
