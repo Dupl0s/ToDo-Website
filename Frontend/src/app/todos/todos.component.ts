@@ -6,7 +6,6 @@ import { TodoitemComponent } from "../components/todoitem/todoitem.component";
 import { HighlightDoneTodosDirective } from '../directives/highlight-done-todos.directive';
 import { PopupComponent } from '../components/popup/popup.component';
 import { NgFor } from '@angular/common';
-import { ArrayTodoitemComponent } from "../arraytodoitem/arraytodoitem.component";
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common'; //
 

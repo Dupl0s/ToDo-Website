@@ -1,8 +1,11 @@
 <header>
   <nav>
-    <a routerLink="/" routerLinkActive="active" class="home" href="/home">Home</a>
+    <div class="left">
+      <a><img src="../assets/home_black.png" routerLink="/"></a>
+      <a class="title">{{urlName}}</a>
+    </div>
     <div class="nav-links">
-      <a routerLink="/todo" routerLinkActive="active" href="/todos">To-Do</a>
+      <a routerLink="/todos" routerLinkActive="active">To-Do</a>
       <a routerLink="/about" routerLinkActive="active" href="/aboutus">About Us</a>
       <a routerLink="/login" routerLinkActive="active" href="/login">
         <i class="fas fa-sign-in-alt"></i> Login
@@ -11,6 +14,6 @@
   </nav>
 </header>
 
-<main >
-  <router-outlet/>
+<main>
+  <router-outlet></router-outlet>
 </main>
