@@ -19,8 +19,6 @@ jobs:
           node-version: "20"
       - name: Authenticate NPM
         run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
-      - name: npm i
-        run: npm i
       - name: Install Packages
         run: npm ci --force
       - name: Build
