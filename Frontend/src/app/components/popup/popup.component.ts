@@ -25,10 +25,10 @@ export class PopupComponent {
   message = signal('');
   todos = signal<Array<Todo>>(JSON.parse(localStorage.getItem('todos') || '[]'));
 
-  title2 = signal('');        // title als WritableSignal<string>
-  niveau = signal(1);        // niveau als WritableSignal<number>
-  importance = signal(1);    // importance als WritableSignal<number>
-  deadline = signal('');     // deadline als WritableSignal<string>
+  title2 = signal('');        
+  niveau = signal(1);        
+  importance = signal(1);    
+  deadline = signal('');    
 
   @Output() todoSaved = new EventEmitter<Todo>();
   @Output() 
