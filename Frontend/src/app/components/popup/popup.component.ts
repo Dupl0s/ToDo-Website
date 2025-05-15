@@ -3,32 +3,26 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Todo } from '../../model/todo.type';
 import { TodoService } from '../../services/todo.service';
-import todoData from 'C:/Users/haaseja/Desktop/DHBW/Bericht Repo/ToDo-Website/Frontend/src/assets/todos.json'
-
-
-
-
+import todoData from '../../../assets/todos.json';
 
 @Component({
   selector: 'app-popup',
   standalone: true,
   imports: [FormsModule],
   templateUrl: './popup.component.html',
-  styleUrl: './popup.component.css'
+  styleUrl: './popup.component.css',
 })
 export class PopupComponent {
-
-  constructor(private todoService: TodoService) {
-
-  }
+  constructor(private todoService: TodoService) {}
 
   editMode = false;
-  
 
   isOpen = signal(false);
   title = signal('');
   message = signal('');
-  todos = signal<Array<Todo>>(JSON.parse(localStorage.getItem('todos') || '[]'));
+  todos = signal<Array<Todo>>(
+    JSON.parse(localStorage.getItem('todos') || '[]')
+  );
 
   title2 = signal('');
   niveau = signal(1);
@@ -37,7 +31,8 @@ export class PopupComponent {
 
   @Output() todoSaved = new EventEmitter<Todo>();
   @Output()
-  @Output() closed = new EventEmitter<void>();
+  @Output()
+  closed = new EventEmitter<void>();
 
   open(title: string, message: string) {
     this.title.set(title);
@@ -47,7 +42,7 @@ export class PopupComponent {
 
   openEdit(title: string, item: Todo) {
     this.title.set(title);
-     this.isOpen.set(true);
+    this.isOpen.set(true);
     this.editMode = true;
 
     this.title2.set(item.title);
@@ -56,7 +51,6 @@ export class PopupComponent {
     this.niveau.set(item.niveau);
 
     //this.tmpTodo.id = item.id;
-
   }
 
   close() {
@@ -67,7 +61,6 @@ export class PopupComponent {
 
   save() {
     if (this.editMode) {
-
       const updatedTodo: Todo = {
         id: 1, // Assuming currentTodo holds the item being edited
         userId: 2,
@@ -75,16 +68,13 @@ export class PopupComponent {
         title: this.title2(),
         deadline: this.deadline(),
         niveau: this.niveau(),
-        importance: this.importance()
-        
+        importance: this.importance(),
       };
 
       /*const index = todoData.find(todo => todo.id === this.currentTodo.id);
       if (index !== -1) {
         this.todos[index] = updatedTodo;
       }*/
-
-
     } else {
       const newTodo: Todo = {
         id: Date.now(),
@@ -93,7 +83,7 @@ export class PopupComponent {
         title: this.title2(),
         deadline: this.deadline(),
         niveau: this.niveau(),
-        importance: this.importance()
+        importance: this.importance(),
       };
 
       this.todoService.addTodo(newTodo);
@@ -112,6 +102,4 @@ export class PopupComponent {
 
     this.todayDate = `${yyyy}-${mm}-${dd}`;
   }
-
-
 }
