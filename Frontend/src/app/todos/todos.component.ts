@@ -7,7 +7,8 @@ import { HighlightDoneTodosDirective } from '../directives/highlight-done-todos.
 import { PopupComponent } from '../components/popup/popup.component';
 import { NgFor } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common'; //
+import { CommonModule } from '@angular/common';
+import todoData from 'C:/Users/haaseja/Desktop/DHBW/Bericht Repo/ToDo-Website/Frontend/src/assets/todos.json'
 
 @Component({
   selector: 'app-todos',
@@ -17,9 +18,6 @@ import { CommonModule } from '@angular/common'; //
   styleUrl: './todos.component.css'
 })
 export class TodosComponent {
-
-  constructor(private todoService2 : TodoService){
-  }
   @ViewChild(PopupComponent) popup!: PopupComponent;
 
   todos = signal<Array<Todo>>(JSON.parse(localStorage.getItem('todos') || '[]'));
@@ -27,32 +25,22 @@ export class TodosComponent {
   todoService = inject(TodoService);  
   arrayTodos: Todo[] = [];
 
-  openPopup() {
-    this.popup.open('ToDo hinzufügen', 'Fügen Sie Ihr geplantes ToDo hinzu');
+  openPopup(title:string, text: string) {
+    this.popup.open(title, text);
+  }
+
+  openEdit(title:string, id: Todo){
+    this.popup.openEdit(title, id);
   }
 
   onPopupClosed() {
     console.log('Popup wurde geschlossen');
-    this.loadTodos();
+    this.todoService.loadTodos();
   }
 
   ngOnInit() {
-    this.loadTodos();
-    this.arrayTodos = this.todoService2.getArrayTodos();
+    this.arrayTodos = this.todoService.loadTodos();   
   }
-
-  loadTodos() {
-    if (this.todos().length === 0) {
-      this.todoService.getTodosFromApi()
-        .pipe(
-          map(data => data.slice(0, 9)) // Optional: Lade nur die ersten 9 Todos
-        )
-        .subscribe((data) => {
-          this.todos.set(data);
-        });
-    }
-  }
-
   sortedTodos() {
     return this.todos().slice().sort((a, b) => Number(a.completed) - Number(b.completed));
   }
@@ -61,7 +49,7 @@ export class TodosComponent {
   }
 
   deleteArrayTodo(todoID: number){
-    this.todoService2.deleteArrayTodo(todoID);
+    this.todoService.deleteTodo(todoID);
   }
 
   markDoneArrayToDo(id: number) {
