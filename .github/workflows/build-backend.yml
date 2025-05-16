@@ -1,4 +1,4 @@
-name: Lint, Typecheck and Build
+name: Lint, Typecheck and Build (Backend)
 
 on:
   push:
@@ -18,24 +18,30 @@ jobs:
         with:
           node-version: "lts/*"
           cache: "npm"
+          cache-dependency-path: Backend/package-lock.json
 
       - name: Install Packages
         run: npm ci --force
+        working-directory: ./Backend
 
       - name: Lint
         run: npm run lint
+        working-directory: ./Backend
 
       - name: Typecheck
         run: npm run typecheck
+        working-directory: ./Backend
 
       - name: Test
         run: npm run test:once
+        working-directory: ./Backend
 
       - name: Build
         run: npm run build
+        working-directory: ./Backend
 
       - name: Upload Build
         uses: actions/upload-artifact@v4
         with:
           name: build
-          path: dist/*
+          path: Backend/dist/*
