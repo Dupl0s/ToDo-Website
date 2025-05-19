@@ -1,0 +1,35 @@
+.modal-body{
+    max-width: 400px;
+
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background-color: #fafafa;
+}
+
+.modal-body form{
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.modal-body input{
+    flex:1;
+    padding: 8px;
+    border: 1px 
+}
+
+.modal-body button{
+    padding: 8px 16px;
+    cursor: pointer;
+  }
+
+.modal-body ul {
+    list-style-type: none;
+    padding-left: 0;
+  }
+  
+.modal-body li {
+    padding: 6px 10px;
+    border-bottom: 1px solid #ddd;
+  }

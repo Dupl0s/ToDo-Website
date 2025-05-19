@@ -1,0 +1,69 @@
+<div class="container mt-4" style="max-width: 600px;">
+    <h3 class="mb-3">Kategorien</h3>
+  
+    <!-- Categories display -->
+    <ul class="list-group mb-4" *ngIf="categories.length > 0; else noCats">
+      <li *ngFor="let c of categories" class="list-group-item">{{ c }}</li>
+    </ul>
+  
+    <!-- No categories yet -->
+    <ng-template #noCats>
+      <div class="alert alert-warning">Noch keine Kategorien vorhanden.</div>
+    </ng-template>
+  
+    <!-- Open modal button --> <!--With the help of the data-bs-target 
+     from here and the id from the pop up window we can define the function of the Kategorien H...-->
+    <button 
+      class="btn btn-outline-dark" 
+      data-bs-toggle="modal"
+      data-bs-target="#addCategoryModal">
+      <i class="bi bi-plus-lg"></i> Kategorie hinzufügen
+    </button>
+  </div>
+  
+  <!-- Modal Pop-Up for Add Category -->
+  <div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategoryModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content" style="background-color: #fffbe6;">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addCategoryModalLabel">Kategorie hinzufügen</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+  
+        <div class="modal-body">
+          <form 
+            [formGroup]="catForm" 
+            (ngSubmit)="addCategories()" 
+            id="addCategoryForm"
+            class="d-flex mb-3">        
+
+            <input 
+              formControlName="name" 
+              placeholder="Neuer Bereich" 
+              class="form-control me-2" 
+              [class.is-invalid]="catForm.controls['name'].invalid && catForm.controls['name'].touched"
+            />
+            <div 
+              *ngIf="catForm.controls['name'].invalid && catForm.controls['name'].touched" 
+              class="invalid-feedback d-block"
+            >
+              Minimum 3 Zeichen eingeben
+            </div>
+          </form>    
+        </div>        
+  
+        <div class="modal-footer">
+          <button 
+            type="submit" 
+            class="btn" 
+            form="addCategoryForm" 
+            [disabled]="catForm.invalid" 
+            style="background-color: #f4e9ae;"
+          >
+            <i class="bi bi-plus-lg"></i> Kategorie hinzufügen
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  

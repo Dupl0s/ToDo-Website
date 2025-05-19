@@ -1,7 +1,8 @@
 {
   "dependencies": {
     "@angular/cli": "^19.1.8",
-    "@popperjs/core": "^2.11.8"
+    "@popperjs/core": "^2.11.8",
+    "bootstrap": "^5.3.6"
   },
   "devDependencies": {
     "@types/bootstrap": "^5.2.10"

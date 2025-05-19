@@ -7,6 +7,9 @@ export const routes: Routes = [
     {path: 'dustbin', loadComponent: () => {
         return import('./dustbin/dustbin.component').then((z) => z.DustbinComponent)
     }},
+    {path: 'categories', loadComponent: () => {
+        return import('./categories/categories.component').then((t) => t.CategoriesComponent)
+    }},
     {path: '', loadComponent: () => {
         return import('./home/home.component').then((z) => z.HomeComponent)
     }}
