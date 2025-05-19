@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
-import { RouterOutlet } from "@angular/router";
-import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from "./home/home.component";
+import { ActivatedRoute, NavigationEnd, Router, RouterLink, RouterModule, RouterOutlet } from "@angular/router";
+import { filter } from "rxjs/operators";
 
 @Component({
   selector: "app-root",
@@ -11,5 +11,29 @@ import { HomeComponent } from "./home/home.component";
   styleUrl: "./app.component.css"
 })
 export class AppComponent {
-  title = "TINF24B5";
+  title = "ToDo Website";
+  urlName: string | null = '';
+  constructor(private router: Router, private route: ActivatedRoute) {}
+  ngOnInit(): void {
+    // Auf jede Navigation hören
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe(() => {
+        const currentUrl = this.router.url;
+        const segments = currentUrl.split('/');
+        const secondSegement = segments[1];
+        switch (secondSegement) {
+          case 'todos':
+            this.urlName = 'To-Do`s';
+            break;
+         //Beispiel
+         // case '[url]':
+         // this.urlName = '[shown text]';
+         // break;
+          default:
+            this.urlName = 'Home';
+            break;
+        }
+      });
+  }
 }

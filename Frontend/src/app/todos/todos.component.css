@@ -1,5 +1,4 @@
-.card {
-    font-family: Elephant, Arial, Helvetica, sans-serifal Black;
+/*.card {
     background-color: #ed6276;
     color:black;
 }
@@ -14,7 +13,7 @@ h1{
     color: black;
     width: 4rem;
     border-color: #c7bb76;
-} */
+} 
 .btn:hover, .delete:hover{
     background-color: #c7bb76;
 }
@@ -27,22 +26,80 @@ h1{
     z-index:1;
     border:0;
     border-radius: 10%;
-    
-}
-.delete:hover{
-    background-color: #f7e78c;
-}
-.papkorb{
-    top:0;
-    right:0;
-    position:absolute;
+    margin: 0.2rem;
+    margin-top: 0.5rem;
+}*/
+
+button {
     background-color: #f4e9ae;
-    width: 7rem;
-    height:3rem;
-    border-radius: 10%;
-    border:0;
-    font-size:16.5px;
+    color: black;
+    width: auto;
+    border-color: #b8ab5e;
+    border: 2px solid #b8ab5e;
+    border-radius: 8px;
+    padding: 10px 20px;
+    margin: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #b8ab5e;
+    color: white;
+    border-color: #f4e9ae;
+    transform: translateY(-2px);
+  }
+
+.todos-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 21px;
 }
-.papkorb:hover{
-    background-color: #f7e78c;
+
+.arraycard {
+    background-color: #ed6276;
+    color: black;
+    padding: 20px;
+    border-radius: 10px;
+    width: calc(33% - 10px);
+    box-sizing: border-box;
 }
+.arraycard.done {
+    background-color: #78cb99 !important;
+}
+
+
+.arraycard h2 {
+    margin: 0;
+    padding: 1rem;
+    font-size: 1.4em;
+    font-weight: bold;
+}
+
+.arraycard p {
+    margin: 5px 0;
+}
+
+.arraycard .buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.arraycard .button {
+    background-color: #f8e7a2; 
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.arraycard .button:hover {
+    background-color: #f5d98e;
+}
+

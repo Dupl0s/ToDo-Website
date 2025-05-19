@@ -3,6 +3,8 @@
     <div>
         <h1>                                          </h1>
     </div>
+    <button (click)="openPopup()">ToDo Hinzufügen</button>
+    <app-popup (closed)="onPopupClosed()"></app-popup>
     @if(todos().length === 0) {
     <h5>Keine Todos angelegt!</h5>
     }
@@ -24,12 +26,15 @@
         </div>
     </div>
     }
-    <div class="row">
+    <!--<div class="row"> 
+        <a routerLink="/dustbin">
+            <button class="papkorb">Papierkorb</button>
+        </a>
         @for (todo of sortedTodos(); track todo.id) {
-        <div class="col-md-4 mb-3"> <!-- 3 Cards Pro Reihe -->
-            <div [appHighlightDoneTodos]="todo.completed"  class="card h-100" > <!-- festgelegte Höhe -->
+        <div class="col-md-4 mb-3">
+            <div [appHighlightDoneTodos]="todo.completed" class="card h-100">
                 <div class="card-body d-flex flex-column">
-                    <app-todoitem [todo]="todo"/>
+                    <app-todoitem [todo]="todo" />
                     <div class="btn-toolbar" role="toolbar">
                         <button (click)="toggleCompleted(todo)" class="btn btn-primary" type="button">
                             <img src="assets/check_circle.svg" alt="Done">
@@ -39,16 +44,35 @@
                         </button>
                     </div>
                 </div>
-            </div>-->
-            
-            <app-todoitem [todo]="todo"
-            [deleteTodos]="deleteTodo"/>
-            <button class="delete" (click)="deleteTodo(todo.id)">Remove</button>
-            
+            </div>
         </div>
-        }
+       }  
+    </div>-->
+
+            
+        
+     <div class="todos-container">
         <a routerLink="/dustbin">
             <button class="papkorb">Papierkorb</button>
         </a>
+        <!--</div>-->
+        @for (item of arrayTodos; track arrayTodos.length) {
+            <div class="arraycard" [ngClass]="{'done': item.completed}">
+                <h4 class="card-title">{{item.title}}</h4>
+                <p class="card-text flex-grow-1">Deadline: {{item.deadline}}</p>
+                <p class="card-text flex-grow-1">Schwierigkeit: {{item.niveau}}</p>
+                <p class="card-text flex-grow-1">Priorität: {{item.importance}}</p>
+                <div class="btn-toolbar" role="toolbar">
+                    <button class="btn btn-primary" (click)="markDoneArrayToDo(item.id)" type="button">
+                        <img src="assets/check_circle.svg" alt="Done">
+                    </button>
+                    <button (click)="deleteArrayTodo(item.id)">
+                        <img src="assets/delete.svg" alt="Remove">
+                    </button>
+                </div>
+            </div>
+        } @empty {
+
+        }
     </div>
 </div>

@@ -10,8 +10,10 @@ import { CommonModule } from '@angular/common';
   templateUrl: './todoitem.component.html',
   styleUrl: './todoitem.component.css'
 })
+
 export class TodoitemComponent{
   todo = input.required<Todo>();
+<<<<<<< HEAD
   deleteTodos = input.required<(id: number) => void>();
 
   /* remove(id:number) {
@@ -21,4 +23,6 @@ export class TodoitemComponent{
     todo.completed = true;
   }
 
+=======
+>>>>>>> main
 }
