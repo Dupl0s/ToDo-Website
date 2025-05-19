@@ -1,0 +1,20 @@
+@if (isOpen()) {
+    <div class="popup">
+      <div class="popup-content">
+        <h2>{{ title() }}</h2>
+        <p>{{ message() }}</p>
+
+        <div class="todoInfos">
+            <input class="title" [(ngModel)]="title2" type="text" placeholder="Titel" />
+            <br>
+            <input class="niveau" [(ngModel)]="niveau" type="number" min="1" max="10" step="1" placeholder="Niveau 1-10" />
+            <br>
+            <input class="importance" [(ngModel)]="importance" type="number" min="1" max="10" step="1" placeholder="Wichtigkeit 1-10" />
+            <br>
+            <input class="deadline" [(ngModel)]="deadline" type="date" />
+        </div>              
+        <button (click)="save()" class="add">Hinzufügen</button>
+        <button (click)="close()" class="close">Schließen</button>
+      </div>
+    </div>
+    }
