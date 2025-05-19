@@ -9,12 +9,14 @@ h1{
     color: white;;
 }
 .restbutt{
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
     background-color: #484443;
     color: white;
     width: 9rem;
     height:2.5rem;
     border-radius: 10%;
     border:0;
-    font-size:17px;
+    font-size:16px;
 }
 

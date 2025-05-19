@@ -1,6 +1,5 @@
 import { Component, inject, signal, effect, ViewChild } from '@angular/core';
 import { TodoService } from '../services/todo.service';
-import { Todo } from '../model/todo.type';
 import { map } from 'rxjs';
 import { TodoitemComponent } from "../components/todoitem/todoitem.component";
 import { HighlightDoneTodosDirective } from '../directives/highlight-done-todos.directive';
@@ -9,11 +8,17 @@ import { NgFor } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common'; //
 import { RouterModule } from '@angular/router';
+import { HighlightDoneTodosDirective } from '../directives/highlight-done-todos.directive';
+import { Todo } from '../model/todo.type';
 
 @Component({
   selector: 'app-todos',
   standalone: true,
+<<<<<<< HEAD
   imports: [PopupComponent,CommonModule, TodoitemComponent, RouterModule],
+=======
+  imports: [TodoitemComponent, RouterModule, HighlightDoneTodosDirective],
+>>>>>>> origin/Papierkorb
   templateUrl: './todos.component.html',
   styleUrl: './todos.component.css'
 })
@@ -25,6 +30,7 @@ export class TodosComponent {
 
   todos = signal<Array<Todo>>(JSON.parse(localStorage.getItem('todos') || '[]'));
   dustbin = signal<Array<Todo>>(JSON.parse(localStorage.getItem('dustbin') || '[]'));
+<<<<<<< HEAD
   todoService = inject(TodoService);  
   arrayTodos: Todo[] = [];
 
@@ -36,6 +42,9 @@ export class TodosComponent {
     console.log('Popup wurde geschlossen');
     this.loadTodos();
   }
+=======
+  todoService = inject(TodoService);
+>>>>>>> origin/Papierkorb
 
   ngOnInit() {
     this.loadTodos();
@@ -57,6 +66,7 @@ export class TodosComponent {
   sortedTodos() {
     return this.todos().slice().sort((a, b) => Number(a.completed) - Number(b.completed));
   }
+<<<<<<< HEAD
   
  
   deleteArrayTodo(todoID: number){
@@ -72,6 +82,9 @@ export class TodosComponent {
     this.todos.set(this.todos().slice().sort((a, b) => Number(a.completed) - Number(b.completed)));
   }
 
+=======
+ 
+>>>>>>> origin/Papierkorb
   deleteTodo(todoId: number){
    const deletedTodo= this.todos().find(todo=> todo.id === todoId);
     if (deletedTodo){
@@ -85,6 +98,8 @@ export class TodosComponent {
       localStorage.setItem('dustbin', JSON.stringify(this.dustbin())); 
     }); 
   } 
+  toggleCompleted(todo: Todo) {
+    todo.completed = !todo.completed;
+    this.todos.set(this.todos().slice().sort((a, b) => Number(a.completed) - Number(b.completed))); 
+  }
 }
-
-
