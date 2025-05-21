@@ -44,15 +44,7 @@ export class TodoService {
   );
 
   loadTodos() {
-    /* if (this.todos().length === 0) {
-      this.getTodosFromApi()
-        .pipe(
-          map(data => data.slice(0, 9)) // Optional: Lade nur die ersten 9 Todos
-        )
-        .subscribe((data) => {
-          this.todos.set(data);
-        });
-    }*/
+
     const savedTodos = localStorage.getItem('todos');
     if (savedTodos) {
       this.localTodos = JSON.parse(savedTodos);
@@ -72,21 +64,6 @@ export class TodoService {
      */
   }
 
-  sortArrayTodosByCompletion(): Todo[] {
-    this.localTodos.sort((a, b) =>
-      a.completed === b.completed ? 0 : a.completed ? -1 : 1
-    );
-    return this.localTodos;
-  }
-
-  markAsCompleted(id: number): Todo[] {
-    const todo = this.localTodos.find((todo) => todo.id === id);
-    if (todo) {
-      todo.completed = true;
-    }
-    return this.localTodos;
-  }
-
   addTodo(newTodo: Todo) {
     this.localTodos.push(newTodo);
     localStorage.setItem('todos', JSON.stringify(this.localTodos));
@@ -96,7 +73,7 @@ export class TodoService {
     const index = this.localTodos.findIndex((todo) => todo.id === id);
     if (index !== -1) {
       this.localTodos.splice(index, 1);
-    }
+    } 
     localStorage.setItem('todos', JSON.stringify(this.localTodos));
     return this.localTodos;
   }
