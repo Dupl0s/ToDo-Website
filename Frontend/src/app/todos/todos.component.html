@@ -1,15 +1,32 @@
 <div class="container-fluid">
-    <h1>Projekt</h1>
-    <button (click)="openPopup('ToDo hinzufügen', 'Fügen Sie Ihr geplantes ToDo hinzu')">ToDo Hinzufügen</button>
-    <app-popup (closed)="onPopupClosed()"></app-popup>
+    <nav class="navbar bg-body-tertiary">
+        <div class="container-fluid-navbar d-flex align-items-center gap-3">
+            <h1 class="navbar-brand mb-0 h1">Projekt</h1>
+            <button (click)="openPopup('ToDo hinzufügen', 'Fügen Sie Ihr geplantes ToDo hinzu')">ToDo
+                Hinzufügen</button>
+            <app-popup (closed)="onPopupClosed()"></app-popup>
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    Sortieren nach 
+                    <span *ngIf="actualSort">{{ actualSort }}</span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a (click)="sortDeadline()" class="dropdown-item" [class.active]="actualSort === 'Deadline'">Deadline</a></li>
+                    <li><a (click)="sortSchwierig()" class="dropdown-item" [class.active]="actualSort === 'Schwierigkeit'">Schwierigkeit</a></li>
+                    <li><a (click)="sortPrio()" class="dropdown-item" [class.active]="actualSort === 'Priorität'">Priorität</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
     <div class="todos-container">
-        
-<!-- Änderungen von Johanna: for loop track item.id und nicht arrayTodos.length, 
+        <!-- Änderungen von Johanna: for loop track item.id und nicht arrayTodos.length, 
  weil sonst Fehlermeldung "duplicated keys", weil die Länge natürlich immer gleich ist 
  sortedTodos für dynamische Seitensortierung
  -->
         @for (item of sortedTodos(); track item.id) {
-        <div [appHighlightDoneTodos]="item.completed" class="arraycard" [ngClass]="{'done': item.completed}" >
+        <div [appHighlightDoneTodos]="item.completed" class="arraycard" [ngClass]="{'done': item.completed}">
             <h4 class="card-title">{{item.title}}</h4>
             <p class="card-text flex-grow-1">Deadline: {{item.deadline}}</p>
             <p class="card-text flex-grow-1">Schwierigkeit: {{item.niveau}}</p>
@@ -27,29 +44,29 @@
             </div>
         </div>
         } @empty {
-    <div>
-        <div class="no-todos">
-            <h5>Keine Todos angelegt!</h5>
-        </div>
-        @if(!sortedTodos.length){
-            <div class="card" aria-hidden="true">
-            <img src="..." class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title placeholder-glow">
-                    <span class="placeholder col-6"></span>
-                </h5>
-                <p class="card-text placeholder-glow">
-                    <span class="placeholder col-7"></span>
-                    <span class="placeholder col-4"></span>
-                    <span class="placeholder col-4"></span>
-                    <span class="placeholder col-6"></span>
-                    <span class="placeholder col-8"></span>
-                </p>
-                <a class="btn btn-primary disabled placeholder col-6" aria-disabled="true"></a>
+        <div>
+            <div class="no-todos">
+                <h5>Keine Todos angelegt!</h5>
             </div>
+            @if(!sortedTodos.length){
+            <div class="card" aria-hidden="true">
+                <img src="..." class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title placeholder-glow">
+                        <span class="placeholder col-6"></span>
+                    </h5>
+                    <p class="card-text placeholder-glow">
+                        <span class="placeholder col-7"></span>
+                        <span class="placeholder col-4"></span>
+                        <span class="placeholder col-4"></span>
+                        <span class="placeholder col-6"></span>
+                        <span class="placeholder col-8"></span>
+                    </p>
+                    <a class="btn btn-primary disabled placeholder col-6" aria-disabled="true"></a>
+                </div>
+            </div>
+            }
         </div>
-        }
-    </div>    
         }
     </div>
 </div>
