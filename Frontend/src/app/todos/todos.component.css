@@ -25,6 +25,7 @@ h1{
     margin-top: 0.5rem;
 }*/
 
+
 button {
     background-color: #f4e9ae;
     color: black;
@@ -38,14 +39,14 @@ button {
     font-weight: bold;
     cursor: pointer;
     transition: all 0.3s ease;
-  }
+}
   
-  button:hover {
+button:hover {
     background-color: #b8ab5e;
     color: white;
     border-color: #f4e9ae;
     transform: translateY(-2px);
-  }
+}
 
 .todos-container {
     display: flex;
@@ -70,7 +71,6 @@ button {
     background-color: #78cb99 !important;
 
 }
-
 
 .arraycard h2 {
     margin: 0;
@@ -130,7 +130,3 @@ button {
 
 
 
-
-  
-  
-  

@@ -5,12 +5,13 @@ import { TodoitemComponent } from '../components/todoitem/todoitem.component';
 import { HighlightDoneTodosDirective } from '../directives/highlight-done-todos.directive';
 import { PopupComponent } from '../components/popup/popup.component';
 import { CommonModule } from '@angular/common';
-
+import todoData from '../../assets/todos.json';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-todos',
   standalone: true,
-  imports: [PopupComponent, CommonModule, HighlightDoneTodosDirective],
+  imports: [PopupComponent, CommonModule, HighlightDoneTodosDirective, RouterModule],
   templateUrl: './todos.component.html',
   styleUrl: './todos.component.css',
 })
@@ -20,7 +21,7 @@ export class TodosComponent {
   todos = signal<Array<Todo>>(
     JSON.parse(localStorage.getItem('todos') || '[]')
   );
-  /*dustbin = signal<Array<Todo>>(JSON.parse(localStorage.getItem('dustbin') || '[]'));*/
+
   todoService = inject(TodoService);
   arrayTodos: Todo[] = [];
 
@@ -48,12 +49,16 @@ export class TodosComponent {
       .sort((a, b) => Number(a.completed) - Number(b.completed));
   }
 
-  deleteArrayTodo(todoID: number) {
-    this.todoService.deleteTodo(todoID);
-  }
+
 
   toggleCompleted(todo: Todo) {
     todo.completed = !todo.completed;
     localStorage.setItem('todos', JSON.stringify(this.arrayTodos));
   }
+
+ deleteTodo(todoID: number) {
+  this.todoService.deleteTodo(todoID);
+  this.arrayTodos = this.todoService.loadTodos();
+}
+
 }

@@ -1,0 +1,61 @@
+.btn-dark{
+    background-color: black;
+    color: white;
+    width:auto;
+    font-size:16px;
+}
+.btn-primary{
+    background-color: #f4e9ae;
+    color: black;
+    width: auto;
+    border-color: #b8ab5e;
+    border: 2px solid #b8ab5e;
+    border-radius: 8px;
+    padding: 10px 20px;
+    margin: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.btn-primary:hover {
+    background-color: #b8ab5e;
+    color: white;
+    border-color: #f4e9ae;
+    transform: translateY(-2px);
+}
+.dustbin-container {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 1rem;
+  gap: 21px;
+}
+
+.dustbin-card {
+  background-color: #f8e7a2;
+  color: black;
+  padding: 20px;
+  border-radius: 10px;
+  width: calc(33% - 10px);
+  box-sizing: border-box;
+}
+
+.dustbin-card.done {
+  background-color: #78cb99 !important;
+}
+
+.dustbin-card h4 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.dustbin-card p {
+  margin: 5px 0;
+}
+
+.dustbin-card .btn-toolbar {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
