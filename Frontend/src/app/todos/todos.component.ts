@@ -25,6 +25,7 @@ export class TodosComponent {
   todoService = inject(TodoService);
   arrayTodos: Todo[] = [];
 
+  actualSort: string = '';
 
   openPopup(title: string, text: string) {
     this.popup.open(title, text);
@@ -35,13 +36,13 @@ export class TodosComponent {
   }
 
   onPopupClosed() {
+    this.arrayTodos = this.todoService.loadTodos();
     console.log('Popup wurde geschlossen');
-    this.todoService.loadTodos();
   }
 
   ngOnInit() {
-      this.arrayTodos = this.todoService.loadTodos();
-    } 
+    this.arrayTodos = this.todoService.loadTodos();
+  } 
 
   sortedTodos() {
     return this.arrayTodos
@@ -49,6 +50,26 @@ export class TodosComponent {
       .sort((a, b) => Number(a.completed) - Number(b.completed));
   }
 
+  sortDeadline() {
+    this.arrayTodos.sort((a, b) => Date.parse(a.deadline).valueOf() - Date.parse(b.deadline).valueOf())
+    localStorage.setItem('todos', JSON.stringify(this.arrayTodos));
+    this.actualSort = "Deadline"
+    return this.arrayTodos;
+
+  }
+  sortSchwierig() {
+    this.arrayTodos.sort((a, b) => a.niveau - b.niveau);
+    localStorage.setItem('todos', JSON.stringify(this.arrayTodos));
+    this.actualSort = "Schwierigkeit"
+    return this.arrayTodos;
+  }
+
+  sortPrio() {
+    this.arrayTodos.sort((a, b) => a.importance - b.importance);
+    localStorage.setItem('todos', JSON.stringify(this.arrayTodos));
+    this.actualSort = "Priorität"
+    return this.arrayTodos;
+  }
 
 
   toggleCompleted(todo: Todo) {

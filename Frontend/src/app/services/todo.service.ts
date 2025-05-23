@@ -52,7 +52,7 @@ export class TodoService {
       this.localTodos = todoData;
       localStorage.setItem('todos', JSON.stringify(this.localTodos));
     }
-
+    console.log("loadTodos")
     return this.localTodos;
   }
 
@@ -65,8 +65,10 @@ export class TodoService {
   }
 
   addTodo(newTodo: Todo) {
+    console.log("addTodo")
     this.localTodos.push(newTodo);
     localStorage.setItem('todos', JSON.stringify(this.localTodos));
+    return this.localTodos;
   }
 
   /*deleteTodo(id: number) {
@@ -75,12 +77,14 @@ export class TodoService {
       this.localTodos.splice(index, 1);
     } 
     localStorage.setItem('todos', JSON.stringify(this.localTodos));
+    console.log("delete")
     return this.localTodos;
   }*/
 
   clearStorage() {
     //maybe to clear all the todos that are done?
   }
+
 
   dustbin = signal<Array<Todo>>(JSON.parse(localStorage.getItem('dustbin') || '[]'));
 
