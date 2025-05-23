@@ -19,6 +19,7 @@ export class TodoService {
       deadline: '2025-10-15',
       niveau: 3,
       importance: 5,
+      bereichsId: 1,
     },
     {
       id: 8,
@@ -28,6 +29,7 @@ export class TodoService {
       deadline: '2025-11-20',
       niveau: 2,
       importance: 4,
+      bereichsId: 1,
     },
     {
       id: 9,
@@ -37,6 +39,7 @@ export class TodoService {
       deadline: '2025-11-20',
       niveau: 2,
       importance: 4,
+      bereichsId: 1,
     },
   ];
   todos = signal<Array<Todo>>(
@@ -44,7 +47,6 @@ export class TodoService {
   );
 
   loadTodos() {
-
     const savedTodos = localStorage.getItem('todos');
     if (savedTodos) {
       this.localTodos = JSON.parse(savedTodos);
@@ -52,7 +54,7 @@ export class TodoService {
       this.localTodos = todoData;
       localStorage.setItem('todos', JSON.stringify(this.localTodos));
     }
-    console.log("loadTodos")
+    console.log('loadTodos');
     return this.localTodos;
   }
 
@@ -65,7 +67,7 @@ export class TodoService {
   }
 
   addTodo(newTodo: Todo) {
-    console.log("addTodo")
+    console.log('addTodo');
     this.localTodos.push(newTodo);
     localStorage.setItem('todos', JSON.stringify(this.localTodos));
     return this.localTodos;
@@ -81,12 +83,24 @@ export class TodoService {
     return this.localTodos;
   }*/
 
+  editTodo(updatedTodo: Todo) {
+    const index = this.localTodos.findIndex(
+      (todo) => todo.id === updatedTodo.id
+    );
+    console.log(index, localStorage.getItem('todos'));
+    if (index !== -1) {
+      this.localTodos[index] = updatedTodo;
+    }
+    localStorage.setItem('todos', JSON.stringify(this.localTodos));
+  }
+
   clearStorage() {
     //maybe to clear all the todos that are done?
   }
 
-
-  dustbin = signal<Array<Todo>>(JSON.parse(localStorage.getItem('dustbin') || '[]'));
+  dustbin = signal<Array<Todo>>(
+    JSON.parse(localStorage.getItem('dustbin') || '[]')
+  );
 
   /*deleteTodo(id: number) {
   const index = this.localTodos.findIndex((todo) => todo.id === id);
@@ -98,14 +112,14 @@ export class TodoService {
 
     this.addToDustbin(deletedTodo);
   }*/
- 
+
   deleteTodo(id: number): Todo[] {
     const current = this.todos();
-    const index = current.findIndex(todo => todo.id === id);
+    const index = current.findIndex((todo) => todo.id === id);
 
     if (index !== -1) {
       const deletedTodo = current[index];
-      const updatedTodos = current.filter(todo => todo.id !== id);
+      const updatedTodos = current.filter((todo) => todo.id !== id);
 
       this.todos.set(updatedTodos);
       localStorage.setItem('todos', JSON.stringify(updatedTodos));
@@ -113,8 +127,8 @@ export class TodoService {
       this.addToDustbin(deletedTodo);
     }
 
-  return this.localTodos;
- }
+    return this.localTodos;
+  }
 
   addToDustbin(todo: Todo) {
     const currentDustbin = this.dustbin();
@@ -127,9 +141,8 @@ export class TodoService {
     return this.dustbin();
   }
   deleteFromDustbin(id: number) {
-  const updatedDustbin = this.dustbin().filter(todo => todo.id !== id);
-  this.dustbin.set(updatedDustbin);
-  localStorage.setItem('dustbin', JSON.stringify(updatedDustbin));
+    const updatedDustbin = this.dustbin().filter((todo) => todo.id !== id);
+    this.dustbin.set(updatedDustbin);
+    localStorage.setItem('dustbin', JSON.stringify(updatedDustbin));
+  }
 }
-}
-
