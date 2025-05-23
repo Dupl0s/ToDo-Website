@@ -28,7 +28,6 @@ button:hover {
     border-color: #f4e9ae;
     transform: translateY(-2px);
 }
-}
 
 .todos-container {
     display: flex;
