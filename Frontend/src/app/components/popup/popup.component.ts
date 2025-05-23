@@ -14,8 +14,10 @@ import todoData from '../../../assets/todos.json';
 })
 export class PopupComponent {
   constructor(private todoService: TodoService) {}
-
   editMode = false;
+  currentID = 0; //overwritten by ID of clicked ToDo
+  currentUserID = 0; //overwritten by userID of Todo
+  index = {};
 
   isOpen = signal(false);
   title = signal('');
@@ -49,8 +51,8 @@ export class PopupComponent {
     this.deadline.set(item.deadline);
     this.importance.set(item.importance);
     this.niveau.set(item.niveau);
-
-    //this.tmpTodo.id = item.id;
+    this.currentID = item.id;
+    this.currentUserID = item.userId;
   }
 
   close() {
@@ -62,19 +64,16 @@ export class PopupComponent {
   save() {
     if (this.editMode) {
       const updatedTodo: Todo = {
-        id: 1, // Assuming currentTodo holds the item being edited
-        userId: 2,
+        id: this.currentID,
+        userId: this.currentUserID,
         completed: false,
         title: this.title2(),
         deadline: this.deadline(),
         niveau: this.niveau(),
         importance: this.importance(),
+        bereichsId: 1,
       };
-
-      /*const index = todoData.find(todo => todo.id === this.currentTodo.id);
-      if (index !== -1) {
-        this.todos[index] = updatedTodo;
-      }*/
+      this.todoService.editTodo(updatedTodo);
     } else {
       const newTodo: Todo = {
         id: Date.now(),
@@ -84,22 +83,12 @@ export class PopupComponent {
         deadline: this.deadline(),
         niveau: this.niveau(),
         importance: this.importance(),
+        bereichsId: 1,
       };
 
       this.todoService.addTodo(newTodo);
     }
 
     this.close();
-  }
-  todayDate: string = '';
-
-  ngOnInit(): void {
-    const today = new Date();
-
-    const yyyy = today.getFullYear();
-    const mm = String(today.getMonth() + 1).padStart(2, '0');
-    const dd = String(today.getDate()).padStart(2, '0');
-
-    this.todayDate = `${yyyy}-${mm}-${dd}`;
   }
 }
