@@ -42,7 +42,7 @@ export class TodosComponent {
 
   ngOnInit() {
     this.arrayTodos = this.todoService.loadTodos();
-  } 
+  }
 
   sortedTodos() {
     return this.arrayTodos
@@ -77,9 +77,9 @@ export class TodosComponent {
     localStorage.setItem('todos', JSON.stringify(this.arrayTodos));
   }
 
- deleteTodo(todoID: number) {
-  this.todoService.deleteTodo(todoID);
-  this.arrayTodos = this.todoService.loadTodos();
-}
+  deleteTodo(todoID: number) {
+    this.todoService.deleteTodo(todoID);
+    this.arrayTodos = this.todoService.loadTodos();
+  }
 
 }

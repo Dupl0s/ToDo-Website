@@ -25,7 +25,7 @@ export class DustbinComponent {
     const restored = currentDustbin.find(todo => todo.id === todoId);
 
     if (restored) {
-      const updatedTodos = [...this.todoService.todos(), restored];
+      const updatedTodos = [...this.todoService.localTodos, restored];
       this.todoService.todos.set(updatedTodos);
       localStorage.setItem('todos', JSON.stringify(updatedTodos));
 

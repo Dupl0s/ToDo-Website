@@ -73,16 +73,6 @@ export class TodoService {
     return this.localTodos;
   }
 
-  /*deleteTodo(id: number) {
-    const index = this.localTodos.findIndex((todo) => todo.id === id);
-    if (index !== -1) {
-      this.localTodos.splice(index, 1);
-    } 
-    localStorage.setItem('todos', JSON.stringify(this.localTodos));
-    console.log("delete")
-    return this.localTodos;
-  }*/
-
   editTodo(updatedTodo: Todo) {
     const index = this.localTodos.findIndex(
       (todo) => todo.id === updatedTodo.id
@@ -102,19 +92,9 @@ export class TodoService {
     JSON.parse(localStorage.getItem('dustbin') || '[]')
   );
 
-  /*deleteTodo(id: number) {
-  const index = this.localTodos.findIndex((todo) => todo.id === id);
-  if (index !== -1) {
-    const deletedTodo = this.localTodos[index];
-
-    this.localTodos.slice(index, 1);
-    localStorage.setItem('todos', JSON.stringify(this.localTodos));
-
-    this.addToDustbin(deletedTodo);
-  }*/
 
   deleteTodo(id: number): Todo[] {
-    const current = this.todos();
+    const current = this.localTodos;
     const index = current.findIndex((todo) => todo.id === id);
 
     if (index !== -1) {
