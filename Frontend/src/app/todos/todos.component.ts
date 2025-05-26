@@ -1,87 +1,85 @@
 import { Component, inject, signal, effect, ViewChild } from '@angular/core';
 import { TodoService } from '../services/todo.service';
 import { Todo } from '../model/todo.type';
-import { map } from 'rxjs';
-import { TodoitemComponent } from "../components/todoitem/todoitem.component";
+import { TodoitemComponent } from '../components/todoitem/todoitem.component';
 import { HighlightDoneTodosDirective } from '../directives/highlight-done-todos.directive';
 import { PopupComponent } from '../components/popup/popup.component';
-import { NgFor } from '@angular/common';
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common'; //
+import { CommonModule } from '@angular/common';
+import todoData from '../../assets/todos.json';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-todos',
   standalone: true,
-  imports: [PopupComponent,CommonModule],
+  imports: [PopupComponent, CommonModule, HighlightDoneTodosDirective, RouterModule],
   templateUrl: './todos.component.html',
-  styleUrl: './todos.component.css'
+  styleUrl: './todos.component.css',
 })
 export class TodosComponent {
-
-  constructor(private todoService2 : TodoService){
-  }
   @ViewChild(PopupComponent) popup!: PopupComponent;
 
-  todos = signal<Array<Todo>>(JSON.parse(localStorage.getItem('todos') || '[]'));
-  /*dustbin = signal<Array<Todo>>(JSON.parse(localStorage.getItem('dustbin') || '[]'));*/
-  todoService = inject(TodoService);  
+  todos = signal<Array<Todo>>(
+    JSON.parse(localStorage.getItem('todos') || '[]')
+  );
+
+  todoService = inject(TodoService);
   arrayTodos: Todo[] = [];
 
-  openPopup() {
-    this.popup.open('ToDo hinzufügen', 'Fügen Sie Ihr geplantes ToDo hinzu');
+  actualSort: string = '';
+
+  openPopup(title: string, text: string) {
+    this.popup.open(title, text);
+  }
+
+  openEdit(title: string, id: Todo) {
+    this.popup.openEdit(title, id);
   }
 
   onPopupClosed() {
+    this.arrayTodos = this.todoService.loadTodos();
     console.log('Popup wurde geschlossen');
-    this.loadTodos();
   }
 
   ngOnInit() {
-    this.loadTodos();
-    this.arrayTodos = this.todoService2.getArrayTodos();
-  }
-
-  loadTodos() {
-    if (this.todos().length === 0) {
-      this.todoService.getTodosFromApi()
-        .pipe(
-          map(data => data.slice(0, 9)) // Optional: Lade nur die ersten 9 Todos
-        )
-        .subscribe((data) => {
-          this.todos.set(data);
-        });
-    }
+    this.arrayTodos = this.todoService.loadTodos();
   }
 
   sortedTodos() {
-    return this.todos().slice().sort((a, b) => Number(a.completed) - Number(b.completed));
-  }
-  deleteTodo(todoId: number) {
-    this.todos.set(this.todos().filter(todo => todo.id !== todoId));
-  }
-
-  deleteArrayTodo(todoID: number){
-    this.todoService2.deleteArrayTodo(todoID);
+    return this.arrayTodos
+      .slice()
+      .sort((a, b) => Number(a.completed) - Number(b.completed));
   }
 
-  markDoneArrayToDo(id: number) {
-    this.todoService.markAsCompleted(id);
+  sortDeadline() {
+    this.arrayTodos.sort((a, b) => Date.parse(a.deadline).valueOf() - Date.parse(b.deadline).valueOf())
+    localStorage.setItem('todos', JSON.stringify(this.arrayTodos));
+    this.actualSort = "Deadline"
+    return this.arrayTodos;
+
+  }
+  sortSchwierig() {
+    this.arrayTodos.sort((a, b) => a.niveau - b.niveau);
+    localStorage.setItem('todos', JSON.stringify(this.arrayTodos));
+    this.actualSort = "Schwierigkeit"
+    return this.arrayTodos;
   }
 
+  sortPrio() {
+    this.arrayTodos.sort((a, b) => a.importance - b.importance);
+    localStorage.setItem('todos', JSON.stringify(this.arrayTodos));
+    this.actualSort = "Priorität"
+    return this.arrayTodos;
+  }
 
-  /*   constructor() {
-      effect(() => {
-        localStorage.setItem('todos', JSON.stringify(this.todos()));
-      });
-    } */
 
   toggleCompleted(todo: Todo) {
     todo.completed = !todo.completed;
-    this.todos.set(this.todos().slice().sort((a, b) => Number(a.completed) - Number(b.completed)));
+    localStorage.setItem('todos', JSON.stringify(this.arrayTodos));
   }
 
-  
+  deleteTodo(todoID: number) {
+    this.todoService.deleteTodo(todoID);
+    this.arrayTodos = this.todoService.loadTodos();
+  }
 
 }
-
-

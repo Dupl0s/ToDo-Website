@@ -1,29 +1,11 @@
-/*.card {
+.card {
     background-color: #ed6276;
-    color:black;
+    color: black;
 }
-h1{
+
+h1 {
     padding: 1rem;
 }
-/* .btn{
-    background-color: #f4e9ae;
-    color: black;
-    width: 4rem;
-    border-color: #c7bb76;
-} 
-.btn:hover, .delete:hover{
-    background-color: #c7bb76;
-}
-.delete, .btn{
-    background-color: #f4e9ae;
-    color: black;
-    width: 5rem;
-    height: 3rem;
-    border:0;
-    border-radius: 10%;
-    margin: 0.2rem;
-    margin-top: 0.5rem;
-}*/
 
 button {
     background-color: #f4e9ae;
@@ -38,14 +20,14 @@ button {
     font-weight: bold;
     cursor: pointer;
     transition: all 0.3s ease;
-  }
+}
   
-  button:hover {
+button:hover {
     background-color: #b8ab5e;
     color: white;
     border-color: #f4e9ae;
     transform: translateY(-2px);
-  }
+}
 
 .todos-container {
     display: flex;
@@ -60,11 +42,21 @@ button {
     border-radius: 10px;
     width: calc(33% - 10px);
     box-sizing: border-box;
-}
-.arraycard.done {
-    background-color: #78cb99 !important;
+    /* animation styles for a checked todo, switching to the end of the list when its checked */
+    transition-property: opacity, transform;
+    transition-duration: 1500ms;
+
+    @starting-style {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+
 }
 
+.arraycard.done {
+    background-color: #78cb99 !important;
+
+}
 
 .arraycard h2 {
     margin: 0;
@@ -84,7 +76,7 @@ button {
 }
 
 .arraycard .button {
-    background-color: #f8e7a2; 
+    background-color: #f8e7a2;
     border: none;
     padding: 10px 15px;
     border-radius: 5px;
@@ -98,7 +90,37 @@ button {
     background-color: #f5d98e;
 }
 
+/* Modern Card Style */
+.no-todos {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
 
-  
-  
-  
+.no-todos:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.no-todos h5 {
+    margin: 0;
+    font-size: 1.4rem;
+    color: #333;
+    font-weight: 600;
+}
+
+.container-fluid-navbar {
+    display: flex;
+    justify-items: flex-start;
+}
+
+.dropdown-item.active {
+    font-weight: bold;
+    background-color: #e9ecef;
+
+}
