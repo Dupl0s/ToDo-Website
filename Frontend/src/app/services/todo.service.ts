@@ -46,6 +46,10 @@ export class TodoService {
     JSON.parse(localStorage.getItem('todos') || '[]')
   );
 
+  connectBackend() {
+    return this.http.get<{ message: string }>('/api/backend');
+  }
+
   loadTodos() {
     const savedTodos = localStorage.getItem('todos');
     if (savedTodos) {
@@ -125,4 +129,7 @@ export class TodoService {
     this.dustbin.set(updatedDustbin);
     localStorage.setItem('dustbin', JSON.stringify(updatedDustbin));
   }
+
+
+
 }

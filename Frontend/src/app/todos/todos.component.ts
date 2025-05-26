@@ -42,6 +42,7 @@ export class TodosComponent {
 
   ngOnInit() {
     this.arrayTodos = this.todoService.loadTodos();
+    this.todoService.connectBackend().subscribe((data) => console.log(data.message));
   }
 
   sortedTodos() {
@@ -81,5 +82,6 @@ export class TodosComponent {
     this.todoService.deleteTodo(todoID);
     this.arrayTodos = this.todoService.loadTodos();
   }
+
 
 }

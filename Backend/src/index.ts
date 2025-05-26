@@ -1,10 +1,14 @@
-import express from "express";
+import express from 'express';
+
+/* Im Terminal im Verzeichnis /Backend mit npm start Server auf Port 3000 starten, dann im /Frontend ng serve --proxy-config proxy.conf.json*/
 
 const app = express();
 
-app.get("/", (_, res) => { 
-  res.send("Hello express");
+app.get("/api/backend", (_req, res) => { 
+  res.json({message: "Backend Server is running"});
 });
 
-app.listen(80);
-console.log("Server started at http://localhost:80");
+const Port = 3000
+
+app.listen(Port);
+console.log("Server started at http://localhost:" + Port);
