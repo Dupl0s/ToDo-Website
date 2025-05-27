@@ -9,7 +9,9 @@
       >
         ToDo Hinzufügen
       </button>
+      <button (click)="devOpenReminder()">devTest</button>
       <app-popup (closed)="onPopupClosed()"></app-popup>
+      <app-reminder (closed)="onReminderClosed()"></app-reminder>
       <div class="dropdown">
         <button
           class="btn btn-secondary dropdown-toggle"

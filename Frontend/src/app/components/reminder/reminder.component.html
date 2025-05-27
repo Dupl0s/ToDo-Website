@@ -1,0 +1,13 @@
+@if (isOpen()) {
+<div class="reminder">
+  <div class="reminder-popup">
+    <div class="reminder-info">
+      <h2>{{ title() }}</h2>
+      <p>{{ message() }}</p>
+      <p>Gelange hier zu den Todos:</p>
+      <p>Johanna Filter -> Filter wird direkt zu Zeitraum der reminder Todos gesetzt</p>
+    </div>
+    <button class="btn btn-primary" (click)="close()">OK</button>
+  </div>
+</div>
+}

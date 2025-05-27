@@ -7,16 +7,18 @@ import { PopupComponent } from '../components/popup/popup.component';
 import { CommonModule } from '@angular/common';
 import todoData from '../../assets/todos.json';
 import { RouterModule } from '@angular/router';
+import { ReminderComponent } from '../components/reminder/reminder.component';
 
 @Component({
   selector: 'app-todos',
   standalone: true,
-  imports: [PopupComponent, CommonModule, HighlightDoneTodosDirective, RouterModule],
+  imports: [PopupComponent, ReminderComponent, CommonModule, HighlightDoneTodosDirective, RouterModule],
   templateUrl: './todos.component.html',
   styleUrl: './todos.component.css',
 })
 export class TodosComponent {
   @ViewChild(PopupComponent) popup!: PopupComponent;
+  @ViewChild(ReminderComponent) reminder!: ReminderComponent;
 
   todos = signal<Array<Todo>>(
     JSON.parse(localStorage.getItem('todos') || '[]')
@@ -29,6 +31,10 @@ export class TodosComponent {
 
   openPopup(title: string, text: string) {
     this.popup.open(title, text);
+  }
+
+  devOpenReminder(){
+    this.reminder.open('Test Reminder', 'This is a test reminder message.');
   }
 
   openEdit(title: string, id: Todo) {
@@ -83,5 +89,7 @@ export class TodosComponent {
     this.arrayTodos = this.todoService.loadTodos();
   }
 
+  onReminderClosed(): void {
 
+    console.log('Reminder wurde geschlossen');}
 }
