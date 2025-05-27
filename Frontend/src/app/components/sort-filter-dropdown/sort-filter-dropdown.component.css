@@ -1,0 +1,33 @@
+
+button {
+    background-color: #f4e9ae;
+    color: black;
+    width: auto;
+    border-color: #b8ab5e;
+    border: 2px solid #b8ab5e;
+    border-radius: 8px;
+    padding: 10px 20px;
+    margin: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+  
+button:hover {
+    background-color: #b8ab5e;
+    color: white;
+    border-color: #f4e9ae;
+    transform: translateY(-2px);
+}
+
+.container-fluid-navbar {
+    display: flex;
+    justify-items: flex-start;
+}
+
+.dropdown-item.active {
+    font-weight: bold;
+    background-color: #e9ecef;
+
+}

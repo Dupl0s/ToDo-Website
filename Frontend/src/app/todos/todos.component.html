@@ -2,76 +2,41 @@
   <nav class="navbar bg-body-tertiary">
     <div class="container-fluid-navbar d-flex align-items-center gap-3">
       <h1 class="navbar-brand mb-0 h1">Projekt</h1>
-      <button
-        (click)="
+      <button (click)="
           openPopup('ToDo hinzufügen', 'Fügen Sie Ihr geplantes ToDo hinzu')
-        "
-      >
+        ">
         ToDo Hinzufügen
       </button>
       <app-popup (closed)="onPopupClosed()"></app-popup>
-      <div class="dropdown">
-        <button
-          class="btn btn-secondary dropdown-toggle"
-          type="button"
-          data-bs-toggle="dropdown"
-          aria-expanded="false"
-        >
-          Sortieren nach
-          <span *ngIf="actualSort">{{ actualSort }}</span>
-        </button>
-        <ul class="dropdown-menu">
-          <li>
-            <a
-              (click)="sortDeadline()"
-              class="dropdown-item"
-              [class.active]="actualSort === 'Deadline'"
-              >Deadline</a
-            >
-          </li>
-          <li>
-            <a
-              (click)="sortSchwierig()"
-              class="dropdown-item"
-              [class.active]="actualSort === 'Schwierigkeit'"
-              >Schwierigkeit</a
-            >
-          </li>
-          <li>
-            <a
-              (click)="sortPrio()"
-              class="dropdown-item"
-              [class.active]="actualSort === 'Priorität'"
-              >Priorität</a
-            >
-          </li>
-        </ul>
-      </div>
+      <app-sort-filter-dropdown [title]="'Sortieren nach'" [options]="[
+      { label: 'Deadline', value: 'deadline'},
+      {label: 'Priorität', value: 'importance'},
+      {label: 'Schwierigkeit', value: 'niveau'}
+      ]" [actualSort]="actualSort" (select)="onSort($event)"></app-sort-filter-dropdown>
+      <app-sort-filter-dropdown [title]="'Filtern nach'" [options]="[
+      { label: 'Undone', value: 'false'},
+      {label: 'Done', value: 'true'},
+      {label: 'Anstehende Todos', value: 'deadline'},
+      {label: 'Alle Todos', value: 'all'	}
+      ]" [actualSort]="actualFilter" (select)="onFilter($event)"></app-sort-filter-dropdown>
       <button routerLink="/dustbin" class="btn btn-warning">Papierkorb</button>
     </div>
   </nav>
 
   <div class="todos-container">
-        <!-- Änderungen von Johanna: for loop track item.id und nicht arrayTodos.length, 
- weil sonst Fehlermeldung "duplicated keys", weil die Länge natürlich immer gleich ist 
- sortedTodos für dynamische Seitensortierung
- -->
+    <!-- Änderungen von Johanna: for loop track item.id und nicht arrayTodos.length, 
+    weil sonst Fehlermeldung "duplicated keys", weil die Länge natürlich immer gleich ist 
+    sortedTodos für dynamische Seitensortierung
+    -->
     @for (item of sortedTodos(); track item.id) {
-    <div
-      [appHighlightDoneTodos]="item.completed"
-      class="arraycard"
-      [ngClass]="{ done: item.completed }"
-    >
+    <div [appHighlightDoneTodos]="item.completed" class="arraycard"
+      [ngClass]="{ done: item.completed }">
       <h4 class="card-title">{{ item.title }}</h4>
       <p class="card-text flex-grow-1">Deadline: {{ item.deadline }}</p>
       <p class="card-text flex-grow-1">Schwierigkeit: {{ item.niveau }}</p>
       <p class="card-text flex-grow-1">Priorität: {{ item.importance }}</p>
       <div class="btn-toolbar" role="toolbar">
-        <button
-          class="btn btn-primary"
-          (click)="toggleCompleted(item)"
-          type="button"
-        >
+        <button class="btn btn-primary" (click)="toggleCompleted(item)" type="button">
           <img src="assets/check_circle.svg" alt="Done" />
         </button>
         <button (click)="openEdit('Todo editieren: ' + item.title, item)">
@@ -101,10 +66,7 @@
             <span class="placeholder col-6"></span>
             <span class="placeholder col-8"></span>
           </p>
-          <a
-            class="btn btn-primary disabled placeholder col-6"
-            aria-disabled="true"
-          ></a>
+          <a class="btn btn-primary disabled placeholder col-6" aria-disabled="true"></a>
         </div>
       </div>
       }

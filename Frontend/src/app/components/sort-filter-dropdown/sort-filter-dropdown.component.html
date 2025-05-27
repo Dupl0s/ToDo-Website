@@ -1,0 +1,14 @@
+<div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        {{ title}}
+        <span *ngIf="actualSort">{{ actualSort }}</span>
+    </button>
+    <ul class="dropdown-menu">
+        <li *ngFor="let options of options">
+            <a (click)="onSelect(options.value, options.label)" 
+            class="dropdown-item" 
+            [class.active]="actualSort === options.label">
+            {{options.label}}</a>
+        </li>
+    </ul>
+</div>

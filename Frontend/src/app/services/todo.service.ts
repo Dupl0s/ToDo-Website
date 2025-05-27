@@ -46,6 +46,7 @@ export class TodoService {
     JSON.parse(localStorage.getItem('todos') || '[]')
   );
 
+
   connectBackend() {
     return this.http.get<{ message: string }>('/api/backend');
   }
@@ -130,6 +131,39 @@ export class TodoService {
     localStorage.setItem('dustbin', JSON.stringify(updatedDustbin));
   }
 
+  sortBy<K extends keyof Todo>(key: K) {
 
+    this.localTodos.sort((a, b) => {
+      // Wenn das Feld ein Datum ist, parse es als Zahl
+      if (key === 'deadline') {
+        return Date.parse(a[key] as string) - Date.parse(b[key] as string);
+      }
+      // Für Zahlenfelder (z.B. niveau, importance)
+      if (typeof a[key] === 'number' && typeof b[key] === 'number') {
+        return (a[key] as number) - (b[key] as number);
+      }
+      // Für Strings (alphabetisch)
+      if (typeof a[key] === 'string' && typeof b[key] === 'string') {
+        return (a[key] as string).localeCompare(b[key] as string);
+      }
+      return 0;
+    });
+    localStorage.setItem('todos', JSON.stringify(this.localTodos));
+    return this.localTodos;
+  }
 
+  filterBy(filter: string) {
+    if (filter === 'true') {
+      this.localTodos = this.loadTodos().filter(todo => todo.completed === true);
+    } else if (filter === 'false') {
+      this.localTodos = this.loadTodos().filter(todo => todo.completed === false);
+    } else if (filter === 'all') {
+      this.localTodos = this.loadTodos();
+    } else if (filter === 'deadline') {
+      // Beispiel: Nur Todos mit Deadline in der Zukunft
+      const now = new Date();
+      this.localTodos = this.loadTodos().filter(todo => new Date(todo.deadline) > now);
+    }
+    return this.localTodos;
+  }
 }
