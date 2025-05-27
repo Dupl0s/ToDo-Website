@@ -5,21 +5,20 @@ import { HighlightDoneTodosDirective } from '../directives/highlight-done-todos.
 import { PopupComponent } from '../components/popup/popup.component';
 import { CommonModule } from '@angular/common';
 import todoData from '../../assets/todos.json';
-import { RouterModule, ActivatedRoute } from '@angular/router';
-import { SortFilterDropdownComponent } from '../components/sort-filter-dropdown/sort-filter-dropdown.component';
-import { CategoriesService } from '../services/categories.service';
-import { Bereich } from '../model/categories.type';
+import { RouterModule } from '@angular/router';
+import { ReminderComponent } from '../components/reminder/reminder.component';
 
 
 @Component({
   selector: 'app-todos',
   standalone: true,
-  imports: [PopupComponent, SortFilterDropdownComponent, CommonModule, HighlightDoneTodosDirective, RouterModule],
+  imports: [PopupComponent, ReminderComponent, CommonModule, HighlightDoneTodosDirective, RouterModule],
   templateUrl: './todos.component.html',
   styleUrl: './todos.component.css',
 })
 export class TodosComponent {
   @ViewChild(PopupComponent) popup!: PopupComponent;
+  @ViewChild(ReminderComponent) reminder!: ReminderComponent;
 
   todoService = inject(TodoService);
   arrayTodos: Todo[] = [];
@@ -35,6 +34,10 @@ export class TodosComponent {
 
   openPopup(title: string, text: string) {
     this.popup.open(title, text);
+  }
+
+  devOpenReminder(){
+    this.reminder.open('Test Reminder', 'This is a test reminder message.');
   }
 
   openEdit(title: string, id: Todo) {
@@ -98,8 +101,9 @@ export class TodosComponent {
     this.applyFilterandSort();
   }
 
-  onFilter(filter: string | { from: string, to: string }) {
+  onReminderClosed(): void {
 
+    console.log('Reminder wurde geschlossen');}
     if (typeof filter === 'string' && filter === '') {
       this.actualFilter = '';
       this.dateFrom = '';
