@@ -2,7 +2,7 @@
   <nav class="navbar bg-body-tertiary">
     <div class="container-fluid-navbar d-flex align-items-center gap-3">
       <h1 class="navbar-brand mb-0 h1">Projekt</h1>
-      <button (click)="
+      <button class="hinzu" (click)="
           openPopup('ToDo hinzufügen', 'Fügen Sie Ihr geplantes ToDo hinzu')
         ">
         ToDo Hinzufügen
@@ -11,30 +11,30 @@
       <app-sort-filter-dropdown [title]="'Sortieren nach'" [options]="[
       { label: 'Deadline', value: 'deadline'},
       {label: 'Priorität', value: 'importance'},
-      {label: 'Schwierigkeit', value: 'niveau'}
-      ]" [actualSort]="actualSort" (select)="onSort($event)"></app-sort-filter-dropdown>
+      {label: 'Schwierigkeit', value: 'niveau'},
+      {label: 'Alphabetisch', value: 'title'},
+      ]" [actualSort]="actualSort" (select)="onSort($event)" 
+      [actualAscending]="ascending" (ascend)="getBool($event)"
+      [isSortDropdown]="true">
+    </app-sort-filter-dropdown>
       <app-sort-filter-dropdown [title]="'Filtern nach'" [options]="[
-      { label: 'Undone', value: 'false'},
-      {label: 'Done', value: 'true'},
-      {label: 'Anstehende Todos', value: 'deadline'},
-      {label: 'Alle Todos', value: 'all'	}
-      ]" [actualSort]="actualFilter" (select)="onFilter($event)"></app-sort-filter-dropdown>
-      <button routerLink="/dustbin" class="btn btn-warning">Papierkorb</button>
+      { label: 'Unerledigt', value: 'false'},
+      {label: 'Erledigt', value: 'true'},
+      {label: 'Zeitraum', value: 'date-range'},
+      ]" [actualSort]="actualFilter" (select)="onFilter($event)" 
+      [isSortDropdown]="false">
+      </app-sort-filter-dropdown>
+      <button routerLink="/dustbin" class="dustbin">Papierkorb</button>
     </div>
   </nav>
 
   <div class="todos-container">
-    <!-- Änderungen von Johanna: for loop track item.id und nicht arrayTodos.length, 
-    weil sonst Fehlermeldung "duplicated keys", weil die Länge natürlich immer gleich ist 
-    sortedTodos für dynamische Seitensortierung
-    -->
-    @for (item of sortedTodos(); track item.id) {
-    <div [appHighlightDoneTodos]="item.completed" class="arraycard"
-      [ngClass]="{ done: item.completed }">
+    @for (item of applyFilterandSort(); track item.id) {
+    <div [appHighlightDoneTodos]="item.completed" class="arraycard" [ngClass]="{ done: item.completed }">
       <h4 class="card-title">{{ item.title }}</h4>
       <p class="card-text flex-grow-1">Deadline: {{ item.deadline }}</p>
-      <p class="card-text flex-grow-1">Schwierigkeit: {{ item.niveau }}</p>
       <p class="card-text flex-grow-1">Priorität: {{ item.importance }}</p>
+      <p class="card-text flex-grow-1">Schwierigkeit: {{ item.niveau }}</p>
       <div class="btn-toolbar" role="toolbar">
         <button class="btn btn-primary" (click)="toggleCompleted(item)" type="button">
           <img src="assets/check_circle.svg" alt="Done" />
@@ -52,7 +52,7 @@
       <div class="no-todos">
         <h5>Keine Todos angelegt!</h5>
       </div>
-      @if(!sortedTodos.length){
+      @if(!applyFilterandSort.length){
       <div class="card" aria-hidden="true">
         <img src="..." class="card-img-top" alt="..." />
         <div class="card-body">

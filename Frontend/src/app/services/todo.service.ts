@@ -131,39 +131,55 @@ export class TodoService {
     localStorage.setItem('dustbin', JSON.stringify(updatedDustbin));
   }
 
-  sortBy<K extends keyof Todo>(key: K) {
-
-    this.localTodos.sort((a, b) => {
+  sortBy<K extends keyof Todo>(key: K, ascending: boolean, todos?: Todo[]) {
+    const allTodos = (todos ? todos : this.loadTodos().slice());
+    allTodos.sort((a, b) => {
+      const aValue = a[key];
+      const bValue = b[key];
       // Wenn das Feld ein Datum ist, parse es als Zahl
       if (key === 'deadline') {
-        return Date.parse(a[key] as string) - Date.parse(b[key] as string);
+        const aDate = Date.parse(aValue as string);
+        const bDate = Date.parse(bValue as string);
+        if (isNaN(aDate) && isNaN(bDate))
+          return 0;
+        if (isNaN(aDate))
+          return 1;
+        if (isNaN(bDate))
+          return -1;
+        return ascending ? aDate - bDate : bDate - aDate;
       }
-      // Für Zahlenfelder (z.B. niveau, importance)
-      if (typeof a[key] === 'number' && typeof b[key] === 'number') {
-        return (a[key] as number) - (b[key] as number);
+
+      /* für default completed: */
+      if (key === 'completed') {
+        return ascending ? Number(aValue) - Number(bValue) : Number(bValue) - Number(aValue);
       }
-      // Für Strings (alphabetisch)
-      if (typeof a[key] === 'string' && typeof b[key] === 'string') {
-        return (a[key] as string).localeCompare(b[key] as string);
+      /* für alphabetisch Klein Und Großschreibung nicht beachten */
+      if (key === 'title' && typeof aValue === 'string' && typeof bValue === 'string') {
+        return ascending ? aValue.toLowerCase().localeCompare(bValue.toLowerCase()) : bValue.toLowerCase().localeCompare(aValue.toLowerCase());
       }
+      if (aValue > bValue) return ascending ? -1 : 1;
+      if (aValue < bValue) return ascending ? 1 : -1;
+
       return 0;
     });
-    localStorage.setItem('todos', JSON.stringify(this.localTodos));
-    return this.localTodos;
+/*     localStorage.setItem('todos', JSON.stringify(this.localTodos));
+ */    return allTodos;
   }
 
-  filterBy(filter: string) {
+  filterBy(filter: string, todos?: Todo[]) {
+    const allTodos = todos ? todos : this.loadTodos();
     if (filter === 'true') {
-      this.localTodos = this.loadTodos().filter(todo => todo.completed === true);
+      return allTodos.filter(todo => todo.completed === true);
     } else if (filter === 'false') {
-      this.localTodos = this.loadTodos().filter(todo => todo.completed === false);
-    } else if (filter === 'all') {
-      this.localTodos = this.loadTodos();
-    } else if (filter === 'deadline') {
-      // Beispiel: Nur Todos mit Deadline in der Zukunft
-      const now = new Date();
-      this.localTodos = this.loadTodos().filter(todo => new Date(todo.deadline) > now);
+      return allTodos.filter(todo => todo.completed === false);
     }
     return this.localTodos;
+  }
+  filterByDateRange(from: string, to: string, todos?: Todo[]) {
+    const allTodos = todos ? todos : this.loadTodos();
+    return allTodos.filter(todo => {
+      const deadline = new Date(todo.deadline);
+      return deadline >= new Date(from) && deadline <= new Date(to);
+    })
   }
 }
