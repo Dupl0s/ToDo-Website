@@ -6,7 +6,7 @@ import { Popover } from 'bootstrap';
   standalone: true
 })
 export class HighlightDoneTodosDirective implements OnChanges {
-  @Input('appHighlightDoneTodos') isCompleted: boolean = false; 
+  @Input('appHighlightDoneTodos') isCompleted: boolean = false;
   constructor(private el: ElementRef) {}
   private popover!: Popover;
 

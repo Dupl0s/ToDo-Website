@@ -46,6 +46,7 @@ export class TodoService {
     JSON.parse(localStorage.getItem('todos') || '[]')
   );
 
+
   connectBackend() {
     return this.http.get<{ message: string }>('/api/backend');
   }
@@ -130,6 +131,55 @@ export class TodoService {
     localStorage.setItem('dustbin', JSON.stringify(updatedDustbin));
   }
 
+  sortBy<K extends keyof Todo>(key: K, ascending: boolean, todos?: Todo[]) {
+    const allTodos = (todos ? todos : this.loadTodos().slice());
+    allTodos.sort((a, b) => {
+      const aValue = a[key];
+      const bValue = b[key];
+      // Wenn das Feld ein Datum ist, parse es als Zahl
+      if (key === 'deadline') {
+        const aDate = Date.parse(aValue as string);
+        const bDate = Date.parse(bValue as string);
+        if (isNaN(aDate) && isNaN(bDate))
+          return 0;
+        if (isNaN(aDate))
+          return 1;
+        if (isNaN(bDate))
+          return -1;
+        return ascending ? aDate - bDate : bDate - aDate;
+      }
 
+      /* für default completed: */
+      if (key === 'completed') {
+        return ascending ? Number(aValue) - Number(bValue) : Number(bValue) - Number(aValue);
+      }
+      /* für alphabetisch Klein Und Großschreibung nicht beachten */
+      if (key === 'title' && typeof aValue === 'string' && typeof bValue === 'string') {
+        return ascending ? aValue.toLowerCase().localeCompare(bValue.toLowerCase()) : bValue.toLowerCase().localeCompare(aValue.toLowerCase());
+      }
+      if (aValue > bValue) return ascending ? -1 : 1;
+      if (aValue < bValue) return ascending ? 1 : -1;
 
+      return 0;
+    });
+/*     localStorage.setItem('todos', JSON.stringify(this.localTodos));
+ */    return allTodos;
+  }
+
+  filterBy(filter: string, todos?: Todo[]) {
+    const allTodos = todos ? todos : this.loadTodos();
+    if (filter === 'true') {
+      return allTodos.filter(todo => todo.completed === true);
+    } else if (filter === 'false') {
+      return allTodos.filter(todo => todo.completed === false);
+    }
+    return this.localTodos;
+  }
+  filterByDateRange(from: string, to: string, todos?: Todo[]) {
+    const allTodos = todos ? todos : this.loadTodos();
+    return allTodos.filter(todo => {
+      const deadline = new Date(todo.deadline);
+      return deadline >= new Date(from) && deadline <= new Date(to);
+    })
+  }
 }

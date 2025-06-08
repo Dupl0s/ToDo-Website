@@ -1,0 +1,36 @@
+<div class="dropdown-tag-wrapper">
+
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            {{ title}}
+        </button>
+        <!-- Sortier/Filterfunktionen in todos.component.html füllen: 
+        class-active löschen? -->
+        <ul class="dropdown-menu">
+            <li *ngFor="let option of options">
+                <a (click)="onSelect(option.value)" class="dropdown-item" [class.active]="actualSort === option.value">
+                    {{option.label}}
+                </a>
+            </li>
+        </ul>
+
+    </div>
+    <!-- aktuelle Sortier/Filterlabel anzeigen: -->
+    <div class="tag">
+        <span *ngIf="actualSort && actualSort != 'completed'" class="selected-tag">
+            {{ actualLabel }}
+            <button *ngIf="isSortDropdown" class="btn-tag" type="button" (click)="toggleAscending()">
+                <span *ngIf="actualAscending">⬆</span>
+                <span *ngIf="!actualAscending">⬇</span>
+            </button>
+            <button type="button" class="btn-close ms-2" aria-label="Close" (click)="onSelect('')"></button>
+
+        </span>
+        <!-- Zeitraum auswählen -->
+        <div *ngIf="showDateRange">
+            <label>Von: <input type="date" [(ngModel)]="dateFrom"></label>
+            <label>Bis: <input type="date" [(ngModel)]="dateTo"></label>
+            <button class="btn btn-secondary" type="button" (click)="applyDateRange()">✔️</button>
+        </div>
+    </div>
+</div>

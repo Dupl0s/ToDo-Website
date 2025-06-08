@@ -124,3 +124,30 @@ button:hover {
     background-color: #e9ecef;
 
 }
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+.container-fluid-navbar {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+    position: relative;
+}
+.hinzu {
+    order: 1;
+}
+
+app-sort-filter-dropdown {
+    order: 2;
+}
+
+/* Papierkorb-Button ganz rechts */
+.dustbin {
+    margin-left: auto;
+    order: 99;
+}

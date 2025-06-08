@@ -12,7 +12,7 @@ npm start (jedes Mal)
 
 in neuem Terminal:
 cd Frontend
-ng serve -proxy-config proxy.conf.json
+ng serve --proxy-config proxy.conf.json
 
 Beide Server laufen!
 

@@ -1,0 +1,90 @@
+button {
+    background-color: #f4e9ae;
+    color: black;
+    width: auto;
+    border-color: #b8ab5e;
+    border: 2px solid #b8ab5e;
+    border-radius: 8px;
+    padding: 10px 20px;
+    margin: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.selected-tag {
+    position: relative;
+    display: inline-block;
+    align-items: center;
+    justify-content: center;
+    min-width: 110px;
+    min-height: 36px;
+    padding: 8px 32px 8px 12px;
+    border: 1.5px solid #434343;
+    border-radius: 16px;
+    background: #fff;
+    font-size: 1em;
+    font-weight: 500;
+    margin-right: 8px;
+}
+
+.selected-tag .btn-close {
+    background-color: white !important;
+
+    position: absolute;
+    top: 5px;
+    right: -1px;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 6px;
+    margin: 0 8px 0 0;
+    font-size: 1.1em;
+    opacity: 1;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.btn-tag:hover,
+.btn-close:hover {
+    border-color: #434343 !important;
+    transform: none !important;
+    background-color: #434343 !important;
+}
+
+button:hover {
+    background-color: #b8ab5e;
+    color: white;
+    border-color: #f4e9ae;
+    transform: translateY(-2px);
+}
+
+.dropdown-tag-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    /* Abstand zwischen Dropdown und Tag */
+}
+
+.dropdown-item.active {
+    font-weight: bold;
+    background-color: #e9ecef;
+
+}
+
+.btn-tag {
+    background: none !important;
+    border: none !important;
+    padding: 0px 8px;
+    margin: 2px 6px;
+    box-shadow: none !important;
+    color: #333;
+    font-size: 1.2em;
+    line-height: 1;
+    cursor: pointer;
+    transition: none;
+}
+
+.btn-tag span {
+    padding: -2px 2px;
+}
