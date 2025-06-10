@@ -26,9 +26,11 @@ export class PopupComponent {
   isOpen = signal(false);
   title = signal('');
   message = signal('');
+  time = signal('');
   todos = signal<Array<Todo>>(
     JSON.parse(localStorage.getItem('todos') || '[]')
   );
+  mode = signal(''); //the mode of the popup, e.g. 'reminder', 'edit', etc.
 
   title2 = signal('');
   niveau = signal(1);
@@ -39,6 +41,7 @@ export class PopupComponent {
   @Output() taskCreated = new EventEmitter<Omit<Todo, 'bereichsId'>>();
   @Output() bereichEdited = new EventEmitter<{id:number; name:string}>();
 
+  open(title: string, message: string, mode: string) {
   openBereichEdit(title: string, bereich:Bereich){
     this.title.set(title);
     this.isOpen.set(true);
@@ -54,11 +57,7 @@ export class PopupComponent {
     this.title.set(title);
     this.message.set(message);
     this.isOpen.set(true);
-    this.editMode = false;
-    this.title2.set('');
-    this.deadline.set('');
-    this.importance.set(1);
-    this.niveau.set(1);
+    this.mode.set(mode);
   }
 
   openEdit(title: string, item: Todo) {
@@ -105,5 +104,28 @@ export class PopupComponent {
       });
     }
     this.close();
+  }
+
+  ngOnInit() {
+    this.checkForReminders();
+  }
+
+  checkForReminders() {
+    const todos: Todo[] = JSON.parse(localStorage.getItem('todos') || '[]');
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const reminders = todos.filter((todo) => {
+      if (!todo.deadline) return false;
+      const deadline = new Date(todo.deadline); 
+      deadline.setHours(23, 59, 59, 999);
+      return !todo.completed && deadline <= tomorrow;
+    });
+    if (reminders.length > 0) {
+      this.open(
+        'Erinnerung',
+        `Du hast ${reminders.length} unerledigte ToDos, die fällig sind!`,
+        'reminder'
+      );
+    }
   }
 }
