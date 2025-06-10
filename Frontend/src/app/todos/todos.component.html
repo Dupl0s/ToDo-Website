@@ -9,9 +9,6 @@
       >
         ToDo Hinzufügen
       </button>
-      <button (click)="devOpenReminder()">devTest</button>
-      <app-popup (closed)="onPopupClosed()"></app-popup>
-      <app-reminder (closed)="onReminderClosed()"></app-reminder>
       <div class="dropdown">
         <button
           class="btn btn-secondary dropdown-toggle"
@@ -51,6 +48,8 @@
       </div>
       <button routerLink="/dustbin" class="btn btn-warning">Papierkorb</button>
     </div>
+          <app-popup (closed)="onPopupClosed()"></app-popup>
+
   </nav>
 
   <div class="todos-container">
