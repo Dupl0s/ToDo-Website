@@ -26,9 +26,9 @@ export class AppComponent {
             this.urlName = 'To-Do`s';
             break;
          //Beispiel
-         // case '[url]':
-         // this.urlName = '[shown text]';
-         // break;
+          case 'dustbin':
+          this.urlName = 'Dustbin';
+          break;
           default:
             this.urlName = 'Home';
             break;
