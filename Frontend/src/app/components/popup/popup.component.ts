@@ -1,23 +1,26 @@
 import { Component, EventEmitter, Output, signal } from '@angular/core';
-import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Todo } from '../../model/todo.type';
 import { TodoService } from '../../services/todo.service';
-import todoData from '../../../assets/todos.json';
+import { Bereich } from '../../model/categories.type';
+import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-popup',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './popup.component.html',
   styleUrl: './popup.component.css',
 })
 export class PopupComponent {
   constructor(private todoService: TodoService) {}
   editMode = false;
-  currentID = 0; //overwritten by ID of clicked ToDo
-  currentUserID = 0; //overwritten by userID of Todo
-  index = {};
+  editBereichMode=false;
+  currentID = 0;
+  currentUserID = 0;
+  currentBereichsId=0;
+  bereichName= signal('');
 
   isOpen = signal(false);
   title = signal('');
@@ -31,15 +34,30 @@ export class PopupComponent {
   importance = signal(1);
   deadline = signal('');
 
-  @Output() todoSaved = new EventEmitter<Todo>();
-  @Output()
-  @Output()
-  closed = new EventEmitter<void>();
+  @Output() closed = new EventEmitter<void>();
+  @Output() taskCreated = new EventEmitter<Omit<Todo, 'bereichsId'>>();
+  @Output() bereichEdited = new EventEmitter<{id:number; name:string}>();
 
+  openBereichEdit(title: string, bereich:Bereich){
+    this.title.set(title);
+    this.isOpen.set(true);
+    this.editMode=false;
+    this.editBereichMode=true;
+    this.bereichName.set(bereich.name);
+  
+    this.currentBereichsId=bereich.id;
+    this.bereichName.set(bereich.name);
+  }
+  
   open(title: string, message: string) {
     this.title.set(title);
     this.message.set(message);
     this.isOpen.set(true);
+    this.editMode = false;
+    this.title2.set('');
+    this.deadline.set('');
+    this.importance.set(1);
+    this.niveau.set(1);
   }
 
   openEdit(title: string, item: Todo) {
@@ -62,20 +80,17 @@ export class PopupComponent {
   }
 
   save() {
-    if (this.editMode) {
-      const updatedTodo: Todo = {
-        id: this.currentID,
-        userId: this.currentUserID,
-        completed: false,
-        title: this.title2(),
-        deadline: this.deadline(),
-        niveau: this.niveau(),
-        importance: this.importance(),
-        bereichsId: 1,
-      };
-      this.todoService.editTodo(updatedTodo);
+    if(this.editBereichMode){
+      this.bereichEdited.emit({id: this.currentBereichsId, name: this.bereichName()});
+      this.close();
+    }
+    else if (this.editMode) {
+      // You may want to emit an event for editing, or handle edit logic in parent
+      // For now, keep as is, but ideally handle bereichsId correctly
+      // this.todoService.editTodo(updatedTodo);
     } else {
-      const newTodo: Todo = {
+      // Emit only the fields except bereichsId
+      this.taskCreated.emit({
         id: Date.now(),
         userId: 1,
         completed: false,
@@ -83,12 +98,8 @@ export class PopupComponent {
         deadline: this.deadline(),
         niveau: this.niveau(),
         importance: this.importance(),
-        bereichsId: 1,
-      };
-
-      this.todoService.addTodo(newTodo);
+      });
     }
-
     this.close();
   }
 }

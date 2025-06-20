@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { TodoService } from '../services/todo.service';
 import { Todo } from '../model/todo.type';
 import {RouterModule} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-dustbin',
@@ -14,8 +15,17 @@ import {RouterModule} from '@angular/router';
 export class DustbinComponent {
   todoService = inject(TodoService);
 
+  bereichsId: number | null = null;
+
+  constructor(private route: ActivatedRoute) {
+  this.route.paramMap.subscribe(params => {
+    this.bereichsId = Number(params.get('id'));
+  });
+}
+
   get dustbinTodos(): Todo[] {
     return this.todoService.dustbin()
+      .filter(todo => todo.bereichsId === this.bereichsId)
       .slice()
       .sort((a, b) => Number(a.completed) - Number(b.completed));
   }

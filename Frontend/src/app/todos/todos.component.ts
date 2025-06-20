@@ -1,4 +1,4 @@
-import { Component, inject, signal, effect, ViewChild } from '@angular/core';
+import { Component, inject, signal, ViewChild } from '@angular/core';
 import { TodoService } from '../services/todo.service';
 import { Todo } from '../model/todo.type';
 import { HighlightDoneTodosDirective } from '../directives/highlight-done-todos.directive';
@@ -18,17 +18,16 @@ import { SortFilterDropdownComponent } from '../components/sort-filter-dropdown/
 export class TodosComponent {
   @ViewChild(PopupComponent) popup!: PopupComponent;
 
-  todos = signal<Array<Todo>>(
-    JSON.parse(localStorage.getItem('todos') || '[]')
-  );
-
   todoService = inject(TodoService);
   arrayTodos: Todo[] = [];
   actualSort: string = '';
+  bereichsId: number | null = null;
   actualFilter: string = '';
   ascending: boolean = false;
   dateFrom: string = '';
   dateTo: string = '';
+
+  constructor(private route: ActivatedRoute) {}
 
   openPopup(title: string, text: string) {
     this.popup.open(title, text);
@@ -49,6 +48,21 @@ export class TodosComponent {
  */    this.applyFilterandSort();
     console.log("ngOninit")
     this.todoService.connectBackend().subscribe((data) => console.log(data.message));
+    //Saving the id of the Bereich in from the url in breichsId
+    this.route.paramMap.subscribe(params => {
+      const id= params.get('id');
+      this.bereichsId = id ? Number(id) : null;
+    });
+  }
+  
+  //Asking the method to createTask to take the Todo without the bereichsId(as it is not manually filled in by the user) and setting the bereichsid ourselves from above.
+  createTask(taskData: Omit<Todo, 'bereichsId'>) {
+    const newTask = {
+      ...taskData,
+      bereichsId: this.bereichsId!
+    };
+    this.todoService.addTodo(newTask as Todo);
+    this.arrayTodos = this.todoService.loadTodos();
   }
 
   toggleCompleted(todo: Todo) {
