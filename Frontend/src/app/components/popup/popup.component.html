@@ -1,9 +1,16 @@
 @if (isOpen()) {
 <div class="popup">
   <div class="popup-content">
+
+<!--Added a flag called editedBereichMode in order to switch between Bereiche and ToDos-->
+  <div *ngIf="editBereichMode">
+    <label>Bereich Name:</label>
+    <input [(ngModel)]="bereichName" class="form-control" />
+  </div>
+
+  <div *ngIf="!editBereichMode">
     <h2>{{ title() }}</h2>
     <p>{{ message() }}</p>
-
     <div class="todoInfos">
       <input class="title" [(ngModel)]="title2" type="text" placeholder="Titel" />
       <br>
@@ -14,7 +21,9 @@
       <br>
       <input class="deadline" [(ngModel)]="deadline" type="date">
     </div>
-    <button (click)="save()" class="add">Hinzufügen</button>
+    </div>
+    
+    <button (click)="save()" class="add">Speichern</button>
     <button (click)="close()" class="close">Schließen</button>
   </div>
 </div>

@@ -1,10 +1,12 @@
 <div class="container-fluid">
   <nav class="navbar bg-body-tertiary">
     <div class="container-fluid-navbar d-flex align-items-center gap-3">
-      <h1 class="navbar-brand mb-0 h1">Projekt</h1>
-      <button class="hinzu" (click)="
+      <!--<h1 class="navbar-brand mb-0 h1">Projekt</h1>-->
+      <button
+        (click)="
           openPopup('ToDo hinzufügen', 'Fügen Sie Ihr geplantes ToDo hinzu')
-        ">
+        " *ngIf="bereichsId"
+      >
         ToDo Hinzufügen
       </button>
       <app-popup (closed)="onPopupClosed()"></app-popup>
@@ -24,7 +26,8 @@
       ]" [actualSort]="actualFilter" (select)="onFilter($event)" 
       [isSortDropdown]="false">
       </app-sort-filter-dropdown>
-      <button routerLink="/dustbin" class="dustbin">Papierkorb</button>
+      <button [routerLink]="['/dustbin', bereichsId]" class="btn btn-warning" *ngIf="bereichsId">
+  Papierkorb</button>
     </div>
   </nav>
 
