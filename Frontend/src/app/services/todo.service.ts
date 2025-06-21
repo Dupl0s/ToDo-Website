@@ -59,7 +59,6 @@ export class TodoService {
       this.localTodos = todoData;
       localStorage.setItem('todos', JSON.stringify(this.localTodos));
     }
-    console.log('loadTodos');
     return this.localTodos;
   }
 

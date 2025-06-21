@@ -5,9 +5,6 @@
     margin: 5%;
     box-sizing: border-box;
 }
-.PasswordReset, .Registration {
-    margin-top: 5%;
-}
 .btn {
     margin-top: 2%;
 }

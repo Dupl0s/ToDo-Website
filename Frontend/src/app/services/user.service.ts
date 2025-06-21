@@ -25,4 +25,8 @@ export class UserService {
     return this.localUser.find(user => user.email === email 
       && user.password === password) || null;
   }
+    resetPassword(email: string): User | null {
+    throw new Error('Method not implemented.');
+  }
+
 }

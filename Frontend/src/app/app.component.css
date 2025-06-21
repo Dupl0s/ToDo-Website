@@ -1,8 +1,42 @@
-header {
+/* header {
   background-color: #ffffff;
   border-bottom: 1px solid #e0e0e0;
   padding: 1rem 2rem;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+} */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  /* verhindert horizontalen Scrollbalken */
+}
+
+body {
+  min-height: 100vh;
+  width: 100vw;
+  overflow-x: hidden;
+}
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 1rem 2rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+main {
+  min-height: calc(100vh - 100px);
+  /* Passe 80px ggf. an die tatsächliche Headerhöhe an */
+  box-sizing: border-box;
+  width: 100%;
+  overflow-x: hidden;
 }
 
 nav {

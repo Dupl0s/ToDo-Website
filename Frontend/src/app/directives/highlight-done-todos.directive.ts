@@ -12,7 +12,6 @@ export class HighlightDoneTodosDirective implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['isCompleted']) {
-      console.log('isCompleted ist jetzt:', this.isCompleted);
       this.updateStyles();
       if(this.isCompleted){
         this.initPopover();
