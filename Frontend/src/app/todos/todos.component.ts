@@ -5,8 +5,11 @@ import { HighlightDoneTodosDirective } from '../directives/highlight-done-todos.
 import { PopupComponent } from '../components/popup/popup.component';
 import { CommonModule } from '@angular/common';
 import todoData from '../../assets/todos.json';
-import { RouterModule } from '@angular/router';
+import { RouterModule, ActivatedRoute } from '@angular/router';
 import { SortFilterDropdownComponent } from '../components/sort-filter-dropdown/sort-filter-dropdown.component';
+import { CategoriesService } from '../services/categories.service';
+import { Bereich } from '../model/categories.type';
+
 
 @Component({
   selector: 'app-todos',
@@ -26,8 +29,9 @@ export class TodosComponent {
   ascending: boolean = false;
   dateFrom: string = '';
   dateTo: string = '';
+  bereichName='';
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute, private categoriesService: CategoriesService) {}
 
   openPopup(title: string, text: string) {
     this.popup.open(title, text);
@@ -45,14 +49,21 @@ export class TodosComponent {
 
   ngOnInit() {
 /*     this.arrayTodos = this.todoService.loadTodos();
- */    this.applyFilterandSort();
-    console.log("ngOninit")
-    this.todoService.connectBackend().subscribe((data) => console.log(data.message));
-    //Saving the id of the Bereich in from the url in breichsId
-    this.route.paramMap.subscribe(params => {
-      const id= params.get('id');
-      this.bereichsId = id ? Number(id) : null;
-    });
+ */    
+  this.todoService.connectBackend().subscribe((data) => console.log(data.message));
+
+  this.route.paramMap.subscribe(params => {
+    const id = params.get('id');
+    this.bereichsId = id ? Number(id) : null;
+
+    if (this.bereichsId !== null) {
+      const bereich = this.categoriesService.getBereiche().find(b => b.id === this.bereichsId);
+      this.bereichName = bereich ? bereich.name : 'Unbekannter Bereich';
+    }
+
+    this.applyFilterandSort();
+    console.log('OnInit');
+  });
   }
   
   //Asking the method to createTask to take the Todo without the bereichsId(as it is not manually filled in by the user) and setting the bereichsid ourselves from above.
@@ -61,6 +72,7 @@ export class TodosComponent {
       ...taskData,
       bereichsId: this.bereichsId!
     };
+    console.log('New task received from popup:', newTask);
     this.todoService.addTodo(newTask as Todo);
     this.arrayTodos = this.todoService.loadTodos();
   }
@@ -106,6 +118,9 @@ export class TodosComponent {
 
   applyFilterandSort() {
     let todos = this.todoService.loadTodos();
+    if (this.bereichsId !==null){
+      todos= todos.filter(todo=> todo.bereichsId===this.bereichsId);
+    }
     if (this.actualFilter === 'true' || this.actualFilter === 'false') {
       todos = this.todoService.filterBy(this.actualFilter, todos);
     }
