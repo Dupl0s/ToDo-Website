@@ -9,7 +9,7 @@
       >
         ToDo Hinzufügen
       </button>
-      <app-popup (closed)="onPopupClosed()"></app-popup>
+      <app-popup (taskCreated)="createTask($event)"  (closed)="onPopupClosed()" #popup></app-popup>
       <app-sort-filter-dropdown [title]="'Sortieren nach'" [options]="[
       { label: 'Deadline', value: 'deadline'},
       {label: 'Priorität', value: 'importance'},
@@ -28,9 +28,12 @@
       </app-sort-filter-dropdown>
       <button [routerLink]="['/dustbin', bereichsId]" class="btn btn-warning" *ngIf="bereichsId">
   Papierkorb</button>
+       <button routerLink="/categories" class="btn btn-secondary">
+  Zurück
+</button>
     </div>
   </nav>
-
+  <h3 class="my-3">{{ bereichName }}</h3>
   <div class="todos-container">
     @for (item of applyFilterandSort(); track item.id) {
     <div [appHighlightDoneTodos]="item.completed" class="arraycard" [ngClass]="{ done: item.completed }">

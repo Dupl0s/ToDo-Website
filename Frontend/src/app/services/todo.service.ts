@@ -3,6 +3,8 @@ import { inject, Injectable, signal } from '@angular/core';
 import { Todo } from '../model/todo.type';
 import { map, Observable } from 'rxjs';
 import todoData from '../../assets/todos.json';
+import { CategoriesService } from '../services/categories.service';
+import { Bereich } from '../model/categories.type';
 
 @Injectable({
   providedIn: 'root',
@@ -182,4 +184,10 @@ export class TodoService {
       return deadline >= new Date(from) && deadline <= new Date(to);
     })
   }
+  deleteTodosByBereichsId(bereichsId: number): void {
+  const filtered = this.localTodos.filter(todo => todo.bereichsId !== bereichsId);
+  this.localTodos = filtered;
+  this.todos.set(filtered);
+  localStorage.setItem('todos', JSON.stringify(filtered));
+}
 }

@@ -80,15 +80,8 @@ export class PopupComponent {
   }
 
   save() {
-    if(this.editBereichMode){
-      this.bereichEdited.emit({id: this.currentBereichsId, name: this.bereichName()});
-      this.close();
-    }
-    else if (this.editMode) {
-      // You may want to emit an event for editing, or handle edit logic in parent
-      // For now, keep as is, but ideally handle bereichsId correctly
-      // this.todoService.editTodo(updatedTodo);
-    } else {
+    console.log('Save clicked');
+     if (!this.editMode && !this.editBereichMode) {
       // Emit only the fields except bereichsId
       this.taskCreated.emit({
         id: Date.now(),
