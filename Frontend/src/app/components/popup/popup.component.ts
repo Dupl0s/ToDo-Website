@@ -4,6 +4,7 @@ import { Todo } from '../../model/todo.type';
 import { TodoService } from '../../services/todo.service';
 import { Bereich } from '../../model/categories.type';
 import { CommonModule } from '@angular/common';
+import { CategoriesService } from '../../services/categories.service';
 
 
 @Component({
@@ -14,7 +15,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './popup.component.css',
 })
 export class PopupComponent {
-  constructor(private todoService: TodoService) {}
+  constructor(private todoService: TodoService, private categoryService: CategoriesService) {}
   editMode = false;
   editBereichMode=false;
   currentID = 0;
@@ -81,7 +82,17 @@ export class PopupComponent {
 
   save() {
     console.log('Save clicked');
-     if (!this.editMode && !this.editBereichMode) {
+    if (this.editBereichMode){
+      const updateName= this.bereichName().trim();
+      if (updateName){
+        this.categoryService.handleUpdate({
+          id: this.currentBereichsId,
+          name: updateName
+        });
+        this.bereichEdited.emit({id: this.currentBereichsId, name: updateName});
+      }
+    }
+     if (!this.editMode) {
       // Emit only the fields except bereichsId
       this.taskCreated.emit({
         id: Date.now(),

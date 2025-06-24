@@ -11,8 +11,8 @@ button {
     background-color: #f4e9ae;
     color: black;
     width: auto;
-    border-color: #b8ab5e;
-    border: 2px solid #b8ab5e;
+    /*border-color: #b8ab5e;*/
+    border: 0px ;
     border-radius: 8px;
     padding: 10px 20px;
     margin: 5px;
@@ -147,7 +147,11 @@ app-sort-filter-dropdown {
 }
 
 /* Papierkorb-Button ganz rechts */
-.dustbin {
+.dustbin-btn {
     margin-left: auto;
-    order: 99;
+    order: 98;
+}
+.back-btn{
+    order:99;
+    padding: 10px 35px;
 }

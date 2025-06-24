@@ -7,7 +7,7 @@
     placeholder="Neuer Bereich"
     class="form-control w-auto"
   />
-  <button (click)="addBereiche()" class="btn2">Hinzufügen</button>
+  <button #addbtn (click)="addBereiche(addbtn)" class="btn2">Hinzufügen</button>
 </div>
 
 <div class="carousel-container">
@@ -24,8 +24,8 @@
               <h5 class="card-title fw-bold">{{ bereich.name }}</h5>
             </div>
             <div class="text-center mt-2">
-            <button class="btn btn-sm btn-outline-dark me-1" (click)="deletedCategories(bereich.id); $event.stopPropagation()">Löschen</button>
-            <button class="btn btn-sm btn-outline-dark" (click)="editCategories(bereich); $event.stopPropagation()">Bearbeiten</button>
+              <button class="btn btn-sm btn-outline-dark" (click)="editCategories(bereich); $event.stopPropagation()">Bearbeiten</button>
+              <button class="btn btn-sm btn-outline-dark me-1" #deleteBtn (click)="deletedCategories(bereich.id, deleteBtn); $event.stopPropagation()">Löschen</button>
           </div>
           </button>
           

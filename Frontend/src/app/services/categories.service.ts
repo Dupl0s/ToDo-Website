@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
-import { Todo } from '../model/todo.type';
 import { map, Observable } from 'rxjs';
 import todoData from '../../assets/todos.json';
 import { Bereich } from '../model/categories.type';
+import { TodoService } from './todo.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,7 @@ export class CategoriesService {
   http = inject(HttpClient);
   private bereiche: Bereich[]=[];
 
- constructor() {
+ constructor(private todoService: TodoService) {
     const saved = localStorage.getItem('bereiche');
     this.bereiche = saved
       ? JSON.parse(saved)
@@ -21,7 +21,7 @@ export class CategoriesService {
           { id: 2, name: 'Projekt' },
           { id: 3, name: 'Arbeit' },
           { id: 4, name: 'Einkaufen' }
-        ];
+        ]; 
   }
 
   getBereiche(): Bereich[]{
@@ -47,5 +47,9 @@ export class CategoriesService {
       this.bereiche[index].name = updatedBereich.name.trim();
       localStorage.setItem('bereiche', JSON.stringify(this.bereiche));
     }
+  }
+  todosInBerech(bereichId:number):boolean{
+    const todos= this.todoService.loadTodos();
+    return todos.some(todo=> todo.bereichsId ===bereichId); // checks if there is at least 1 element
   }
 }

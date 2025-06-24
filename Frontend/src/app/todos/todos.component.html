@@ -26,9 +26,9 @@
       ]" [actualSort]="actualFilter" (select)="onFilter($event)" 
       [isSortDropdown]="false">
       </app-sort-filter-dropdown>
-      <button [routerLink]="['/dustbin', bereichsId]" class="btn btn-warning" *ngIf="bereichsId">
+      <button [routerLink]="['/dustbin', bereichsId]" class="btn btn-warning dustbin-btn" *ngIf="bereichsId">
   Papierkorb</button>
-       <button routerLink="/categories" class="btn btn-secondary">
+       <button routerLink="/categories" class="btn btn-secondary back-btn">
   Zurück
 </button>
     </div>
