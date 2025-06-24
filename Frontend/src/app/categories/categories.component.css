@@ -7,6 +7,13 @@
   align-items: center;
   justify-content: center;
   margin-top: -20px;
+  transition-property: opacity, transform;
+  transition-duration: 1500ms;
+
+  @starting-style {
+      opacity: 0;
+      transform: translateX(-10px);
+  }
 }
 
 .carousel-track {
@@ -17,6 +24,7 @@
   justify-content: center;
   align-items: center;
   gap: 1rem;
+  
 }
 
 .carousel-button {
@@ -40,6 +48,13 @@
   align-items: flex-start;
   height: 70vh;
   padding-top: 10px;
+  transition-property: opacity, transform;
+  transition-duration: 1500ms;
+
+  @starting-style {
+      opacity: 0;
+      transform: translateX(-10px);
+  }
 }
 
 .bereich-item {
@@ -76,8 +91,7 @@ h5{
   background-color: #f4e9ae;
   color: black;
   width: auto;
-  border-color: #b8ab5e;
-  border: 2px solid #b8ab5e;
+  border: 0px solid #b8ab5e;
   border-radius: 8px;
   padding: 10px 20px;
   margin: 5px;
@@ -97,8 +111,7 @@ h5{
   background-color: #f4e9ae;
   color: black;
   width: 50%;
-  border-color: #b8ab5e;
-  border: 2px solid #b8ab5e;
+  border: 0px solid #b8ab5e;
   border-radius: 8px;
   padding: 10px 20px;
   margin: 5px;
@@ -107,6 +120,12 @@ h5{
   cursor: pointer;
   transition: all 0.3s ease;
   margin-top: 40px;
+}
+.btn:hover, .btn2:hover {
+    background-color: #b8ab5e;
+    color: white;
+    border-color: #f4e9ae;
+    transform: translateY(-2px);
 }
 
 h1,
