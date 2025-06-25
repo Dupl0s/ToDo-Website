@@ -3,6 +3,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { UserService } from '../services/user.service';
 import { User } from '../model/user.type';
 import { CommonModule } from '@angular/common';
+import { emailDomainValidator } from '../validators/mail.validator';
 
 @Component({
   selector: 'app-registration',
@@ -13,28 +14,42 @@ import { CommonModule } from '@angular/common';
 export class RegistrationComponent {
   registrationForm = new FormGroup({
     name: new FormControl('', [Validators.minLength(4)]),
-    email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', [Validators.minLength(8), Validators.required]),
+    email: new FormControl('', [Validators.required, Validators.email, emailDomainValidator]),
+    password: new FormControl('', [Validators.minLength(8), Validators.required])
   });
 
   userService = inject(UserService)
   handleSubmit() {
-    if (typeof this.registrationForm.value.email === 'string'
-      && typeof this.registrationForm.value.password === 'string'
-      && typeof this.registrationForm.value.name === 'string') {
-      const user: User | null = this.userService.checkLogin(this.registrationForm.value.email, this.registrationForm.value.password);
-      if (user) {
-        alert(
-          user.username + "already registrated!"
-        );
-      }
-      else {
-        /* Post Methode */
-        alert("Registrierung erfolgreich!");
-      }
+    const newEmail = this.registrationForm.value.email;
+    const newName = this.registrationForm.value.name;
+    const newPassword = this.registrationForm.value.password;
+
+    if (typeof newEmail === 'string'
+      && typeof newName === 'string'
+      && typeof newPassword === 'string') {
+      this.userService.checkMail(newEmail).subscribe({
+        next: (user) => {
+          if (user) {
+            alert(
+              "Hallo " + user.username + ", du bist schon mit " + user.email + " registriert!"
+            );
+          } 
+        },
+        error: (err) => {
+          this.userService.createUser(newName, newEmail, newPassword).subscribe({
+            next: (createdUser) => {
+              console.log('Erfolgreich registriert:', createdUser);
+              alert("Hallo " + createdUser.username + ", willkommen!")
+            },
+            error: (err) => {
+              console.log('Fehler bei der Registrierung:', err.status, err.error);
+              alert("Fehler bei der Registrierung.")
+            }
+          });
+        }
+      });
     } else {
-      alert(
-        "Something went wrong. Try again later.");
+      alert("Wrong Input. Check the Notices!");
     }
   }
 };

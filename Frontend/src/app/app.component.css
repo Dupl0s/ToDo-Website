@@ -57,7 +57,13 @@ nav .title {
   color: #333;
   text-decoration: none;
 }
-
+nav .user {
+  padding: 0.5rem;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #ed6276;
+  text-decoration: none;
+}
 
 .nav-links {
   display: flex;

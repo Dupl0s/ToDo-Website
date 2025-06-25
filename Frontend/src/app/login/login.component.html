@@ -4,7 +4,8 @@
             <label for="exampleInputEmail1">Email Addresse</label>
             <input formControlName="email" type="email" class="form-control" id="exampleInputEmail1"
                 aria-describedby="emailHelp" placeholder="Enter email">
-            <div *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched">
+            <div *ngIf="(userForm.get('email')?.invalid || userForm.get('email')?.errors?.['emailDomain'])
+            && userForm.get('email')?.touched">
                 <!-- Add your error message here, e.g.: -->
                 <small class="text-danger">Please enter a valid email address.</small>
             </div>

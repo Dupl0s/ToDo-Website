@@ -13,7 +13,9 @@
             <label for="exampleInputEmail1">Email address</label>
             <input formControlName="email" type="email" class="form-control" id="exampleInputEmail1"
                 aria-describedby="emailHelp" placeholder="Enter email">
-            <div *ngIf="registrationForm.get('email')?.invalid && registrationForm.get('email')?.touched">
+            <div *ngIf="(registrationForm.get('email')?.invalid || (registrationForm.get('email')?.errors?.['emailDomain'])) 
+            && registrationForm.get('email')?.touched
+            ">
                 <!-- Add your error message here, e.g.: -->
                 <small class="text-danger">Please enter a valid email address.</small>
             </div>
@@ -24,7 +26,8 @@
                 placeholder="Password" required minlength="8">
             <div *ngIf="registrationForm.get('password')?.invalid && registrationForm.get('password')?.touched">
                 <!-- Add your error message here, e.g.: -->
-                <small class="text-danger">Please enter at least 8 characters.</small>
+                <small class="text-danger">Please enter at least 8 characters with lower and uppercase letters, numbers
+                    and special characters.</small>
             </div>
         </div>
 

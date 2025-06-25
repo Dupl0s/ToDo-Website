@@ -3,13 +3,13 @@
     <div class="left">
       <a routerLink="/"><img src="../assets/home.svg"></a>
       <a class="title">{{urlName}}</a>
+      <a class="user" *ngIf="user" (click)="toggleDropdown()">{{user.username}}</a>
     </div>
     <div class="nav-links">
       <a routerLink="/todos" routerLinkActive="active">To-Do</a>
       <a routerLink="/about" routerLinkActive="active" href="/aboutus">About Us</a>
-      <a routerLink="/login" routerLinkActive="active" href="/login">
-        <i class="fas fa-sign-in-alt"></i> Login
-      </a>
+      <a *ngIf="!user" routerLink="/login" routerLinkActive="active">Login</a>
+      <a *ngIf="user" routerLink="/" (click)="logout(); $event.preventDefault()">Logout</a>
     </div>
   </nav>
 </header>
