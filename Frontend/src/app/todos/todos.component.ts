@@ -57,8 +57,11 @@ export class TodosComponent {
     this.bereichsId = id ? Number(id) : null;
 
     if (this.bereichsId !== null) {
-      const bereich = this.categoriesService.getBereiche().find(b => b.id === this.bereichsId);
-      this.bereichName = bereich ? bereich.name : 'Unbekannter Bereich';
+      this.categoriesService.getBereiche().subscribe(bereicheArray => {
+        const bereich = bereicheArray.find(b => b.id === this.bereichsId);
+        this.bereichName = bereich ? bereich.name : 'Unbekannter Bereich';
+      });
+
     }
 
     this.applyFilterandSort();
