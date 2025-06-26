@@ -1,6 +1,10 @@
 {
   "dependencies": {
     "@angular/cli": "^19.1.8",
-    "@popperjs/core": "^2.11.8"
+    "@popperjs/core": "^2.11.8",
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.3"
   }
 }
