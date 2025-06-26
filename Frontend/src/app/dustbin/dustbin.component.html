@@ -1,6 +1,6 @@
 <h1 class="mb-4 ps-3">Papierkorb</h1>
 <div class="d-flex justify-content-end ">
-  <button [routerLink]="['/todos', bereichsId]" class="btn btn-primary back-btn" style="width: 150px; height: 50px">
+  <button [routerLink]="['/todos', bereichsId]" class="btn btn-primary" style="width: 150px; height: 50px">
   Zurück
   </button>
 </div>
@@ -13,8 +13,8 @@
       <p>Schwierigkeit: {{ todo.niveau }}</p>
       <p>Priorität: {{ todo.importance }}</p>
       <div class="btn-toolbar">
-        <button (click)="restore(todo.id)" class="btn btn-dark btn2">Wiederherstellen</button>
-        <button (click)="deletePermanently(todo.id)" class="btn btn-dark btn2">Löschen</button>
+        <button (click)="restore(todo.id)" class="btn btn-dark">Wiederherstellen</button>
+        <button (click)="deletePermanently(todo.id)" class="btn btn-dark">Löschen</button>
       </div>
     </div>
   }

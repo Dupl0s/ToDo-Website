@@ -1,4 +1,4 @@
-/*import { HttpClient } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import todoData from '../../assets/todos.json';
@@ -51,42 +51,5 @@ export class CategoriesService {
   todosInBerech(bereichId:number):boolean{
     const todos= this.todoService.loadTodos();
     return todos.some(todo=> todo.bereichsId ===bereichId); // checks if there is at least 1 element
-  }
-}*/
-
-import { HttpClient } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Bereich } from '../model/categories.type';
-import { TodoService } from './todo.service';
-
-@Injectable({
-  providedIn: 'root'
-})
-export class CategoriesService {
-  private http = inject(HttpClient);
-  private apiUrl = '/api/bereiche'; // your backend endpoint
-
-  constructor(private todoService: TodoService) {}
-
-  getBereiche(): Observable<Bereich[]> {
-    return this.http.get<Bereich[]>(this.apiUrl);
-  }
-
-  addBereich(name: string): Observable<Bereich> {
-    return this.http.post<Bereich>(this.apiUrl, { name });
-  }
-
-  deleteBereich(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
-  }
-
-  handleUpdate(updatedBereich: Bereich): Observable<void> {
-    return this.http.put<void>(`${this.apiUrl}/${updatedBereich.id}`, updatedBereich);
-  }
-
-  todosInBereich(bereichId: number): boolean {
-    const todos = this.todoService.loadTodos();
-    return todos.some(todo => todo.bereichsId === bereichId);
   }
 }
