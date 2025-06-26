@@ -5,16 +5,13 @@ import { HighlightDoneTodosDirective } from '../directives/highlight-done-todos.
 import { PopupComponent } from '../components/popup/popup.component';
 import { CommonModule } from '@angular/common';
 import todoData from '../../assets/todos.json';
-import { RouterModule, ActivatedRoute } from '@angular/router';
-import { SortFilterDropdownComponent } from '../components/sort-filter-dropdown/sort-filter-dropdown.component';
-import { CategoriesService } from '../services/categories.service';
-import { Bereich } from '../model/categories.type';
+import { RouterModule } from '@angular/router';
 
 
 @Component({
   selector: 'app-todos',
   standalone: true,
-  imports: [PopupComponent, SortFilterDropdownComponent, CommonModule, HighlightDoneTodosDirective, RouterModule],
+  imports: [PopupComponent, CommonModule, HighlightDoneTodosDirective, RouterModule],
   templateUrl: './todos.component.html',
   styleUrl: './todos.component.css',
 })
@@ -34,15 +31,14 @@ export class TodosComponent {
   constructor(private route: ActivatedRoute, private categoriesService: CategoriesService) {}
 
   openPopup(title: string, text: string) {
-    this.popup.open(title, text);
+    this.popup.open(title, text, 'default');
   }
-
+  
   openEdit(title: string, id: Todo) {
     this.popup.openEdit(title, id);
   }
 
   onPopupClosed() {
-/*     this.arrayTodos = this.todoService.loadTodos();
  */    this.applyFilterandSort();
     console.log('Popup wurde geschlossen');
   }
@@ -101,8 +97,9 @@ export class TodosComponent {
     this.applyFilterandSort();
   }
 
-  onFilter(filter: string | { from: string, to: string }) {
+  onReminderClosed(): void {
 
+    console.log('Reminder wurde geschlossen');}
     if (typeof filter === 'string' && filter === '') {
       this.actualFilter = '';
       this.dateFrom = '';
