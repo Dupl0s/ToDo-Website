@@ -6,6 +6,7 @@ import { LoginComponent } from './login/login.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { PasswordResetComponent } from './password-reset/password-reset.component';
 import { LoggedActivate } from './helpers/logged.activate';
+import { UserEditComponent } from './user-edit/user-edit.component';
 
 
 export const routes: Routes = [/*{
@@ -23,5 +24,6 @@ export const routes: Routes = [/*{
 { path: '', component: HomeComponent },
 {path: 'login', component: LoginComponent},
 {path: 'registration', component: RegistrationComponent},
-{path: 'password-reset', component: PasswordResetComponent}
+{path: 'password-reset', component: PasswordResetComponent},
+{path: 'user-edit', component: UserEditComponent, canActivate: [LoggedActivate]}
 ];

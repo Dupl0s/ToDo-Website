@@ -1,7 +1,6 @@
-import { Component, EventEmitter, inject, Output } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserService } from '../services/user.service';
-import { User } from '../model/user.type';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { emailDomainValidator } from '../validators/mail.validator';
@@ -13,9 +12,6 @@ import { emailDomainValidator } from '../validators/mail.validator';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-
-/*   @Output() loggedIn = new EventEmitter<boolean>();
-  logged: boolean = false; */
 
   userForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email, emailDomainValidator]),
@@ -31,25 +27,17 @@ export class LoginComponent {
     if (typeof userMail === 'string' && typeof userPW === 'string' && userMail !== undefined) {
       this.userService.checkLogin(userMail, userPW).subscribe({
         next: (user) => {
-          if (user) {
+          if (user !== undefined) {
             console.log("User:" + user.username + user.email);
             alert(
               "Hallo " + user.username + "!"
             );
             // Zur ToDo-Seite navigieren:
             this.router.navigate(['/todos']);
-            /*ToDo: cache user data, load Todos */
           }
-
-          else {
-            this.userService.checkMail(userMail).subscribe((user: User | null) => {
-              if (user) {
-                alert("Falsches Passwort. Passwort vergessen?");
-              } else {
-                alert("Login fehlgeschlagen: Benutzer nicht gefunden oder ungültige Anmeldedaten!");
-              }
-            });
-          }
+        },
+        error: (err) => {
+          alert(err.error.message)
         }
       });
     } else {

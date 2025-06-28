@@ -14,18 +14,17 @@ export class UserService {
 
 
   constructor() {
-    this.userSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('user')!));
+    const userFromStorage = localStorage.getItem('user');
+    let parsedUser: User | null = null;
+    try {
+      parsedUser = userFromStorage ? JSON.parse(userFromStorage) : null;
+    } catch (e) {
+      localStorage.removeItem('user');
+      parsedUser = null;
+    }
+    this.userSubject = new BehaviorSubject<User | null>(parsedUser);
     this.user = this.userSubject.asObservable();
   }
-
-  localUser: User[] = [
-    {
-      userId: 1,
-      username: 'user1',
-      email: 'user@gmail.com',
-      password: 'hallo123'
-    }
-  ]
 
   public get userValue(): User | null {
     return this.userSubject.value;
@@ -53,7 +52,7 @@ export class UserService {
   }
 
   checkMail(findEmail: string) {
-    return this.http.get<User>(this.apiUrl, {
+    return this.http.get<User>(`${this.apiUrl}/by-mail`, {
       params: { email: findEmail },
     });
   }
@@ -69,6 +68,17 @@ export class UserService {
       password: newPassword,
     });
   };
+
+  updateUser(userId: string, updateData: Partial<User>) {
+    return this.http.put<{ message: string, user: User }>(`${this.apiUrl}/${userId}`, updateData,
+      { headers: { 'Content-Type': 'application/json' } }
+    )
+  }
+
+  updateLocalUser(user: User) {
+    localStorage.setItem('user', JSON.stringify(user));
+    this.userSubject.next(user);
+  }
 }
 
 

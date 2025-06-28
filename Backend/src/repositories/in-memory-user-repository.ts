@@ -4,8 +4,12 @@ import { UserRepository } from "./user-repository";
 export class InMemoryUserRepo implements UserRepository {
     constructor(private allUser: User[] = []) { }
 
-    findUserById(id: string): User | undefined {
-        return this.allUser.find((user) => user.userId === id)
+    findAll():User[] {
+        return this.allUser;
+    }
+
+    findUserById(userId: string): User | undefined {
+        return this.allUser.find((user) => user.userId === userId)
     }
     loadUser(email: string, password: string): User | undefined
     {
@@ -27,8 +31,8 @@ export class InMemoryUserRepo implements UserRepository {
         this.allUser.push(newUser);
         return newUser;
     }
-    updateUser(id: string, updatedUser: updateUser): User | undefined {
-        const userIndex = this.allUser.findIndex((user) => user.userId === id);
+    updateUser(userId: string, updatedUser: updateUser): User | undefined {
+        const userIndex = this.allUser.findIndex((user) => user.userId === userId);
         if (userIndex === -1) return undefined
 
         this.allUser[userIndex] = {
@@ -42,6 +46,8 @@ export class InMemoryUserRepo implements UserRepository {
         this.allUser[userIndex].password = '';
         return this.allUser[userIndex] = { ...this.allUser[userIndex] }
     }
+
+
     findUserWithMail(email: string): string | undefined {
         console.log(this.allUser)
         

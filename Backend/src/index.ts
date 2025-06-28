@@ -4,28 +4,25 @@ import { createUserSchema, updateUserSchema, userSchema } from "./models/user"
 import { InMemoryUserRepo } from './repositories/in-memory-user-repository';
 import { buildUserRouter } from './routers/user-router';
 
-/* Im Terminal im Verzeichnis /Backend mit npm start Server auf Port 3000 starten, dann im /Frontend ng serve --proxy-config proxy.conf.json*/
-
-
 export type User = z.infer<typeof userSchema>;
 export type createUser = z.infer<typeof createUserSchema>;
 export type updateUser = z.infer<typeof updateUserSchema>
 
 const localUser = [
     {
-        userId: "1",
+        userId: "1uwh",
         username: 'user1',
         email: 'user1@gmail.com',
         password: 'hallo123'
     },
     {
-        userId: "2",
+        userId: "2uwh",
         username: 'user2',
         email: 'user2@gmail.com',
         password: 'hallo456'
     },
     {
-        userId: "3",
+        userId: "3uwh",
         username: 'user3',
         email: 'user3@gmail.com',
         password: 'hallo789'

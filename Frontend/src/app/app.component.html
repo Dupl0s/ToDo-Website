@@ -3,7 +3,7 @@
     <div class="left">
       <a routerLink="/"><img src="../assets/home.svg"></a>
       <a class="title">{{urlName}}</a>
-      <a class="user" *ngIf="user" (click)="toggleDropdown()">{{user.username}}</a>
+      <a *ngIf="user" class="user" routerLink="/user-edit" routerLinkActive="active">{{user.username}}</a>
     </div>
     <div class="nav-links">
       <a routerLink="/todos" routerLinkActive="active">To-Do</a>

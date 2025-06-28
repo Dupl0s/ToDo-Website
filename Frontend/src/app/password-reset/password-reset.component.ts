@@ -3,7 +3,7 @@ import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserService } from '../services/user.service';
 import { User } from '../model/user.type';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { emailDomainValidator } from '../validators/mail.validator';
 
 @Component({
@@ -18,6 +18,7 @@ export class PasswordResetComponent {
   })
 
   userService = inject(UserService);
+  router = inject(Router);
 
   handleSubmit() {
     const email = this.passwordForm.value.email;
@@ -30,15 +31,17 @@ export class PasswordResetComponent {
           {
             alert("Wir haben dir eine Email an: " + email + " geschickt.")
           }
+          this.router.navigate(['/login'])
+
         },
         error: (err) => {
           console.log(err);
           if (err.status === 404) {
-            alert("Kein Konto mit dieser Mailadresse gefunden. Willst du ein neues Konto erstellen?");
+            alert(err.error.status + "Kein Konto mit dieser Mailadresse gefunden. Willst du ein neues Konto erstellen?");
           } else if (err.status === 400) {
-            alert("Ungültige Eingabe. Bitte überprüfe deine Email-Adresse.");
+            alert(err.error.status + "Ungültige Eingabe. Bitte überprüfe deine Email-Adresse.");
           } else {
-            alert("Ein unbekannter Fehler ist aufgetreten.");
+            alert(err.error.status + "Ein unbekannter Fehler ist aufgetreten.");
           }
         }
       })

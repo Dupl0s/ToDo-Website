@@ -17,7 +17,6 @@ export class AppComponent {
   urlName: string | null = '';
   user?: User | null;
   userService = inject(UserService);
-  dropDown: boolean = false;
 
   constructor(private router: Router, private route: ActivatedRoute) {
     this.userService.user.subscribe(x => this.user = x);
@@ -48,10 +47,6 @@ export class AppComponent {
 
   logout() {
     this.userService.logout();
-    this.dropDown = false;
   }
 
-  toggleDropdown() {
-    this.dropDown = true;
-  }
 }

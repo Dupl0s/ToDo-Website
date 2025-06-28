@@ -4,6 +4,7 @@ import { UserService } from '../services/user.service';
 import { User } from '../model/user.type';
 import { CommonModule } from '@angular/common';
 import { emailDomainValidator } from '../validators/mail.validator';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registration',
@@ -19,6 +20,8 @@ export class RegistrationComponent {
   });
 
   userService = inject(UserService)
+  router = inject(Router);
+
   handleSubmit() {
     const newEmail = this.registrationForm.value.email;
     const newName = this.registrationForm.value.name;
@@ -40,6 +43,7 @@ export class RegistrationComponent {
             next: (createdUser) => {
               console.log('Erfolgreich registriert:', createdUser);
               alert("Hallo " + createdUser.username + ", willkommen!")
+              this.router.navigate(['/login'])
             },
             error: (err) => {
               console.log('Fehler bei der Registrierung:', err.status, err.error);

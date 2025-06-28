@@ -58,7 +58,7 @@ nav .title {
   text-decoration: none;
 }
 nav .user {
-  padding: 0.5rem;
+  padding: 1rem;
   font-size: 1.8rem;
   font-weight: 600;
   color: #ed6276;
@@ -70,7 +70,7 @@ nav .user {
   gap: 2rem;
 }
 
-.nav-links a {
+.nav-links a, .edit {
   color: #555;
   text-decoration: none;
   font-size: 1rem;
