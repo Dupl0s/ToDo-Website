@@ -1,21 +1,103 @@
-@if (isOpen()) {
-<div class="popup">
-  <div class="popup-content">
-    <h2>{{ title() }}</h2>
-    <p>{{ message() }}</p>
+<div *ngIf="isOpen() && mode() === 'default'">
+  <div class="popup">
+    <div class="popup-content">
+      <div>
+        <h2>{{ title() }}</h2>
+        <p>{{ message() }}</p>
+        <div class="todoInfos">
+          <label for="todo-title">Titel <span class="info">(Pflichtfeld, z.B. "Einkaufen")</span></label><br>
+          <input id="todo-title" class="title" [(ngModel)]="title2" type="text" placeholder="Titel" />
+          <br>
 
-    <div class="todoInfos">
-      <input class="title" [(ngModel)]="title2" type="text" placeholder="Titel" />
-      <br>
-      <input class="niveau" [(ngModel)]="niveau" type="number" min="1" max="10" step="1" placeholder="Niveau 1-10" />
-      <br>
-      <input class="importance" [(ngModel)]="importance" type="number" min="1" max="10" step="1"
-        placeholder="Wichtigkeit 1-10" />
-      <br>
-      <input class="deadline" [(ngModel)]="deadline" type="date">
+          <label for="todo-niveau">Niveau <span class="info">(1-10, Schwierigkeit)</span></label><br>
+          <input id="todo-niveau" class="niveau" [(ngModel)]="niveau" type="number" min="1" max="10" step="1" placeholder="Niveau 1-10" />
+          <br>
+
+          <label for="todo-importance">Wichtigkeit <span class="info">(1-10, Priorität)</span></label><br>
+          <input id="todo-importance" class="importance" [(ngModel)]="importance" type="number" min="1" max="10" step="1" placeholder="Wichtigkeit 1-10" />
+          <br>
+
+          <label for="todo-deadline">Deadline <span class="info">(Fälligkeitsdatum)</span></label><br>
+          <input id="todo-deadline" class="deadline" [(ngModel)]="deadline" type="date">
+          <br>
+
+          <label for="todo-time">Uhrzeit <span class="info">(optional)</span></label><br>
+          <input id="todo-time" class="time" [(ngModel)]="time" type="time" placeholder="Uhrzeit">
+        </div>
+
+        <button (click)="save()" class="add">Hinzufügen</button>
+        <button (click)="close()" class="close">Schließen</button>
+      </div>
     </div>
-    <button (click)="save()" class="add">Hinzufügen</button>
-    <button (click)="close()" class="close">Schließen</button>
   </div>
 </div>
-}
+<div *ngIf="isOpen() && mode() === 'reminder'">
+  <div class="reminder">
+    <div class="reminder-popup">
+      <div class="reminder-info">
+        <h2>{{ title() }}</h2>
+        <p>{{ message() }}</p>
+        <p>Gelange hier zu den Todos:</p>
+        <p>Johanna Filter -> Filter wird direkt zu Zeitraum der reminder Todos gesetzt</p>
+        <button routerLink="">Route zu Todos im Bereich der Todos</button>  
+      </div>
+      <button class="btn btn-primary" (click)="close()">OK</button>
+    </div>
+  </div>
+</div>
+<div *ngIf="isOpen() && mode() === 'login'">
+  <div class="login-popup">
+  
+  </div>
+</div>
+<div *ngIf="isOpen() && mode() === 'register'">
+  <div class="register-popup">
+  
+  </div>
+</div>
+
+ <div *ngIf="isOpen() && mode() === 'editBereich'">
+  <div class="popup">
+    <div class="popup-content">
+      <h2>{{ title() }}</h2>
+      <p>{{ message() }}</p>
+      <div class="todoInfos">
+        <label for="bereich-name">Bereich Name</label><br>
+        <input id="bereich-name" class="title" [(ngModel)]="bereichNameModel" type="text" placeholder="Bereich Name" />
+      </div>
+      <button (click)="save()" class="add">Speichern</button>
+      <button (click)="close()" class="close">Schließen</button>
+    </div>
+  </div>
+  </div>
+
+  <div *ngIf="isOpen() && mode() === 'editTodo'">
+    <div class="popup">
+      <div class="popup-content">
+        <h2>{{ title() }}</h2>
+        <p>{{ message() }}</p>
+        <div class="todoInfos">
+          <label for="todo-title">Titel</label><br>
+          <input id="todo-title" class="title" [(ngModel)]="title2" type="text" placeholder="Titel" />
+          <br>
+
+          <label for="todo-niveau">Niveau</label><br>
+          <input id="todo-niveau" class="niveau" [(ngModel)]="niveau" type="number" min="1" max="10" step="1" placeholder="Niveau 1-10" />
+          <br>
+
+          <label for="todo-importance">Wichtigkeit</label><br>
+          <input id="todo-importance" class="importance" [(ngModel)]="importance" type="number" min="1" max="10" step="1" placeholder="Wichtigkeit 1-10" />
+          <br>
+
+          <label for="todo-deadline">Deadline</label><br>
+          <input id="todo-deadline" class="deadline" [(ngModel)]="deadline" type="date">
+          <br>
+
+          <label for="todo-time">Uhrzeit</label><br>
+          <input id="todo-time" class="time" [(ngModel)]="time" type="time">
+        </div>
+        <button (click)="save()" class="add">Speichern</button>
+        <button (click)="close()" class="close">Schließen</button>
+      </div>
+    </div>
+  </div> 

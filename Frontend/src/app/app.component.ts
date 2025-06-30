@@ -1,3 +1,4 @@
+import { Component, ViewChild } from "@angular/core";
 import { Component, inject } from "@angular/core";
 import { ActivatedRoute, NavigationEnd, Router, RouterLink, RouterModule, RouterOutlet } from "@angular/router";
 import { filter } from "rxjs/operators";
@@ -13,6 +14,7 @@ import { UserService } from "./services/user.service";
   styleUrl: "./app.component.css"
 })
 export class AppComponent {
+
   title = "ToDo Website";
   urlName: string | null = '';
   user?: User | null;
@@ -34,10 +36,15 @@ export class AppComponent {
           case 'todos':
             this.urlName = 'To-Do`s';
             break;
-          //Beispiel
-          // case '[url]':
-          // this.urlName = '[shown text]';
-          // break;
+          case 'dustbin':
+          this.urlName = 'Dustbin';
+          break;
+          case 'calendar':
+            this.urlName = 'Calendar';
+            break;
+          case 'categories':
+            this.urlName = 'Categories';
+            break;
           default:
             this.urlName = 'Home';
             break;

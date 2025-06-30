@@ -6,7 +6,9 @@
       <a *ngIf="user" class="user" routerLink="/user-edit" routerLinkActive="active">{{user.username}}</a>
     </div>
     <div class="nav-links">
+      <a routerLink="/categories" routerLinkActive="active">Categories</a>
       <a routerLink="/todos" routerLinkActive="active">To-Do</a>
+      <a routerLink="/calendar" routerLinkActive="active">Calendar</a>
       <a routerLink="/about" routerLinkActive="active" href="/aboutus">About Us</a>
       <a *ngIf="!user" routerLink="/login" routerLinkActive="active">Login</a>
       <a *ngIf="user" routerLink="/" (click)="logout(); $event.preventDefault()">Logout</a>
@@ -16,5 +18,4 @@
 
 <main>
   <router-outlet></router-outlet>
-  <!--hallo 2-->
 </main>

@@ -1,0 +1,39 @@
+
+
+<div class="newBereiche">
+  <input
+    [(ngModel)]="newBereich"
+    placeholder="Neuer Bereich"
+    class="form-control w-auto"
+  />
+  <button #addbtn (click)="addBereiche(addbtn)" class="btn2">Hinzufügen</button>
+</div>
+
+<div class="carousel-container">
+  <button class="carousel-button prev" (click)="prevSlide()">‹</button>
+
+  <ul class="carousel-track">
+    @for (bereich of bereiche; let i = $index; track bereich.id) {
+      <!--Traversing through the Bereiche. Whenever the next button is clicked, it set the
+       currentindex to the new idex and only displays that particular Bereich-->
+      @if (i === currentIndex) {
+        <li class="slide">
+          <button class="bereich-item" (click)="goToTodos(bereich.id)">
+            <div class="card text-black rounded-3 p-3">
+              <h5 class="card-title fw-bold">{{ bereich.name }}</h5>
+            </div>
+            <div class="text-center mt-2">
+              <button class="btn btn-sm btn-outline-dark" (click)="editCategories(bereich); $event.stopPropagation()">Bearbeiten</button>
+              <button class="btn btn-sm btn-outline-dark me-1" #deleteBtn (click)="deletedCategories(bereich.id, deleteBtn); $event.stopPropagation()">Löschen</button>
+          </div>
+          </button>
+          
+        </li>
+      }
+    }
+  </ul>
+
+  <button class="carousel-button next" (click)="nextSlide()">›</button>
+</div>
+
+<app-popup></app-popup>

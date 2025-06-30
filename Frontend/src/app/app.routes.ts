@@ -7,6 +7,8 @@ import { RegistrationComponent } from './registration/registration.component';
 import { PasswordResetComponent } from './password-reset/password-reset.component';
 import { LoggedActivate } from './helpers/logged.activate';
 import { UserEditComponent } from './user-edit/user-edit.component';
+import { CalendarComponent } from './components/calendar/calendar.component';
+import { CategoriesComponent } from './categories/categories.component';
 
 
 export const routes: Routes = [/*{
@@ -26,4 +28,8 @@ export const routes: Routes = [/*{
 {path: 'registration', component: RegistrationComponent},
 {path: 'password-reset', component: PasswordResetComponent},
 {path: 'user-edit', component: UserEditComponent, canActivate: [LoggedActivate]}
+{path: "categories", component: CategoriesComponent},
+{path: "todos/:id", component: TodosComponent},
+{path: 'calendar', component: CalendarComponent},
+{ path: 'dustbin/:id', component: DustbinComponent },
 ];

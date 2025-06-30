@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TodosComponent } from './todos.component';
+import { HttpClient } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ActivatedRoute } from '@angular/router';
 
 describe('TodosComponent', () => {
   let component: TodosComponent;
@@ -8,9 +11,14 @@ describe('TodosComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TodosComponent]
+      imports: [TodosComponent,
+        HttpClientTestingModule
+      ],
+      providers: [
+        { provide: ActivatedRoute, useValue: {} }
+      ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(TodosComponent);
     component = fixture.componentInstance;

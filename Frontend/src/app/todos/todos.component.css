@@ -1,31 +1,39 @@
 .card {
-    background-color: #ed6276;
-    color: black;
+    background-color: rgba(250, 238, 203, 0.85);
+    color: #23272b;
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 0.5rem 0;
+    box-shadow: 0 2px 8px rgba(52,58,64,0.06);
+    font-size: 1.1rem;
+    border: 1.5px solid #ede4b5;
+    backdrop-filter: blur(2px);
 }
 
 h1 {
     padding: 1rem;
+    color: #23272b;
 }
 
 button {
-    background-color: #f4e9ae;
-    color: black;
+    background-color: #faeecb;
+    color: #23272b;
     width: auto;
-    border-color: #b8ab5e;
-    border: 2px solid #b8ab5e;
+    /*border-color: #b8ab5e;*/
+    border: 0px ;
     border-radius: 8px;
     padding: 10px 20px;
     margin: 5px;
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: background 0.3s, color 0.2s;
 }
   
 button:hover {
-    background-color: #b8ab5e;
-    color: white;
-    border-color: #f4e9ae;
+    background-color: #ede4b5;
+    color: #23272b;
+    border-color: #faeecb;
     transform: translateY(-2px);
 }
 
@@ -36,26 +44,29 @@ button:hover {
 }
 
 .arraycard {
-    background-color: #ed6276;
-    color: black;
+    background-color: rgba(237, 98, 118, 0.85);
+    color: #23272b;
     padding: 20px;
     border-radius: 10px;
     width: calc(33% - 10px);
     box-sizing: border-box;
-    /* animation styles for a checked todo, switching to the end of the list when its checked */
     transition-property: opacity, transform;
     transition-duration: 1500ms;
-
+    border: 2px solid #c94a5e;
+    font-size: 1.1rem;
+    position: relative;
+    backdrop-filter: blur(2px);
     @starting-style {
         opacity: 0;
         transform: translateX(-10px);
     }
-
 }
 
 .arraycard.done {
-    background-color: #78cb99 !important;
-
+    background-color: rgba(120, 203, 153, 0.85) !important;
+    border: 2px solid #4ab073;
+    color: #23272b;
+    backdrop-filter: blur(2px);
 }
 
 .arraycard h2 {
@@ -76,21 +87,24 @@ button:hover {
 }
 
 .arraycard .button {
-    background-color: #f8e7a2;
-    border: none;
+    background-color: #faeecb;
+    color: #23272b;
+    border: 2px solid #ede4b5;
     padding: 10px 15px;
-    border-radius: 5px;
+    border-radius: 6px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-weight: bold;
+    transition: background 0.2s, color 0.2s;
 }
 
 .arraycard .button:hover {
-    background-color: #f5d98e;
+    background-color: #ede4b5;
+    color: #23272b;
 }
 
-/* Modern Card Style */
 .no-todos {
     background-color: #ffffff;
     border: 1px solid #e0e0e0;
@@ -122,7 +136,6 @@ button:hover {
 .dropdown-item.active {
     font-weight: bold;
     background-color: #e9ecef;
-
 }
 .navbar {
     position: sticky;
@@ -147,7 +160,11 @@ app-sort-filter-dropdown {
 }
 
 /* Papierkorb-Button ganz rechts */
-.dustbin {
+.dustbin-btn {
     margin-left: auto;
-    order: 99;
+    order: 98;
+}
+.back-btn{
+    order:99;
+    padding: 10px 35px;
 }

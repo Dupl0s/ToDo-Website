@@ -2,75 +2,175 @@
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     background-color: rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 9999;
-  }
-  .popup-content {
-    background-color: white;
-    padding: 20px;
-    border-radius: 5px;
-  }
+}
 
-  button {
-    margin-right: 10px;
+.popup-content {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 0.625rem;
+    max-width: 95vw;
+    max-height: 90vh;
+    width: 100%;
+    max-width: 28rem; /* ca. 450px */
+    box-sizing: border-box;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+button {
+    margin-right: 0.625rem;
+    margin-top: 1.25rem;
     background-color: #f4e9ae;
     color: black;
     width: auto;
     border-color: #b8ab5e;
-    border: 2px solid #b8ab5e;
-    border-radius: 8px;
-    padding: 10px 20px;
-    font-size: 16px;
+    border: 0px solid #b8ab5e;
+    border-radius: 0.5rem;
+    padding: 0.625rem 1.25rem;
+    font-size: 1rem;
     font-weight: bold;
     cursor: pointer;
     transition: all 0.3s ease;
-  }
-  
-  button:hover {
+}
+
+button:hover {
     background-color: #b8ab5e;
     color: white;
     border-color: #f4e9ae;
     transform: translateY(-2px);
-  }
-  
-  button:focus {
+}
+
+button:focus {
     outline: none;
     box-shadow: 0 0 0 2px rgba(184, 171, 94, 0.5);
-  }
+}
 
-  input[type="text"], input[type="email"], input[type="password"], input[type="number"], input[type="date"] {
+input[type="text"], input[type="email"], input[type="password"], input[type="number"], input[type="date"], input[type="time"] {
     width: 100%;
-    padding: 12px 25px;
-    margin: 10px 0;
-    border: 2px solid #b8ab5e;
-    border-radius: 8px;
-    background-color: #f4e9ae;
-    color: black;
-    font-size: 16px;
-    font-weight: bold;
+    padding: 0.75rem 1.5rem;
+    margin: 0.625rem 0;
+    border: 1px solid rgb(180, 172, 172);
+    border-radius: 0.5rem;
+    color: rgb(79, 77, 77);
+    font-size: 1rem;
     box-sizing: border-box;
     transition: all 0.3s ease;
-  }
-  
-  input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus, input[type="number"]:focus, input[type="date"]:focus {
+}
+
+input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus, input[type="number"]:focus, input[type="date"]:focus {
     outline: none;
     border-color: #f4e9ae;
     background-color: #fff;
     box-shadow: 0 0 5px rgba(184, 171, 94, 0.6);
-  }
-  
-  input[type="text"]::placeholder, input[type="email"]::placeholder, input[type="password"]::placeholder, input[type="number"]::placeholder, input[type="date"]::placeholder {
-    color: #b8ab5e; 
+}
+
+input[type="text"]::placeholder, input[type="email"]::placeholder, input[type="password"]::placeholder, input[type="number"]::placeholder, input[type="date"]::placeholder {
     font-style: italic;
-    font-weight: bold; 
-  }
-  input[type="text"]:hover, input[type="email"]:hover, input[type="password"]:hover,input[type="number"]:hover, input[type="date"]:hover  {
+}
+
+input[type="text"]:hover, input[type="email"]:hover, input[type="password"]:hover,input[type="number"]:hover, input[type="date"]:hover  {
     border-color: #f4e9ae;
     color: black;
+}
+
+@media (max-width: 600px) {
+    .popup-content {
+        padding: 0.75rem;
+        font-size: 0.95rem;
+        max-width: 98vw;
+        max-height: 85vh;
+    }
+    button {
+        font-size: 0.95rem;
+        padding: 0.5rem 1rem;
+    }
+}
+
+@media (max-height: 500px) {
+    .popup-content {
+        max-height: 75vh;
+        padding: 0.5rem;
+    }
+}
+
+  .todoInfos label {
+    display: block;
+    margin-bottom: 0px;
+    margin-top: 0px;
+    font-weight: bold;
   }
-  
+
+  .todoInfos input {
+    margin-top: 0;
+    margin-bottom: 10px;
+  }
+
+.reminder {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.3s ease;
+    opacity: 1;
+}
+
+.reminder-popup {
+    background-color: #e9ecef;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(52, 58, 64, 0.18);
+    padding: 32px 24px 24px 24px;
+    width: 340px;
+    max-width: 95vw;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.reminder-info {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1.15rem;
+    color: #23272b;
+    margin-bottom: 18px;
+    text-align: center;
+}
+
+.reminder-popup h2 {
+    margin-top: 0;
+    margin-bottom: 12px;
+    font-size: 1.5rem;
+    color: #ed6276;
+    font-weight: bold;
+}
+
+.reminder-popup button {
+    background-color: #ed6276;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 24px;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-top: 18px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.reminder-popup button:hover {
+    background-color: #c94a5e;
+}

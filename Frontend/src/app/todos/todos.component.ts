@@ -1,54 +1,78 @@
-import { Component, inject, signal, effect, ViewChild } from '@angular/core';
+import { Component, inject, signal, ViewChild } from '@angular/core';
 import { TodoService } from '../services/todo.service';
 import { Todo } from '../model/todo.type';
 import { HighlightDoneTodosDirective } from '../directives/highlight-done-todos.directive';
 import { PopupComponent } from '../components/popup/popup.component';
 import { CommonModule } from '@angular/common';
 import todoData from '../../assets/todos.json';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
+import { CategoriesService } from '../services/categories.service';
 import { SortFilterDropdownComponent } from '../components/sort-filter-dropdown/sort-filter-dropdown.component';
-
 @Component({
   selector: 'app-todos',
   standalone: true,
-  imports: [PopupComponent, SortFilterDropdownComponent, CommonModule, HighlightDoneTodosDirective, RouterModule],
+  imports: [PopupComponent, CommonModule, HighlightDoneTodosDirective, RouterModule, SortFilterDropdownComponent],
   templateUrl: './todos.component.html',
   styleUrl: './todos.component.css',
 })
 export class TodosComponent {
   @ViewChild(PopupComponent) popup!: PopupComponent;
 
-  todos = signal<Array<Todo>>(
-    JSON.parse(localStorage.getItem('todos') || '[]')
-  );
-
   todoService = inject(TodoService);
   arrayTodos: Todo[] = [];
   actualSort: string = '';
+  bereichsId: number | null = null;
   actualFilter: string = '';
   ascending: boolean = false;
   dateFrom: string = '';
   dateTo: string = '';
+  bereichName='';
+
+  constructor(private route: ActivatedRoute, private categoriesService: CategoriesService) {}
 
   openPopup(title: string, text: string) {
-    this.popup.open(title, text);
+    this.popup.open(title, text, 'default');
   }
-
+  
   openEdit(title: string, id: Todo) {
-    this.popup.openEdit(title, id);
+    this.popup.open(title, '', 'editTodo', undefined, id);
   }
 
   onPopupClosed() {
-/*     this.arrayTodos = this.todoService.loadTodos();
- */    this.applyFilterandSort();
+     this.applyFilterandSort();
     console.log('Popup wurde geschlossen');
   }
 
   ngOnInit() {
 /*     this.arrayTodos = this.todoService.loadTodos();
- */    this.applyFilterandSort();
-    console.log("ngOninit")
-    this.todoService.connectBackend().subscribe((data) => console.log(data.message));
+ */    
+  this.todoService.connectBackend().subscribe((data) => console.log(data.message));
+
+  this.route.paramMap.subscribe(params => {
+    const id = params.get('id');
+    this.bereichsId = id ? Number(id) : null;
+
+    if (this.bereichsId !== null) {
+      const bereich = this.categoriesService.getBereiche().find(b => b.id === this.bereichsId);
+      this.bereichName = bereich ? bereich.name : 'Unbekannter Bereich';
+    }
+
+    this.applyFilterandSort();
+    this.popup.checkForReminders();
+
+  });
+  }
+  
+  
+  //Asking the method to createTask to take the Todo without the bereichsId(as it is not manually filled in by the user) and setting the bereichsid ourselves from above.
+  createTask(taskData: Omit<Todo, 'bereichsId'>) {
+    const newTask = {
+      ...taskData,
+      bereichsId: this.bereichsId!
+    };
+    console.log('New task received from popup:', newTask);
+    this.todoService.addTodo(newTask as Todo);
+    this.arrayTodos = this.todoService.loadTodos();
   }
 
   toggleCompleted(todo: Todo) {
@@ -72,6 +96,11 @@ export class TodosComponent {
     this.applyFilterandSort();
   }
 
+  onReminderClosed(): void {
+    console.log('Reminder wurde geschlossen');
+    }
+  
+
   onFilter(filter: string | { from: string, to: string }) {
 
     if (typeof filter === 'string' && filter === '') {
@@ -89,9 +118,13 @@ export class TodosComponent {
     }
     this.applyFilterandSort()
   }
+  
 
   applyFilterandSort() {
     let todos = this.todoService.loadTodos();
+    if (this.bereichsId !==null){
+      todos= todos.filter(todo=> todo.bereichsId===this.bereichsId);
+    }
     if (this.actualFilter === 'true' || this.actualFilter === 'false') {
       todos = this.todoService.filterBy(this.actualFilter, todos);
     }
@@ -114,5 +147,6 @@ export class TodosComponent {
   getBool(ascend: boolean) {
     this.ascending = ascend;
     this.applyFilterandSort();
+    }
   }
-}
+
