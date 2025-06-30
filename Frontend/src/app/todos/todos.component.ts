@@ -5,13 +5,13 @@ import { HighlightDoneTodosDirective } from '../directives/highlight-done-todos.
 import { PopupComponent } from '../components/popup/popup.component';
 import { CommonModule } from '@angular/common';
 import todoData from '../../assets/todos.json';
-import { RouterModule } from '@angular/router';
-
-
+import { ActivatedRoute, RouterModule } from '@angular/router';
+import { CategoriesService } from '../services/categories.service';
+import { SortFilterDropdownComponent } from '../components/sort-filter-dropdown/sort-filter-dropdown.component';
 @Component({
   selector: 'app-todos',
   standalone: true,
-  imports: [PopupComponent, CommonModule, HighlightDoneTodosDirective, RouterModule],
+  imports: [PopupComponent, CommonModule, HighlightDoneTodosDirective, RouterModule, SortFilterDropdownComponent],
   templateUrl: './todos.component.html',
   styleUrl: './todos.component.css',
 })
@@ -35,11 +35,11 @@ export class TodosComponent {
   }
   
   openEdit(title: string, id: Todo) {
-    this.popup.openEdit(title, id);
+    this.popup.open(title, '', 'editTodo', undefined, id);
   }
 
   onPopupClosed() {
- */    this.applyFilterandSort();
+     this.applyFilterandSort();
     console.log('Popup wurde geschlossen');
   }
 
@@ -58,9 +58,11 @@ export class TodosComponent {
     }
 
     this.applyFilterandSort();
-    console.log('OnInit');
+    this.popup.checkForReminders();
+
   });
   }
+  
   
   //Asking the method to createTask to take the Todo without the bereichsId(as it is not manually filled in by the user) and setting the bereichsid ourselves from above.
   createTask(taskData: Omit<Todo, 'bereichsId'>) {
@@ -95,8 +97,12 @@ export class TodosComponent {
   }
 
   onReminderClosed(): void {
+    console.log('Reminder wurde geschlossen');
+    }
+  
 
-    console.log('Reminder wurde geschlossen');}
+  onFilter(filter: string | { from: string, to: string }) {
+
     if (typeof filter === 'string' && filter === '') {
       this.actualFilter = '';
       this.dateFrom = '';
@@ -112,6 +118,7 @@ export class TodosComponent {
     }
     this.applyFilterandSort()
   }
+  
 
   applyFilterandSort() {
     let todos = this.todoService.loadTodos();
@@ -140,5 +147,6 @@ export class TodosComponent {
   getBool(ascend: boolean) {
     this.ascending = ascend;
     this.applyFilterandSort();
+    }
   }
-}
+

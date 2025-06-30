@@ -1,7 +1,6 @@
 
-<h1>Bereiche</h1>
 
-<div class="mb-3 d-flex gap-2">
+<div class="newBereiche">
   <input
     [(ngModel)]="newBereich"
     placeholder="Neuer Bereich"
@@ -37,4 +36,4 @@
   <button class="carousel-button next" (click)="nextSlide()">›</button>
 </div>
 
-<app-popup (bereichEdited)="handleBereichEdit($event)"></app-popup>
+<app-popup></app-popup>

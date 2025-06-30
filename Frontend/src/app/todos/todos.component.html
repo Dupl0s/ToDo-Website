@@ -10,46 +10,7 @@
         ToDo Hinzufügen
       </button>
       <app-popup (closed)="onPopupClosed()"></app-popup>
-      <app-reminder (closed)="onReminderClosed()"></app-reminder>
-      <div class="dropdown">
-        <button
-          class="btn btn-secondary dropdown-toggle"
-          type="button"
-          data-bs-toggle="dropdown"
-          aria-expanded="false"
-        >
-          Sortieren nach
-          <span *ngIf="actualSort">{{ actualSort }}</span>
-        </button>
-        <ul class="dropdown-menu">
-          <li>
-            <a
-              (click)="sortDeadline()"
-              class="dropdown-item"
-              [class.active]="actualSort === 'Deadline'"
-              >Deadline</a
-            >
-          </li>
-          <li>
-            <a
-              (click)="sortSchwierig()"
-              class="dropdown-item"
-              [class.active]="actualSort === 'Schwierigkeit'"
-              >Schwierigkeit</a
-            >
-          </li>
-          <li>
-            <a
-              (click)="sortPrio()"
-              class="dropdown-item"
-              [class.active]="actualSort === 'Priorität'"
-              >Priorität</a
-            >
-          </li>
-        </ul>
-      </div>
       <button routerLink="/dustbin" class="btn btn-warning">Papierkorb</button>
-      <app-popup (taskCreated)="createTask($event)"  (closed)="onPopupClosed()" #popup></app-popup>
       <app-sort-filter-dropdown [title]="'Sortieren nach'" [options]="[
       { label: 'Deadline', value: 'deadline'},
       {label: 'Priorität', value: 'importance'},
@@ -72,7 +33,6 @@
   Zurück
 </button>
     </div>
-          <app-popup (closed)="onPopupClosed()"></app-popup>
 
   </nav>
   <h3 class="my-3">{{ bereichName }}</h3>

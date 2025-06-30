@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, ViewChild } from "@angular/core";
 import { ActivatedRoute, NavigationEnd, Router, RouterLink, RouterModule, RouterOutlet } from "@angular/router";
 import { filter } from "rxjs/operators";
 
@@ -10,8 +10,10 @@ import { filter } from "rxjs/operators";
   styleUrl: "./app.component.css"
 })
 export class AppComponent {
+
   title = "ToDo Website";
   urlName: string | null = '';
+
   constructor(private router: Router, private route: ActivatedRoute) {}
   ngOnInit(): void {
     // Auf jede Navigation hören
@@ -25,10 +27,15 @@ export class AppComponent {
           case 'todos':
             this.urlName = 'To-Do`s';
             break;
-         //Beispiel
           case 'dustbin':
           this.urlName = 'Dustbin';
           break;
+          case 'calendar':
+            this.urlName = 'Calendar';
+            break;
+          case 'categories':
+            this.urlName = 'Categories';
+            break;
           default:
             this.urlName = 'Home';
             break;

@@ -17,7 +17,6 @@ export const routes: Routes = [/*{
 {path: "todos", component: TodosComponent},
 { path: "dustbin", component: DustbinComponent },
 { path: '', component: HomeComponent },
-{path: 'calendar', component: CalendarComponent}
+{path: 'calendar', component: CalendarComponent},
 { path: 'dustbin/:id', component: DustbinComponent },
-{ path: '', component: HomeComponent }
 ];

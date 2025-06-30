@@ -15,6 +15,13 @@
       transform: translateX(-10px);
   }
 }
+.newBereiche {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 20%;
+  padding: 1rem;
+}
 
 .carousel-track {
   flex:1;

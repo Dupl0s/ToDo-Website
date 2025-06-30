@@ -56,7 +56,8 @@ export class CategoriesComponent {
   }
 
   editCategories(updatedBereich: Bereich){
-    this.popup.openBereichEdit('Bereich bearbeiten', updatedBereich);
+    //this.popup.openBereichEdit('Bereich bearbeiten', updatedBereich);
+    this.popup.open('Bereich bearbeiten', '', 'editBereich', updatedBereich);
 
   }
 
