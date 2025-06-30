@@ -5,6 +5,7 @@ import { User } from '../model/user.type';
 import { CommonModule } from '@angular/common';
 import { emailDomainValidator } from '../validators/mail.validator';
 import { Router } from '@angular/router';
+import { passwordRegexValidator } from '../validators/passwort.validator';
 
 @Component({
   selector: 'app-registration',
@@ -16,7 +17,7 @@ export class RegistrationComponent {
   registrationForm = new FormGroup({
     name: new FormControl('', [Validators.minLength(4)]),
     email: new FormControl('', [Validators.required, Validators.email, emailDomainValidator]),
-    password: new FormControl('', [Validators.minLength(8), Validators.required])
+    password: new FormControl('', [Validators.minLength(8), Validators.required, passwordRegexValidator])
   });
 
   userService = inject(UserService)
