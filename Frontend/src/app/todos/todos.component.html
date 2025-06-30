@@ -1,6 +1,7 @@
 <div class="container-fluid">
   <nav class="navbar bg-body-tertiary">
-    <div class="container-fluid-navbar d-flex align-items-center gap-3">
+    <div class="container-fluid-navbar d-flex align-items-center gap-3 w-100">
+      <div class="d-flex align-items-center gap-3 flex-wrap">
       <!--<h1 class="navbar-brand mb-0 h1">Projekt</h1>-->
       <button
         (click)="
@@ -29,9 +30,10 @@
       </app-sort-filter-dropdown>
       <button [routerLink]="['/dustbin', bereichsId]" class="btn btn-warning dustbin-btn" *ngIf="bereichsId">
   Papierkorb</button>
-       <button routerLink="/categories" class="btn btn-secondary back-btn">
+       <button routerLink="/categories" class="btn btn-secondary back-btn ms-auto">
   Zurück
 </button>
+</div>
     </div>
 
   </nav>

@@ -3,13 +3,23 @@
     color: white;
     width:auto;
     font-size:16px;
+    border: 0px ;
+    border-radius: 8px;
+    padding: 10px 20px;
+    margin: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.btn-dark:hover{
+  
 }
 .btn-primary{
     background-color: #f4e9ae;
     color: black;
     width: auto;
-    border-color: #b8ab5e;
-    border: 2px solid #b8ab5e;
+    border: 0px;
     border-radius: 8px;
     padding: 10px 20px;
     margin: 5px;
@@ -29,6 +39,13 @@
   flex-wrap: wrap;
   padding: 1rem;
   gap: 21px;
+  transition-property: opacity, transform;
+    transition-duration: 1500ms;
+
+    @starting-style {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
 }
 
 .dustbin-card {

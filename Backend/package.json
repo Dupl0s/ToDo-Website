@@ -12,17 +12,18 @@
     "format": "prettier --write src/**/*.ts"
   },
   "dependencies": {
-    "express": "latest"
+    "express": "^5.1.0",
+    "ts-node": "^10.9.2"
   },
   "devDependencies": {
-    "@types/express": "latest",
-    "@types/node": "latest",
+    "@types/express": "^4.17.17",
+    "@types/node": "^24.0.4",
     "@vitest/ui": "latest",
     "eslint": "latest",
     "eslint-config-prettier": "latest",
     "nodemon": "latest",
     "prettier": "latest",
-    "typescript": "latest",
+    "typescript": "^5.7.3",
     "typescript-eslint": "latest",
     "vitest": "latest"
   }

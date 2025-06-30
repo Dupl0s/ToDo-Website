@@ -7,6 +7,13 @@
     class="form-control w-auto"
   />
   <button #addbtn (click)="addBereiche(addbtn)" class="btn2">Hinzufügen</button>
+  <button [routerLink]="['']" class="back-btn " style="width: 120px; height: 45px">
+  Home
+  </button>
+  <button [routerLink]="['/todos']" class="back-btn2 " style=" width: 130px;
+  height: 45px;" >
+  To-Dos
+  </button>
 </div>
 
 <div class="carousel-container">
