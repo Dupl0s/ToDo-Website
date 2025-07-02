@@ -33,7 +33,7 @@ export class LoginComponent {
               "Hallo " + user.username + "!"
             );
             // Zur ToDo-Seite navigieren:
-            this.router.navigate(['/todos']);
+            this.router.navigate(['/categories']);
           }
         },
         error: (err) => {

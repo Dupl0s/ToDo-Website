@@ -1,4 +1,4 @@
-import { Component, inject, signal, ViewChild } from '@angular/core';
+import { Component, inject, Output, signal, viewChild, ViewChild } from '@angular/core';
 import { TodoService } from '../services/todo.service';
 import { Todo } from '../model/todo.type';
 import { HighlightDoneTodosDirective } from '../directives/highlight-done-todos.directive';
@@ -26,44 +26,46 @@ export class TodosComponent {
   ascending: boolean = false;
   dateFrom: string = '';
   dateTo: string = '';
-  bereichName='';
+  bereichName = '';
 
-  constructor(private route: ActivatedRoute, private categoriesService: CategoriesService) {}
+  justCompletedId: number | null = null;
+
+  constructor(private route: ActivatedRoute, private categoriesService: CategoriesService) { }
 
   openPopup(title: string, text: string) {
     this.popup.open(title, text, 'default');
   }
-  
+
   openEdit(title: string, id: Todo) {
     this.popup.open(title, '', 'editTodo', undefined, id);
   }
 
   onPopupClosed() {
-     this.applyFilterandSort();
+    this.applyFilterandSort();
     console.log('Popup wurde geschlossen');
   }
 
   ngOnInit() {
-/*     this.arrayTodos = this.todoService.loadTodos();
- */    
-  this.todoService.connectBackend().subscribe((data) => console.log(data.message));
+    /*     this.arrayTodos = this.todoService.loadTodos();
+     */
+    this.todoService.connectBackend().subscribe((data) => console.log(data.message));
 
-  this.route.paramMap.subscribe(params => {
-    const id = params.get('id');
-    this.bereichsId = id ? Number(id) : null;
+    this.route.paramMap.subscribe(params => {
+      const id = params.get('id');
+      this.bereichsId = id ? Number(id) : null;
 
-    if (this.bereichsId !== null) {
-      const bereich = this.categoriesService.getBereiche().find(b => b.id === this.bereichsId);
-      this.bereichName = bereich ? bereich.name : 'Unbekannter Bereich';
-    }
+      if (this.bereichsId !== null) {
+        const bereich = this.categoriesService.getBereiche().find(b => b.id === this.bereichsId);
+        this.bereichName = bereich ? bereich.name : 'Unbekannter Bereich';
+      }
 
-    this.applyFilterandSort();
-    this.popup.checkForReminders();
+      this.applyFilterandSort();
+      this.popup.checkForReminders();
 
-  });
+    });
   }
-  
-  
+
+
   //Asking the method to createTask to take the Todo without the bereichsId(as it is not manually filled in by the user) and setting the bereichsid ourselves from above.
   createTask(taskData: Omit<Todo, 'bereichsId'>) {
     const newTask = {
@@ -78,6 +80,18 @@ export class TodosComponent {
   toggleCompleted(todo: Todo) {
     todo.completed = !todo.completed;
     localStorage.setItem('todos', JSON.stringify(this.arrayTodos));
+    if (todo.completed) {
+      this.justCompletedId = todo.id;
+      console.log('justCompletedId gesetzt:', this.justCompletedId);
+      // Nach kurzer Zeit zurücksetzen, damit das Flag nur kurzzeitig true ist
+      setTimeout(() => {
+        this.justCompletedId = null;
+      }, 2000);
+    } else {
+      this.justCompletedId = null;
+      console.log('justCompletedId zurückgesetzt');
+
+    }
   }
 
   deleteTodo(todoID: number) {
@@ -98,8 +112,8 @@ export class TodosComponent {
 
   onReminderClosed(): void {
     console.log('Reminder wurde geschlossen');
-    }
-  
+  }
+
 
   onFilter(filter: string | { from: string, to: string }) {
 
@@ -118,12 +132,12 @@ export class TodosComponent {
     }
     this.applyFilterandSort()
   }
-  
+
 
   applyFilterandSort() {
     let todos = this.todoService.loadTodos();
-    if (this.bereichsId !==null){
-      todos= todos.filter(todo=> todo.bereichsId===this.bereichsId);
+    if (this.bereichsId !== null) {
+      todos = todos.filter(todo => todo.bereichsId === this.bereichsId);
     }
     if (this.actualFilter === 'true' || this.actualFilter === 'false') {
       todos = this.todoService.filterBy(this.actualFilter, todos);
@@ -147,6 +161,6 @@ export class TodosComponent {
   getBool(ascend: boolean) {
     this.ascending = ascend;
     this.applyFilterandSort();
-    }
   }
+}
 

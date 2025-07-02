@@ -1,5 +1,4 @@
-import { Component, ViewChild } from "@angular/core";
-import { Component, inject } from "@angular/core";
+import { Component, ViewChild, inject } from "@angular/core";
 import { ActivatedRoute, NavigationEnd, Router, RouterLink, RouterModule, RouterOutlet } from "@angular/router";
 import { filter } from "rxjs/operators";
 import { CommonModule } from "@angular/common";

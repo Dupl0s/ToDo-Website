@@ -12,7 +12,8 @@
     "format": "prettier --write src/**/*.ts"
   },
   "dependencies": {
-    "express": "latest"
+    "express": "latest",
+    "zod": "^3.25.67"
   },
   "devDependencies": {
     "@types/express": "latest",

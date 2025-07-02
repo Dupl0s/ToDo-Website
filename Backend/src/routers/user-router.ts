@@ -99,11 +99,11 @@ export const buildUserRouter = (userRepo: UserRepository) => {
             else {
                 const UserId = userRepo.findUserWithMail(email);
                 if (UserId) {
-                    res.status(401).json({ message: "User mit Mail gefunden, aber falsches Passwort." })
+                    res.status(401).json({ message: "User mit Mail gefunden, aber falsches Passwort. Passwort vergessen?" })
                 }
                 else {
                     console.log("No User arrived")
-                    res.status(404).json({ message: "Kein Benutzer mit dieser Mailadresse vorhanden." })
+                    res.status(404).json({ message: "Kein Benutzer mit dieser Mailadresse vorhanden. Willst du dich registrieren?" })
                 }
             }
         }

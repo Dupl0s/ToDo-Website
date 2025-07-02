@@ -10,7 +10,6 @@ import { UserEditComponent } from './user-edit/user-edit.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
 import { CategoriesComponent } from './categories/categories.component';
 
-
 export const routes: Routes = [/*{
     path: 'todos',
     loadComponent: () => {
@@ -27,9 +26,9 @@ export const routes: Routes = [/*{
 {path: 'login', component: LoginComponent},
 {path: 'registration', component: RegistrationComponent},
 {path: 'password-reset', component: PasswordResetComponent},
-{path: 'user-edit', component: UserEditComponent, canActivate: [LoggedActivate]}
-{path: "categories", component: CategoriesComponent},
-{path: "todos/:id", component: TodosComponent},
-{path: 'calendar', component: CalendarComponent},
-{ path: 'dustbin/:id', component: DustbinComponent },
+{path: 'user-edit', component: UserEditComponent, canActivate: [LoggedActivate]},
+{path: "categories", component: CategoriesComponent, canActivate: [LoggedActivate]},
+{path: "todos/:id", component: TodosComponent, canActivate: [LoggedActivate]},
+{path: 'calendar', component: CalendarComponent, canActivate: [LoggedActivate]},
+{ path: 'dustbin/:id', component: DustbinComponent, canActivate: [LoggedActivate] }
 ];

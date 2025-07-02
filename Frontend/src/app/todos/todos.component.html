@@ -2,11 +2,9 @@
   <nav class="navbar bg-body-tertiary">
     <div class="container-fluid-navbar d-flex align-items-center gap-3">
       <!--<h1 class="navbar-brand mb-0 h1">Projekt</h1>-->
-      <button
-        (click)="
+      <button (click)="
           openPopup('ToDo hinzufügen', 'Fügen Sie Ihr geplantes ToDo hinzu')
-        " *ngIf="bereichsId"
-      >
+        " *ngIf="bereichsId">
         ToDo Hinzufügen
       </button>
       <app-popup (closed)="onPopupClosed()"></app-popup>
@@ -16,29 +14,33 @@
       {label: 'Priorität', value: 'importance'},
       {label: 'Schwierigkeit', value: 'niveau'},
       {label: 'Alphabetisch', value: 'title'},
-      ]" [actualSort]="actualSort" (select)="onSort($event)" 
-      [actualAscending]="ascending" (ascend)="getBool($event)"
-      [isSortDropdown]="true">
-    </app-sort-filter-dropdown>
+      ]" [actualSort]="actualSort" (select)="onSort($event)" [actualAscending]="ascending" (ascend)="getBool($event)"
+        [isSortDropdown]="true">
+      </app-sort-filter-dropdown>
       <app-sort-filter-dropdown [title]="'Filtern nach'" [options]="[
       { label: 'Unerledigt', value: 'false'},
       {label: 'Erledigt', value: 'true'},
       {label: 'Zeitraum', value: 'date-range'},
-      ]" [actualSort]="actualFilter" (select)="onFilter($event)" 
-      [isSortDropdown]="false">
+      ]" [actualSort]="actualFilter" (select)="onFilter($event)" [isSortDropdown]="false">
       </app-sort-filter-dropdown>
       <button [routerLink]="['/dustbin', bereichsId]" class="btn btn-warning dustbin-btn" *ngIf="bereichsId">
-  Papierkorb</button>
-       <button routerLink="/categories" class="btn btn-secondary back-btn">
-  Zurück
-</button>
+        Papierkorb</button>
+      <button routerLink="/categories" class="btn btn-secondary back-btn">
+        Zurück
+      </button>
     </div>
 
   </nav>
   <h3 class="my-3">{{ bereichName }}</h3>
   <div class="todos-container">
     @for (item of applyFilterandSort(); track item.id) {
-    <div [appHighlightDoneTodos]="item.completed" class="arraycard" [ngClass]="{ done: item.completed }">
+    <div [appHighlightDoneTodos]="item.completed" class="arraycard" [ngClass]="{ done: item.completed }"
+      style="position: relative;">
+      <div *ngIf="item.id === justCompletedId" class="completed-overlay">
+        🎉 
+        <br>
+        <p>Erledigt!</p>
+      </div>
       <h4 class="card-title">{{ item.title }}</h4>
       <p class="card-text flex-grow-1">Deadline: {{ item.deadline }}</p>
       <p class="card-text flex-grow-1">Priorität: {{ item.importance }}</p>
