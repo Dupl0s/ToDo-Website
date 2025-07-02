@@ -16,7 +16,7 @@ h1 {
 }
 
 button {
-    background-color: #faeecb;
+    background-color: #f4e9ae;
     color: #23272b;
     width: auto;
     /*border-color: #b8ab5e;*/
@@ -31,8 +31,8 @@ button {
 }
   
 button:hover {
-    background-color: #ede4b5;
-    color: #23272b;
+    background-color: #b8ab5e;
+    color: white;
     border-color: #faeecb;
     transform: translateY(-2px);
 }
@@ -101,7 +101,7 @@ button:hover {
 }
 
 .arraycard .button:hover {
-    background-color: #ede4b5;
+    background-color: #b8ab5e;
     color: #23272b;
 }
 
@@ -160,11 +160,11 @@ app-sort-filter-dropdown {
 }
 
 /* Papierkorb-Button ganz rechts */
-.dustbin-btn {
-    margin-left: auto;
-    order: 98;
-}
-.back-btn{
-    order:99;
-    padding: 10px 35px;
+
+.right-buttons{
+   margin-left: auto;  /* push this whole group to the right */
+  display: flex;
+  gap: 10px;  /* space between buttons */
+  align-items: center; 
+  order:99;
 }

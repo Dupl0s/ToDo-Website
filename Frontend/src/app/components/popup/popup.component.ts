@@ -100,14 +100,11 @@ export class PopupComponent {
     if (this.mode() === 'editBereich') {
       const updateName = this.bereichName().trim();
       if (updateName) {
-        this.categoryService.handleUpdate({
-          id: this.currentBereichsId,
-          name: updateName,
-        });
-        this.bereichEdited.emit({
-          id: this.currentBereichsId,
-          name: updateName,
-        });
+          this.bereichEdited.emit({
+            id: this.currentBereichsId,
+            name: updateName,
+          });
+
       }
     }
     if (this.mode() === 'default') {

@@ -1,14 +1,24 @@
 import express from 'express';
-
-/* Im Terminal im Verzeichnis /Backend mit npm start Server auf Port 3000 starten, dann im /Frontend ng serve --proxy-config proxy.conf.json*/
+import bodyParser from 'body-parser';
+import { buildBereichRouter } from './routes/bereicheRoutes';
+import { InMemoryBereichRepository } from './repositories/InMemoryBereichRepository';
+import { BereichRepository } from './repositories/BereichRepository';
 
 const app = express();
+const PORT = 3000;
 
-app.get("/api/backend", (_req, res) => { 
-  res.json({message: "Backend Server is running"});
+app.use(bodyParser.json());
+
+const repo = new InMemoryBereichRepository();
+
+
+app.use('/api/bereiche', buildBereichRouter(repo));
+
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
 });
 
-const Port = 3000
 
-app.listen(Port);
-console.log("Server started at http://localhost:" + Port);
+
+
+

@@ -10,7 +10,6 @@
         ToDo Hinzufügen
       </button>
       <app-popup (closed)="onPopupClosed()"></app-popup>
-      <button routerLink="/dustbin" class="btn btn-warning">Papierkorb</button>
       <app-sort-filter-dropdown [title]="'Sortieren nach'" [options]="[
       { label: 'Deadline', value: 'deadline'},
       {label: 'Priorität', value: 'importance'},
@@ -27,12 +26,15 @@
       ]" [actualSort]="actualFilter" (select)="onFilter($event)" 
       [isSortDropdown]="false">
       </app-sort-filter-dropdown>
+      <div class="right-buttons">
       <button [routerLink]="['/dustbin', bereichsId]" class="btn btn-warning dustbin-btn" *ngIf="bereichsId">
   Papierkorb</button>
        <button routerLink="/categories" class="btn btn-secondary back-btn">
   Zurück
 </button>
+</div>
     </div>
+
 
   </nav>
   <h3 class="my-3">{{ bereichName }}</h3>
