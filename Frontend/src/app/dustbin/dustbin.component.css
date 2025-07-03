@@ -38,6 +38,13 @@
   flex-wrap: wrap;
   padding: 1rem;
   gap: 21px;
+  transition-property: opacity, transform;
+  transition-duration: 1500ms;
+
+  @starting-style {
+      opacity: 0;
+      transform: translateX(-10px);
+  }
 }
 
 .dustbin-card {

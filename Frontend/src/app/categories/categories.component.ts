@@ -76,26 +76,18 @@ export class CategoriesComponent {
     });
     
 }
-/*handleBereichEdit(updatedBereich: Bereich) {
-  console.log('Editing Bereich:', updatedBereich);
-  this.categoriesService.handleUpdate(updatedBereich).subscribe((updated) => {
-    console.log('Updated Bereich from backend:', updated);
-    const idx = this.bereiche.findIndex(b => b.id === updated.id);
-    if (idx !== -1) {
-      this.bereiche[idx] = updated;
-    }
-  });
-}*/
 
   prevSlide() {
     if (this.bereiche.length > 0) {
-      this.currentIndex = (this.currentIndex - 1 + this.bereiche.length) % this.bereiche.length;
+      this.currentIndex = Math.max(this.currentIndex - 3, 0);
     }
   }
 
   nextSlide() {
     if (this.bereiche.length > 0) {
-      this.currentIndex = (this.currentIndex + 1) % this.bereiche.length;
+    const maxIndex = this.bereiche.length - 3;
+    this.currentIndex = Math.min(this.currentIndex + 3, maxIndex);
+
     }
   }
 

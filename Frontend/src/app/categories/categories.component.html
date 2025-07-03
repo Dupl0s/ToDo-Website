@@ -23,7 +23,7 @@
     @for (bereich of bereiche; let i = $index; track bereich.id) {
       <!--Traversing through the Bereiche. Whenever the next button is clicked, it set the
        currentindex to the new idex and only displays that particular Bereich-->
-      @if (i === currentIndex) {
+      @if (i >= currentIndex && i < currentIndex + 3) {
         <li class="slide">
           <button class="bereich-item" (click)="goToTodos(bereich.id)">
             <div class="card text-black rounded-3 p-3">

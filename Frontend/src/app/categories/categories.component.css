@@ -1,12 +1,15 @@
 .carousel-container {
-  position: relative;
-  width: 100%;
-  max-width: 500px;
-  margin: .5rem auto; 
+
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: -20px;
+  gap: 1rem;
+  width: 100%;
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  position: relative;
+  box-sizing: border-box;
   transition-property: opacity, transform;
   transition-duration: 1500ms;
 
@@ -31,14 +34,14 @@
 }
 
 .carousel-track {
-  flex:1;
-  display: flex;
-  overflow: hidden;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
+ display: flex;
   gap: 1rem;
-  
+  overflow: hidden;
+  flex: 1;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
 }
 
 .carousel-button {
@@ -52,11 +55,12 @@
   padding: 0.5rem 1rem;
   transition: transform 0.2s ease;
   z-index: 10;
-  top:-20px;
+  top:-55px;
 }
 
 .slide {
-  flex: 0 0 100%;
+  flex: 0 0 calc(33.333% - 1rem);
+  margin:0 0.5rem;
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -75,8 +79,8 @@
   background-color: #ed6276;
   border: none;
   color: black;
-  width: 80%;
-  height: 60vh;
+  width: 70%;
+  height: 50vh;
   border-radius: 10px;
   text-align: center;
   cursor: pointer;
@@ -84,6 +88,7 @@
   flex-direction: column;
   justify-content: flex-start; 
   padding-top: 3rem;
+  top: 50% ;
 }
 
 .bereich-item .card {
@@ -155,6 +160,7 @@ width:auto;
 }
 
 .btn {
+  position:relative;
   background-color: #f4e9ae;
   color: black;
   width: 35%;
@@ -167,7 +173,7 @@ width:auto;
   font-weight: bold;
   cursor: pointer;
   transition: all 0.3s ease;
-  margin-top: 40px;
+  margin-top: 20px;
 }
 .btn:hover, .btn2:hover, .back-btn:hover, .back-btn2:hover{
     background-color: #b8ab5e;

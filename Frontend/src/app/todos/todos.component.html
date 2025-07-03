@@ -45,7 +45,7 @@
       <p class="card-text flex-grow-1">Deadline: {{ item.deadline }}</p>
       <p class="card-text flex-grow-1">Priorität: {{ item.importance }}</p>
       <p class="card-text flex-grow-1">Schwierigkeit: {{ item.niveau }}</p>
-      <div class="btn-toolbar" role="toolbar" *ngIf="bereichsId">
+      <div class="btn-toolbar" role="toolbar" >
         <button class="btn btn-primary" (click)="toggleCompleted(item)" type="button">
           <img src="assets/check_circle.svg" alt="Done" />
         </button>
