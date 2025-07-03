@@ -1,176 +1,84 @@
-html, body {
-  margin: 0;
-  padding: 0;
-  overflow: hidden; /* Prevent page scroll */
-}
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap');
 
-.container-fluid {
-  position: relative;
+.home-container {
+  position:relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 60px 5% 0 10%;
   background-color: white;
-  overflow: hidden; /* Keep your existing */
-   /* Or slightly more than tallest card + top */
-  box-sizing: border-box;
+  transition-property: opacity, transform;
+  transition-duration: 1500ms;
+
+  @starting-style {
+      opacity: 0;
+      transform: translateX(-10px);
+  }
+  
 }
 
-h1, h2, h3, h4, h5 {
-  margin: 0.3rem 0;
+.home-text {
+  flex: 1;
+  max-width: 50%;
+  padding-top: 3%;
+  
 }
-h1{
-    position: absolute;
-    left:600px;
-    font-weight: 900;
-    top: 0px;
-    font-size:60px;
+.filled-text, .outlined-text, .home-text h4{
+  font-family: 'Poppins', sans-serif;
 }
-
-h2{
-    position: absolute;
-    font-weight: 900;
-    left:700px;
-    top:280px;
-    font-size:50px;
-    
-}
-
-h3{
-    position: absolute;
-    font-weight: 900;
-    right:250px;
-    top:220px;
-    font-size:50px;
-}
-
-h4{
-    position: absolute;
-    font-weight: 700;
-    left:700px;
-    top:130px;
-    font-size:40px;
-}
-
-h5{
-    position: absolute;
-    font-weight: 700;
-    left:380px;
-    top:200px;
-    font-size:40px;
-}
-
-
-/* Shared flip card styles */
-.flip-card {
-  position: absolute;
-  width: 140px;
-  height: 180px;
-  perspective: 1000px;
-  cursor: pointer;
-}
-
-.flip-inner {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  transform-style: preserve-3d;
-  transition: transform 1.2s;
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.flip-card:hover .flip-inner {
-  transform: rotateY(180deg);
-}
-
-.flip-front,
-.flip-back {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
-  border-radius: 8px;
-}
-
-.flip-back {
-  transform: rotateY(180deg);
-
-}
-
-.flip-back img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 8px;
-}
-
-.card1-front {
-  background-color: #FFEC9F;
-}
-
-.card1-back {
-  background-color: #FFEC9F;
-}
-
-.card2-front {
-  background-color: #ed6276;
-}
-
-.card2-back {
-  background-color: #ed6276;
-}
-
-.card3-front {
-  background-color: #FFEC9F;
-}
-
-.card3-back {
-  background-color: #FFEC9F;
-}
-
-.card4-front {
-  background-color: #FFEC9F;
-}
-
-.card4-back {
-  background-color: #FFEC9F;
-}
-
-.card5-back {
-  background-color: #ed6276;
-}
-
-.card5-front {
-  background-color: #ed6276;
-}
-
-
-.flip-card:nth-child(1) {
-  top: 20px;
-  left: 350px;
-}
-
-.flip-card:nth-child(2) {
-  top:200px;
-  left:150px;
-}
-
-.flip-card:nth-child(3) {
-  top:290px;
-  left:500px;
-}
-
-.flip-card:nth-child(4) {
-  top:60px;
-  right:205px;
-}
-
-.flip-card:nth-child(5) {
-  top:330px;
-  right:350px;
-}
-
-/* Text block in the center */
-.container-fluid .position-absolute {
+.filled-text {
+  font-size: 3rem;
+  font-weight:800;
   color: black;
-  text-align: center;
-  pointer-events: none;
+  /*margin-bottom: 20px;*/
+  margin:35px; /*35px*/
+  margin-bottom:10px;
+}
+.outlined-text{
+  font-size:3.5rem;
+  font-weight:800;
+   color:white; 
+  -webkit-text-stroke: 1.2px #0a0a23;
+  margin-bottom:40px;
+  margin-left: 35px;
 }
 
+.home-text h4 {
+  font-size: 24px;
+  color: black;
+  padding-left:40px;
+}
+
+.home-text button {
+  padding: 12px 24px;
+  background-color: #f4e9ae;
+  color: black;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  font-size: 17px;
+  margin:10px 0 0 35px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.home-text button:hover {
+  background-color: #b8ab5e;
+    color: white;
+    border-color: #f4e9ae;
+    transform: translateY(-2px);
+}
+
+.home-image {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.home-image img {
+  max-width: 500px;
+  width:100%;
+  height: auto;
+}
