@@ -12,16 +12,24 @@
     "format": "prettier --write src/**/*.ts"
   },
   "dependencies": {
-    "express": "latest"
+    "@neondatabase/serverless": "^1.0.1",
+    "@vercel/postgres": "^0.10.0",
+    "dotenv": "^17.0.1",
+    "drizzle-orm": "^0.44.2",
+    "express": "latest",
+    "pg": "^8.16.3"
   },
   "devDependencies": {
     "@types/express": "latest",
     "@types/node": "^24.0.10",
+    "@types/pg": "^8.15.4",
     "@vitest/ui": "latest",
+    "drizzle-kit": "^0.31.4",
     "eslint": "latest",
     "eslint-config-prettier": "latest",
     "nodemon": "latest",
     "prettier": "latest",
+    "tsx": "^4.20.3",
     "typescript": "latest",
     "typescript-eslint": "latest",
     "vitest": "latest"
