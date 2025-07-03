@@ -4,7 +4,7 @@ import express from 'express';
 
 const app = express();
 
-app.get("/", (_req, res) => { 
+app.get("/testing", (_req, res) => { 
   res.json({message: "Backend Server is running"});
 });
 
