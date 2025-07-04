@@ -1,5 +1,5 @@
 import { updateUser } from "..";
-import { createUserSchema, emailSchema, updateUserSchema, userSchema } from "../models/user";
+import { createUserSchema, emailSchema, updateUserSchema, userIdSchema, userSchema } from "../models/user";
 import { UserRepository } from "../repositories/user-repository";
 import express, { Request, Response } from 'express';
 import { z } from "zod";
@@ -136,5 +136,20 @@ export const buildUserRouter = (userRepo: UserRepository) => {
             return;
         }
     });
+    /* Delete User */
+    router.delete("/:userId", (req: Request, res: Response) => {
+        const { userId } = req.params;
+        const {success, data, error} = userIdSchema.safeParse(userId);
+        if (success) {
+            const deleted = userRepo.deleteUser(userId);
+            if (deleted) {
+                res.status(200).json({message: "User gelöscht"})
+            }
+            else res.status(400).json({message: "Löschen nicht möglich"})
+        }
+        if (!success) {
+            res.status(403).json({message: "Falscher Input", error})
+        }
+    })
     return router;
 }

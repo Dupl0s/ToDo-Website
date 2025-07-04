@@ -39,7 +39,7 @@ export class UserService {
     localStorage.removeItem('user');
     return this.http.post<User>(`${this.apiUrl}/login`, { email, password })
       .pipe(map(user => {
-        localStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem('userId', JSON.stringify(user.userId));
         this.userSubject.next(user);
         return user;
       }));
@@ -78,6 +78,15 @@ export class UserService {
   updateLocalUser(user: User) {
     localStorage.setItem('user', JSON.stringify(user));
     this.userSubject.next(user);
+  }
+
+  delete(userId: string) {
+    return this.http.delete(`${this.apiUrl}/${userId}`)
+    .pipe(map(u => {
+      if (userId === this.userSubject.value?.userId) 
+        this.logout();
+      return u;
+    }))
   }
 }
 

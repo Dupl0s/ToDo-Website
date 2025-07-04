@@ -14,3 +14,5 @@ export const updateUserSchema = createUserSchema.partial();
 export const emailSchema = z.object({
     email: z.string().email()
 });
+
+export const userIdSchema = z.string();

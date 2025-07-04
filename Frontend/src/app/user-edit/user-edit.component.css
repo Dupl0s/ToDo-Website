@@ -6,5 +6,18 @@
     box-sizing: border-box;
 }
 .btn {
-    margin-top: 2%;
+    margin: 2% 3%;
+}
+@media (max-width: 768px) and (max-height: 440px) {
+    .form {
+        padding: 1%;
+        padding-left: 10%;
+        padding-right: 10%;
+        margin: 2%;
+        box-sizing: border-box;
+    }
+
+    input {
+        width: 60%;
+    }
 }

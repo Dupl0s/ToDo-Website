@@ -1,12 +1,13 @@
 import express from 'express';
 import { z } from "zod"
-import { createUserSchema, updateUserSchema, userSchema } from "./models/user"
+import { createUserSchema, updateUserSchema, userIdSchema, userSchema } from "./models/user"
 import { InMemoryUserRepo } from './repositories/in-memory-user-repository';
 import { buildUserRouter } from './routers/user-router';
 
 export type User = z.infer<typeof userSchema>;
 export type createUser = z.infer<typeof createUserSchema>;
-export type updateUser = z.infer<typeof updateUserSchema>
+export type updateUser = z.infer<typeof updateUserSchema>;
+export type userIdSchema = z.infer<typeof userIdSchema>;
 
 const localUser = [
     {

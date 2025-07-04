@@ -14,9 +14,11 @@ import { User } from '../model/user.type';
 })
 export class UserEditComponent {
   user?: User | null;
-  constructor(    private userService: UserService) {
-    this.userService.user.subscribe(x => {console.log('User aus Service:', x);
-      this.user = x})
+  constructor(private userService: UserService, private router: Router) {
+    this.userService.user.subscribe(x => {
+      console.log('User aus Service:', x);
+      this.user = x
+    })
   }
 
   editForm = new FormGroup({
@@ -37,13 +39,25 @@ export class UserEditComponent {
     if (this.user) {
       this.userService.updateUser(String(this.user.userId), updateData).subscribe({
         next: (response) => {
-            this.userService.updateLocalUser(response.user);
-            alert(
-              response.user.username + " geupdatet!"
-            );
+          this.userService.updateLocalUser(response.user);
+          alert(
+            response.user.username + " geupdatet!"
+          );
         },
         error: err => alert('Fehler beim Update: ' + err.error?.message)
       });
+    }
+  }
+  delete() {
+    if (this.user){
+      /* TODO: popup: are you sure? */
+      this.userService.delete(this.user.userId).subscribe({
+        next: (response) => {
+          alert(response)
+          this.router.navigate(['/'])
+        },
+        error:err => alert(err),
+      })
     }
   }
 }
