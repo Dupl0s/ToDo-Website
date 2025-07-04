@@ -32,17 +32,16 @@ const localUser = [
 
 
 const app = express();
-const Port = 3000;
+const port = 3000;
 
-app.use(express.json());
+app.get("/api/backend", (_req, res) => { 
+  res.json({message: "Backend Server is running"});
+});
 
+const Port = 3000
 const userRepo = new InMemoryUserRepo(localUser);
 const userRouter = buildUserRouter(userRepo);
 app.use("/user", userRouter);
-
-app.get("/api/backend", (_req, res) => {
-    res.json({ message: "Hello Backend!" });
-});
 
 app.listen(Port);
 console.log("Server started at http://localhost:" + Port);
