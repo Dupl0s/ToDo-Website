@@ -16,7 +16,7 @@ export class UserEditComponent {
   user?: User | null;
   constructor(private userService: UserService, private router: Router) {
     this.userService.user.subscribe(x => {
-      console.log('User aus Service:', x);
+      console.log('User aus Service:', x?.username);
       this.user = x
     })
   }

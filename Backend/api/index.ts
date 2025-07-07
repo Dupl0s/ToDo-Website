@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import { db } from '../src/db/index';
-import { users, todos, sections } from '../src/db/schema';
+import { todos, sections } from '../src/db/schema';
 import { userRouter } from './routers/user-router';
 import cors from 'cors'
 
@@ -10,16 +10,16 @@ app.use(cors({
   origin: "http://localhost:4200",
   credentials: true,
 }));
-//user
-app.use("/users", userRouter());
 
 const Port = 3000;
 app.listen(Port, () => {
   console.log(`Server started at http://localhost:${Port}`);
 });
 
-//todos
+//users
+app.use("/users", userRouter());
 
+//todos
 app.get("/todos", async (_req, res) => {
   try {
     const allTodos = await db.select().from(todos);
@@ -32,7 +32,6 @@ app.get("/todos", async (_req, res) => {
 
 
 //bereiche / sections
-
 app.get("/sections", async (_req, res) => {
   try {
     const allSections = await db.select().from(sections);

@@ -40,6 +40,7 @@ export class RegistrationComponent {
           } 
         },
         error: (err) => {
+          console.log(err.error.message)
           this.userService.createUser(newName, newEmail, newPassword).subscribe({
             next: (createdUser) => {
               console.log('Erfolgreich registriert:', createdUser);

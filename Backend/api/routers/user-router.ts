@@ -1,6 +1,5 @@
 import { createUserSchema, emailSchema, updateUserSchema, userIdSchema, loginSchema } from "../models/user";
-import express, { NextFunction, Request, Response } from 'express';
-import { z, ZodSchema } from "zod";
+import express, { Request, Response } from 'express';
 import { db } from "../../src/db";
 import { users } from "../../src/db/schema";
 import { randomUUID } from "crypto";
@@ -9,9 +8,9 @@ import { eq } from 'drizzle-orm';
 export const userRouter = () => {
     const router = express.Router();
 
-    /* Get all users */
     router.get("/", async (req: Request, res: Response) => {
         const { email } = req.query;
+        /* Get user by email */
         if (email) {
             const { success, data, error } = emailSchema.safeParse({ email });
             if (success) {
@@ -20,7 +19,7 @@ export const userRouter = () => {
                     const result = await db.select({ userId: users.userId }).from(users).where(eq(users.email, data.email));
                     const userId = result[0]?.userId;
                     if (userId && userId.length > 0) {
-                        res.status(200).json({ message: "Benutzer vorhanden" })
+                        res.status(200).json({ message: "Benutzer vorhanden", userId })
                     }
                     else res.status(404).json({
                         message:
@@ -36,12 +35,15 @@ export const userRouter = () => {
                 return;
             }
         }
-        try {
-            const allUsers = await db.select().from(users);
-            res.json({ users: allUsers });
-        } catch (error) {
-            const message = error instanceof Error ? error.message : String(error);
-            res.status(500).json({ message: "DB error", error: message });
+        /* Get all users */
+        if (!email) {
+            try {
+                const allUsers = await db.select().from(users);
+                res.json({ users: allUsers });
+            } catch (error) {
+                const message = error instanceof Error ? error.message : String(error);
+                res.status(500).json({ message: "DB error", error: message });
+            }
         }
     })
 
@@ -120,7 +122,7 @@ export const userRouter = () => {
                     });
                 }
                 res.status(200).json({
-                    message: "Benutzer vorhanden und verifiziert", 
+                    message: "Benutzer vorhanden und verifiziert",
                     username: user.username, email: user.email, userId: user.userId,
                 });
             } catch (error) {
