@@ -8,7 +8,6 @@
         ToDo Hinzufügen
       </button>
       <app-popup (closed)="onPopupClosed()"></app-popup>
-      <button routerLink="/dustbin" class="btn btn-warning">Papierkorb</button>
       <app-sort-filter-dropdown [title]="'Sortieren nach'" [options]="[
       { label: 'Deadline', value: 'deadline'},
       {label: 'Priorität', value: 'importance'},
@@ -23,12 +22,15 @@
       {label: 'Zeitraum', value: 'date-range'},
       ]" [actualSort]="actualFilter" (select)="onFilter($event)" [isSortDropdown]="false">
       </app-sort-filter-dropdown>
+      <div class="right-buttons">
       <button [routerLink]="['/dustbin', bereichsId]" class="btn btn-warning dustbin-btn" *ngIf="bereichsId">
-        Papierkorb</button>
-      <button routerLink="/categories" class="btn btn-secondary back-btn">
-        Zurück
-      </button>
+  Papierkorb</button>
+       <button routerLink="/sections" class="btn btn-secondary back-btn">
+  Zurück
+</button>
+</div>
     </div>
+
 
   </nav>
   <h3 class="my-3">{{ bereichName }}</h3>
@@ -45,7 +47,7 @@
       <p class="card-text flex-grow-1">Deadline: {{ item.deadline }}</p>
       <p class="card-text flex-grow-1">Priorität: {{ item.importance }}</p>
       <p class="card-text flex-grow-1">Schwierigkeit: {{ item.niveau }}</p>
-      <div class="btn-toolbar" role="toolbar" *ngIf="bereichsId">
+      <div class="btn-toolbar" role="toolbar" >
         <button class="btn btn-primary" (click)="toggleCompleted(item)" type="button">
           <img src="assets/check_circle.svg" alt="Done" />
         </button>
