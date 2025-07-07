@@ -1,7 +1,49 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+  --bg-color: #f8f5f5;
+  --text-color: #000000;
+  --popover-bg: #ffffff;
+  --popover-header-bg: #78cb99;
+  --button-bg: #f4e9ae;
+  --card-bg: #ed6276;
+  --papKorb-bg:#f4e9ae;
+}
+
+.dark-theme {
+  --bg-color: #333131;
+  --text-color: #ece8e8;
+  --popover-bg: #ffffff;
+  --popover-header-bg: #3e8e6f;
+  --button-bg: #e9dc95;
+  --card-bg: #d75d6f;
+  --papKorb-bg: #e9dc95;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+
+.popover {
+  background-color: var(--popover-bg);
+}
+
+.popover-header {
+  background-color: var(--popover-header-bg);
+}
+
+
+/*
 .popover {
     background-color: #ffffff;
 }
 .popover-header {
     background-color: #78cb99
-}
+}*/
