@@ -10,7 +10,7 @@ export class UserService {
   private userSubject: BehaviorSubject<User | null>;
   public user: Observable<User | null>;
   private http = inject(HttpClient);
-  private readonly apiUrl = '/user';
+  private readonly apiUrl = 'https://todobackend-eolkudus5-janniks-projects-e7141841.vercel.app/users';
 
 
   constructor() {
@@ -52,7 +52,7 @@ export class UserService {
   }
 
   checkMail(findEmail: string) {
-    return this.http.get<User>(`${this.apiUrl}/by-mail`, {
+    return this.http.get<User>(this.apiUrl, {
       params: { email: findEmail },
     });
   }

@@ -1,11 +1,11 @@
 import { pgTable, serial, text, uuid, boolean, integer } from 'drizzle-orm/pg-core';
 
 export const users = pgTable('users', {
-  id: serial('id').primaryKey(),
-  name: text('name').notNull(),
-  userid: uuid('userid'),
-  password: text('password'),
+  userId: uuid('userid').unique(),
+  username: text('name').notNull(),
   email: text('email'),
+/*   id: serial('id').primaryKey(),
+ */  password: text('password'),
 });
 
 export const todos = pgTable('todos', {

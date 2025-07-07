@@ -1,5 +1,5 @@
 {
-  "name": "ToDo-Backend",
+  "name": "todo-backend",
   "version": "1.0.50",
   "scripts": {
     "test": "vitest --ui",
@@ -12,15 +12,18 @@
     "format": "prettier --write src/**/*.ts"
   },
   "dependencies": {
-    "zod": "^3.25.67"
     "@neondatabase/serverless": "^1.0.1",
+    "@vercel/node": "^5.3.3",
     "@vercel/postgres": "^0.10.0",
+    "cors": "^2.8.5",
     "dotenv": "^17.0.1",
     "drizzle-orm": "^0.44.2",
     "express": "latest",
-    "pg": "^8.16.3"
+    "pg": "^8.16.3",
+    "zod": "^3.25.67"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.19",
     "@types/express": "latest",
     "@types/node": "^24.0.10",
     "@types/pg": "^8.15.4",
