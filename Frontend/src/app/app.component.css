@@ -1,8 +1,21 @@
 header {
-  background-color: #ffffff;
+  background-color: var(--bg-color);
+  color: var(--text-color);
   border-bottom: 1px solid #e0e0e0;
   padding: 1rem 2rem;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+button{
+  background-color: transparent;
+  color: var(--text-color);
+  border:0px;
+}
+
+.content {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  min-height: 100vh;
+  padding: 1rem;
 }
 
 nav {
@@ -20,7 +33,7 @@ nav .title {
   padding: 0.5rem;
   font-size: 1.8rem;
   font-weight: 600;
-  color: #333;
+  color: var(--text-color);
   text-decoration: none;
 }
 
@@ -31,7 +44,7 @@ nav .title {
 }
 
 .nav-links a {
-  color: #555;
+  color: var(--text-color);
   text-decoration: none;
   font-size: 1rem;
   padding: 0.5rem 0;

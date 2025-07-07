@@ -1,5 +1,6 @@
 <div class="container-fluid">
-  <nav class="navbar bg-body-tertiary">
+<!--COmmented out navbar because it was giving problems in dark mode--> 
+  <!--<nav class="navbar bg-body-tertiary">-->
     <div class="container-fluid-navbar d-flex align-items-center gap-3">
       <!--<h1 class="navbar-brand mb-0 h1">Projekt</h1>-->
       <button
@@ -34,9 +35,7 @@
 </button>
 </div>
     </div>
-
-
-  </nav>
+  <!--</nav>-->
   <h3 class="my-3">{{ bereichName }}</h3>
   <div class="todos-container">
     @for (item of applyFilterandSort(); track item.id) {

@@ -1,5 +1,5 @@
 button {
-    background-color: #f4e9ae;
+    background-color: var(--button-bg);
     color: black;
     width: auto;
     border-color: #b8ab5e;

@@ -1,3 +1,8 @@
+.container-fluid{
+    background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
 .card {
     background-color: rgba(250, 238, 203, 0.85);
     color: #23272b;
@@ -16,7 +21,7 @@ h1 {
 }
 
 button {
-    background-color: #f4e9ae;
+    background-color: var(--button-bg);
     color: #23272b;
     width: auto;
     /*border-color: #b8ab5e;*/
@@ -44,7 +49,7 @@ button:hover {
 }
 
 .arraycard {
-    background-color: rgba(237, 98, 118, 0.85);
+    background-color: var(--card-bg);
     color: #23272b;
     padding: 20px;
     border-radius: 10px;
@@ -52,7 +57,7 @@ button:hover {
     box-sizing: border-box;
     transition-property: opacity, transform;
     transition-duration: 1500ms;
-    border: 2px solid #c94a5e;
+    border: 2px solid #d24d61;
     font-size: 1.1rem;
     position: relative;
     backdrop-filter: blur(2px);
@@ -87,7 +92,7 @@ button:hover {
 }
 
 .arraycard .button {
-    background-color: #faeecb;
+    background-color: var(--button-bg);
     color: #23272b;
     border: 2px solid #ede4b5;
     padding: 10px 15px;
@@ -106,7 +111,7 @@ button:hover {
 }
 
 .no-todos {
-    background-color: #ffffff;
+    background-color: #ece8e8;
     border: 1px solid #e0e0e0;
     border-radius: 12px;
     padding: 1.5rem;
@@ -130,7 +135,7 @@ button:hover {
 
 .container-fluid-navbar {
     display: flex;
-    justify-items: flex-start;
+    justify-items: flex-start;      
 }
 
 .dropdown-item.active {
@@ -141,8 +146,6 @@ button:hover {
     position: sticky;
     top: 0;
     z-index: 100;
-    background: #fff;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
 }
 .container-fluid-navbar {
     display: flex;
@@ -150,6 +153,8 @@ button:hover {
     gap: 1rem;
     width: 100%;
     position: relative;
+    background-color: var(--bg-color);
+    color: var(--text-color);
 }
 .hinzu {
     order: 1;
@@ -162,9 +167,9 @@ app-sort-filter-dropdown {
 /* Papierkorb-Button ganz rechts */
 
 .right-buttons{
-   margin-left: auto;  /* push this whole group to the right */
+   margin-left: auto;  
   display: flex;
-  gap: 10px;  /* space between buttons */
+  gap: 10px;  
   align-items: center; 
   order:99;
 }
