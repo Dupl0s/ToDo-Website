@@ -55,8 +55,13 @@ export class AppComponent {
   title = "ToDo Website";
   urlName: string | null = '';
   isDark = false;
+  user?: User | null;
+  userService = inject(UserService);
 
-  constructor(private router: Router, private route: ActivatedRoute) {}
+  constructor(private router: Router, private route: ActivatedRoute) {
+    this.userService.user.subscribe(x => this.user = x);
+  }
+
 
   ngOnInit(): void {
     // Set theme based on localStorage

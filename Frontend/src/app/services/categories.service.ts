@@ -9,7 +9,7 @@ import { TodoService } from './todo.service';
 })
 export class CategoriesService {
   private http = inject(HttpClient);
-  private apiUrl = 'https://todobackend-baw9jalg6-janniks-projects-e7141841.vercel.app/sections';
+  private apiUrl = 'https://todobackend-35fl5cgkl-janniks-projects-e7141841.vercel.app/sections';
 
   constructor(private todoService: TodoService){}
 

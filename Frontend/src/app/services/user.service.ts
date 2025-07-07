@@ -10,7 +10,7 @@ export class UserService {
   private userSubject: BehaviorSubject<User | null>;
   public user: Observable<User | null>;
   private http = inject(HttpClient);
-  private readonly apiUrl = 'https://todobackend-eolkudus5-janniks-projects-e7141841.vercel.app/users';
+  private readonly apiUrl = 'https://todobackend-35fl5cgkl-janniks-projects-e7141841.vercel.app/users';
 
 
   constructor() {
