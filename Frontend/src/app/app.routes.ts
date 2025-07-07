@@ -12,7 +12,7 @@ export const routes: Routes = [/*{
         return import('./todos/todos.component').then((m) => m.TodosComponent)
     }
 }*/
-{path: "categories", component: CategoriesComponent},
+{path: "sections", component: CategoriesComponent},
 {path: "todos/:id", component: TodosComponent},
 {path: "todos", component: TodosComponent},
 { path: "dustbin", component: DustbinComponent },

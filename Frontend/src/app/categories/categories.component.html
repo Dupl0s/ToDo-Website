@@ -27,6 +27,9 @@
         <li class="slide">
           <button class="bereich-item" (click)="goToTodos(bereich.id)">
             <div class="card text-black rounded-3 p-3">
+              <!--<span class="undone-todos" *ngIf="bereich.incompleteCount && bereich.incompleteCount>0">
+                {{bereich.incompleteCount}}
+              </span>-->
               <h5 class="card-title fw-bold">{{ bereich.name }}</h5>
             </div>
             <div class="text-center mt-2">

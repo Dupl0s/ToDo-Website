@@ -72,7 +72,11 @@ export class CategoriesComponent {
 
   handleBereichEdit(updatedBereich: Bereich) {
   this.categoriesService.handleUpdate(updatedBereich).subscribe(() => {
-      this.loadBereiche();
+      /*this.loadBereiche();*/
+      const idx = this.bereiche.findIndex(b => b.id === updatedBereich.id);
+    if (idx !== -1) {
+      this.bereiche[idx] = updatedBereich;
+    }
     });
     
 }

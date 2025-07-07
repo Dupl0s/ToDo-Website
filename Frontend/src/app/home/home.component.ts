@@ -13,6 +13,6 @@ export class HomeComponent {
   constructor(private router: Router) {}
 
   navigateToBereiche() {
-    this.router.navigate(['/categories']);
+    this.router.navigate(['/sections']);
   }
 }

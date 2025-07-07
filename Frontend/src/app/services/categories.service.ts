@@ -9,13 +9,14 @@ import { TodoService } from './todo.service';
 })
 export class CategoriesService {
   private http = inject(HttpClient);
-  private apiUrl = '/api/bereiche';
+  private apiUrl = 'https://todobackend-baw9jalg6-janniks-projects-e7141841.vercel.app/sections';
 
   constructor(private todoService: TodoService){}
 
   getBereiche(): Observable<Bereich[]> {
     return this.http.get<Bereich[]>(this.apiUrl);
   }
+
 
   addBereich(name: string): Observable<Bereich> {
     return this.http.post<Bereich>(this.apiUrl, { name });

@@ -13,13 +13,16 @@
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.0.1",
+    "@vendia/serverless-express": "^4.12.6",
     "@vercel/postgres": "^0.10.0",
+    "cors": "^2.8.5",
     "dotenv": "^17.0.1",
     "drizzle-orm": "^0.44.2",
     "express": "latest",
     "pg": "^8.16.3"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.19",
     "@types/express": "latest",
     "@types/node": "^24.0.10",
     "@types/pg": "^8.15.4",
@@ -30,7 +33,7 @@
     "nodemon": "latest",
     "prettier": "latest",
     "tsx": "^4.20.3",
-    "typescript": "latest",
+    "typescript": "^4.9.5",
     "typescript-eslint": "latest",
     "vitest": "latest"
   }
