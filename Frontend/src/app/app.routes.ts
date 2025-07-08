@@ -10,12 +10,7 @@ import { UserEditComponent } from './user-edit/user-edit.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
 import { CategoriesComponent } from './categories/categories.component';
 
-export const routes: Routes = [/*{
-    path: 'todos',
-    loadComponent: () => {
-        return import('./todos/todos.component').then((m) => m.TodosComponent)
-    }
-}*/
+export const routes: Routes = [
 
 /* !!!Kein Zugriff ohne Login mit canActivate: [LoggedActivate],
  bitte auch bei Bereiche etc hinzufügen */

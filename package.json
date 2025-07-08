@@ -1,4 +1,14 @@
 {
+  "name": "todo-root",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"npm run dev --prefix Backend\" \"npm run start --prefix Frontend\"",
+    "build": "npm run build --prefix Backend && npm run build --prefix Frontend",
+    "start": "concurrently \"npm run start --prefix Backend\" \"npm run start --prefix Frontend\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
   "dependencies": {
     "@angular/cli": "^19.1.8",
     "@fullcalendar/timegrid": "^6.1.18",

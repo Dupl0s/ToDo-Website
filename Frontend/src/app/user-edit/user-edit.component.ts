@@ -53,7 +53,7 @@ export class UserEditComponent {
       /* TODO: popup: are you sure? */
       this.userService.delete(this.user.userId).subscribe({
         next: (response) => {
-          alert(response)
+          alert("User gelöscht")
           this.router.navigate(['/'])
         },
         error:err => alert(err),

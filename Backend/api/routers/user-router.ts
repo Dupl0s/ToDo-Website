@@ -54,9 +54,10 @@ export const userRouter = () => {
             try {
                 console.log(data);
                 const userWithId = { ...data, userId: randomUUID() };
-                const newUser = await db.insert(users).values(userWithId).returning();
+                const newUserArray = await db.insert(users).values(userWithId).returning();
+                const newUser = newUserArray[0];
                 res.status(201).json({
-                    message: "User wurde erstellt: ", newUser
+                    message: "User wurde erstellt: ", user: newUser
                 });
             } catch (error) {
                 const message = error instanceof Error ? error.message : String(error);
