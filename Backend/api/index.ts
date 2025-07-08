@@ -6,6 +6,7 @@ import {count, and, eq} from 'drizzle-orm';
 import { userRouter } from './routers/user-router';
 import serverless from '@vendia/serverless-express'
 
+import { uuid } from 'drizzle-orm/gel-core';
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -14,14 +15,34 @@ app.use(cors({
   credentials: true,
 }));
 
+app.get("/users", async (_req, res) => {
+  try {
+    const allUsers = await db.select().from(users);
+    res.json({ users: allUsers });
+  } catch (error) {
+    res.status(500).json({ message: "DB error", error: error.message });
+  }
+});
+app.post("/users", async (req: Request, res: Response) => {
+  const { name } = req.body;
+  try {
+    const inserted = await db.insert(users).values({ name }).returning();
+    res.status(201).json({ user: inserted[0] });
+  } catch (error) {
+    res.status(500).json({ message: "DB error", error: error.message });
+  }
+});
 
 //users
 app.use("/users", userRouter());
 
 //todos
-app.get("/todos", async (_req, res) => {
+
+app.get("/todos/{userID}", async (req, res) => {
   try {
-    const allTodos = await db.select().from(todos);
+    const {userID} = req.query;
+    const allTodos = await db.select().from(todos).where(
+      userID ? eq(todos.userID, String(userID)) : undefined);
     res.json({ todos: allTodos });
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
