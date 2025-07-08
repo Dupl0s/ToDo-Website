@@ -34,5 +34,9 @@ export class CategoriesService {
     const todos=this.todoService.loadTodos();
     return todos.some(todo=> todo.bereichsId === bereichId);
   }
+  todosInBerech(bereichId:number):boolean{
+    const todos= this.todoService.loadTodos();
+    return todos.some(todo=> todo.bereichsID ===bereichId); // checks if there is at least 1 element
+  }
 }
 

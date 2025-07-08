@@ -30,6 +30,8 @@ export class TodosComponent {
   bereichName = '';
   todosBackend: any;
   bereichId: number | null = null;
+  filteredTodos: Todo[] = [];
+  testArray: Todo[] = [];
 
   justCompletedId: number | null = null;
   constructor(
@@ -54,9 +56,10 @@ export class TodosComponent {
   }
 
   ngOnInit() {
-/*     this.arrayTodos = this.todoService.loadTodos();
- */    
-  this.todoService.connectBackend().subscribe((data) => console.log(data.message));
+    this.refreshTodosFromApi();
+    this.route.paramMap.subscribe((params) => {
+      const id = params.get('id');
+      this.bereichsId = id ? Number(id) : null;
 
       if (this.bereichsId !== null) {
         const bereich = this.categoriesService
@@ -66,17 +69,15 @@ export class TodosComponent {
       }
 
       this.applyFilterandSort();
-      this.popup.checkForReminders();
+      //this.popup.checkForReminders();
     });
   }
 
-    this.applyFilterandSort();
-    this.popup.checkForReminders();
-
-  });
+  ngAfterViewInit() {
+    this.bereichId = this.popup.bereichId();
+    this.todoService.getTodosFromApiWithID(this.bereichId);
   }
-  
-  
+
   //Asking the method to createTask to take the Todo without the bereichsId(as it is not manually filled in by the user) and setting the bereichsid ourselves from above.
   createTask(taskData: Omit<Todo, 'bereichsId'>) {
     const newTask = {
@@ -119,16 +120,44 @@ export class TodosComponent {
       });
   }
 
-  refreshTodosFromApi() {
-    this.http
-      .get<{ todos: Todo[] }>(
-        'https://todobackend-dupl0s-janniks-projects-e7141841.vercel.app/todos'
-      )
-      .subscribe((response) => {
-        this.arrayTodos = response.todos;
-        localStorage.setItem('todos', JSON.stringify(response.todos));
-        this.applyFilterandSort();
-      });
+  refreshTodosFromApi(bereichId?: number) {
+    if (bereichId) {
+      this.bereichsId = bereichId;
+      this.http
+        .get<{ todos: Todo[] }>(
+          `https://todobackend-dupl0s-janniks-projects-e7141841.vercel.app/todos/${bereichId}`
+        )
+        .subscribe({
+          next: (response) => {
+            this.arrayTodos = Array.isArray(response.todos) ? response.todos : [];
+            this.applyFilterandSort();
+          },
+          error: () => {
+            const local = localStorage.getItem('todos');
+            let arr = local ? JSON.parse(local) : [];
+            this.arrayTodos = Array.isArray(arr) ? arr.filter((todo: Todo) => todo.bereichsID === bereichId) : [];
+            this.applyFilterandSort();
+          },
+        });
+    } else {
+      this.bereichsId = null;
+      this.http
+        .get<{ todos: Todo[] }>(
+          'https://todobackend-dupl0s-janniks-projects-e7141841.vercel.app/todos'
+        )
+        .subscribe({
+          next: (response) => {
+            this.arrayTodos = Array.isArray(response.todos) ? response.todos : [];
+            this.applyFilterandSort();
+          },
+          error: () => {
+            const local = localStorage.getItem('todos');
+            let arr = local ? JSON.parse(local) : [];
+            this.arrayTodos = Array.isArray(arr) ? arr : [];
+            this.applyFilterandSort();
+          },
+        });
+    }
   }
 
   onSort(sort: string | { from: string; to: string }) {
@@ -159,12 +188,12 @@ export class TodosComponent {
     this.applyFilterandSort();
   }
 
-
   applyFilterandSort() {
     let todos = [...this.arrayTodos];
     if (this.bereichsId !== null) {
-      todos = todos.filter((todo) => todo.bereichsId === this.bereichsId);
+      todos = todos.filter(todo => todo.bereichsID === this.bereichsId);
     }
+
     if (this.actualFilter === 'true' || this.actualFilter === 'false') {
       todos = this.todoService.filterBy(this.actualFilter, todos);
     } else if (
@@ -185,7 +214,6 @@ export class TodosComponent {
         todos
       );
     } else if (this.actualSort === '') {
-      console.log('no sort, default');
       this.actualSort = 'completed';
       this.ascending = true;
       todos = this.todoService.sortBy(
@@ -195,11 +223,33 @@ export class TodosComponent {
       );
     }
 
-    return (this.arrayTodos = todos);
+    this.filteredTodos = todos;
   }
 
   getBool(ascend: boolean) {
     this.ascending = ascend;
     this.applyFilterandSort();
+  }
+
+  loadTodosByBereichId(bereichsId: number): void {
+    this.http
+      .get<{ todos: Todo[] }>(
+        `https://todobackend-dupl0s-janniks-projects-e7141841.vercel.app/todos/2`
+      )
+      .subscribe({
+        next: (response) => {
+          this.testArray = Array.isArray(response.todos) ? response.todos : [];
+          localStorage.setItem('todos', JSON.stringify(this.testArray));
+          // Hier kannst du weitere Aktionen machen, z.B.:
+          this.applyFilterandSort();
+        },
+        error: () => {
+          // Fallback: LocalStorage
+          const local = localStorage.getItem('todos');
+          let arr = local ? JSON.parse(local) : [];
+          this.testArray = Array.isArray(arr) ? arr.filter((todo: Todo) => todo.bereichsID === bereichsId) : [];
+          this.applyFilterandSort();
+        }
+      });
   }
 }

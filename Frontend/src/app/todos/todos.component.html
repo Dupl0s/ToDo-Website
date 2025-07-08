@@ -34,7 +34,7 @@
   <!--</nav>-->
   <h3 class="my-3">{{ bereichName }}</h3>
   <div class="todos-container">
-    @for (item of applyFilterandSort(); track item.id) {
+    @for (item of filteredTodos; track item.id) {
     <div [appHighlightDoneTodos]="item.completed" class="arraycard" [ngClass]="{ done: item.completed }"
       style="position: relative;">
       <div *ngIf="item.id === justCompletedId" class="completed-overlay">
