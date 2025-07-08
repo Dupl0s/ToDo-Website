@@ -29,8 +29,78 @@ app.get("/todos", async (_req, res) => {
   }
 });
 
+app.get("/todos/:id", async (req: Request, res: Response) => {
+  const { id } = req.params;
+  try {
+    const todo = await db.select().from(todos).where(eq(todos.bereichsID, Number(id)));
+    res.json({ todo: todo[0] });
+  } catch (error) {
+    res.status(500).json({ message: "DB error", error: error.message });
+  }
+});
 
-//bereiche / sections
+app.post("/todos", async (req: Request, res: Response) => {
+  const { title, userID, bereichsID, deadline, importance, niveau, completed } = req.body;
+  try {
+    const inserted = await db.insert(todos).values({
+      title,
+      userID,       
+      bereichsID,
+      deadline,
+      importance,
+      niveau,
+      completed
+    }).returning();
+    res.status(201).json({ todo: inserted[0] });
+  } catch (error) {
+    res.status(500).json({ message: "DB error", error: error.message });
+  }
+});
+
+app.delete("/todos/:id", async (req: Request, res: Response) => {
+  const { id } = req.params;
+  try{
+    const deleted = await db.delete(todos).where(eq(todos.id, Number(id))).returning();
+    res.status(200).json({ message: "Todo deleted", todo: deleted[0] });
+  }
+  catch (error) {
+    res.status(500).json({ message: "DB error", error: error.message });
+  }
+});
+
+app.put("/todos/:id", async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const updatedTodo = req.body;
+  console.log('PUT /todos/:id body:', updatedTodo);
+
+  // Zugriff auf einzelne Werte:
+  const title = updatedTodo.title;
+  const userID = updatedTodo.userid;
+  const bereichsID = updatedTodo.bereichsID;
+  const deadline = updatedTodo.deadline;
+  const importance = updatedTodo.importance;
+  const niveau = updatedTodo.niveau;
+  const completed = updatedTodo.completed;
+
+  try {
+    const updated = await db.update(todos)
+      .set({
+        title,
+        userID,
+        bereichsID,
+        deadline,
+        importance,
+        niveau,
+        completed
+      })
+      .where(eq(todos.id, Number(id)))
+      .returning();
+    res.status(200).json({ todo: updated[0] });
+  } catch (error) {
+    res.status(500).json({ message: "DB error", error: error.message });
+  }
+});
+
 app.get("/sections", async (_req, res) => {
   try {
     const allSections = await db.select().from(sections).orderBy(sections.id);
