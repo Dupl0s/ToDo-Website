@@ -50,6 +50,6 @@ export class CategoriesService {
   }
   todosInBerech(bereichId:number):boolean{
     const todos= this.todoService.loadTodos();
-    return todos.some(todo=> todo.bereichsId ===bereichId); // checks if there is at least 1 element
+    return todos.some(todo=> todo.bereichsID ===bereichId); // checks if there is at least 1 element
   }
 }

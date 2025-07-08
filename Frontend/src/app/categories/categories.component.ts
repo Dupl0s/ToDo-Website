@@ -8,11 +8,12 @@ import { CategoriesService } from '../services/categories.service';
 import {RouterModule} from '@angular/router';
 import { TodoService } from '../services/todo.service';
 import { CommonModule } from '@angular/common';
+import { TodosComponent } from '../todos/todos.component';
 
 @Component({
   selector: 'app-categories',
   standalone: true,
-  imports: [FormsModule, PopupComponent, RouterModule, CommonModule],
+  imports: [FormsModule, PopupComponent, RouterModule, CommonModule, TodosComponent],
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.css'
 })
@@ -23,6 +24,7 @@ export class CategoriesComponent {
 
   @ViewChild(PopupComponent) popup!: PopupComponent;
   private popover?:Popover;
+  @ViewChild(TodosComponent) todosComponent!: TodosComponent;
 
   get currentBereich(): Bereich | null {
     return this.bereiche.length > 0 ? this.bereiche[this.currentIndex] : null;
@@ -51,6 +53,7 @@ export class CategoriesComponent {
   }
 }
   goToTodos(bereichId: number) {
+    this.todosComponent.refreshTodosFromApi(bereichId);  
     this.router.navigate(['/todos', bereichId]);
   }
 
@@ -79,7 +82,7 @@ export class CategoriesComponent {
 
  deletedCategories(bereichId: number, button: HTMLElement) {
   const todos = this.todoService.loadTodos();
-  const todosExist = todos.some(todo => todo.bereichsId === bereichId);
+  const todosExist = todos.some(todo => todo.bereichsID === bereichId);
 
   if (todosExist) {
     this.showDeletePopover(button, bereichId);

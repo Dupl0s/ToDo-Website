@@ -8,9 +8,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-//user
-
-// Alle User abrufen
 app.get("/users", async (_req, res) => {
   try {
     const allUsers = await db.select().from(users);

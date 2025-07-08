@@ -30,7 +30,7 @@ export class PopupComponent {
   message = signal('');
   time = signal('');
   todos = signal<Array<Todo>>(
-    JSON.parse(localStorage.getItem('todos') || '[]')
+    []
   );
   mode = signal(''); //the mode of the popup, e.g. 'reminder', 'edit', etc.
 
@@ -44,7 +44,8 @@ export class PopupComponent {
   @Output() bereichEdited = new EventEmitter<{ id: number; name: string }>();
 
   ngOnInit() {
-    this.checkForReminders();}
+   // this.checkForReminders();
+   }
 
   openBereichEdit(title: string, bereich: Bereich) {
     this.title.set(title);
@@ -132,6 +133,7 @@ export class PopupComponent {
         deadline: todo.deadline,
         niveau: todo.niveau,
         importance: todo.importance,
+        bereichsID: todo.bereichsID,
       });
     }
     if(this.mode() === 'editTodo') {
@@ -139,7 +141,7 @@ export class PopupComponent {
       const updatedTodo: Todo = {
         id: this.currentID,
         userId: this.currentUserID,
-        bereichsId: id,
+        bereichsID: id,
         completed: false,
         title: this.title2(),
         deadline: this.deadline(),
@@ -150,7 +152,7 @@ export class PopupComponent {
     }
     this.close();
   }
-  checkForReminders() {
+  /*checkForReminders() {
     const todos: Todo[] = JSON.parse(localStorage.getItem('todos') || '[]');
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
@@ -167,7 +169,7 @@ export class PopupComponent {
         'reminder'
       );
     }
-  }
+  }*/
 
   get bereichNameModel() {
     return this.bereichName();
