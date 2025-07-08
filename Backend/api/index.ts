@@ -15,7 +15,7 @@ app.use(cors({
   credentials: true,
 }));
 
-app.get("/users", async (_req, res) => {
+app.get("/users", async (req, res) => {
   try {
     const allUsers = await db.select().from(users);
     res.json({ users: allUsers });
@@ -47,6 +47,16 @@ app.get("/todos/{userID}", async (req, res) => {
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
     res.status(500).json({ message: "DB error", error: message });
+  }
+});
+
+app.get("/todos/:id", async (req: Request, res: Response) => {
+  const { id } = req.params;
+  try {
+    const todoInBereich = await db.select().from(todos).where(eq(todos.bereichsID, Number(id)));
+    res.json({ todo: todoInBereich });
+  } catch (error) {
+    res.status(500).json({ message: "DB error", error: error.message });
   }
 });
 
@@ -100,6 +110,26 @@ app.put("/todos/:id", async (req: Request, res: Response) => {
   const niveau = updatedTodo.niveau;
   const completed = updatedTodo.completed;
 
+  try {
+    const updated = await db.update(todos)
+      .set({
+        title,
+        userID,
+        bereichsID,
+        deadline,
+        importance,
+        niveau,
+        completed
+      })
+      .where(eq(todos.id, Number(id)))
+      .returning();
+    res.status(200).json({ todo: updated[0] });
+  } catch (error) {
+    res.status(500).json({ message: "DB error", error: error.message });
+  }
+});
+
+app.get("/sections", async (_req, res) => {
   try {
     const updated = await db.update(todos)
       .set({
