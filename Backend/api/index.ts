@@ -4,7 +4,7 @@ import { db } from '../src/db/index';
 import { users, todos, sections } from '../src/db/schema';
 import {count, and, eq} from 'drizzle-orm';
 import { userRouter } from './routers/user-router';
-
+import serverless from '@vendia/serverless-express'
 
 const app = express();
 app.use(cors());
@@ -89,7 +89,4 @@ app.put('/sections/:id', async (req: Request, res: Response) => {
     }
   });
   
-  export default app;
-
-
-
+export const handler = serverless({ app });
