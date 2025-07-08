@@ -1,4 +1,6 @@
 {
+  "name": "todo-root",
+  "private": true,
   "dependencies": {
     "@angular/cli": "^19.1.8",
     "@fullcalendar/timegrid": "^6.1.18",

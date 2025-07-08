@@ -14,6 +14,7 @@ import { User } from '../model/user.type';
 })
 export class UserEditComponent {
   user?: User | null;
+  del: boolean = false;
   constructor(private userService: UserService, private router: Router) {
     this.userService.user.subscribe(x => {
       console.log('User aus Service:', x?.username);
@@ -48,6 +49,14 @@ export class UserEditComponent {
       });
     }
   }
+
+  confirmdelete() {
+    this.del = true;
+  }
+  canceldelete() {
+    this.del = false;
+  }
+  
   delete() {
     if (this.user){
       /* TODO: popup: are you sure? */
