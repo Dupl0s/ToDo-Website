@@ -48,8 +48,8 @@ app.get("/todos", async (_req, res) => {
 app.get("/todos/:id", async (req: Request, res: Response) => {
   const { id } = req.params;
   try {
-    const todo = await db.select().from(todos).where(eq(todos.bereichsID, Number(id)));
-    res.json({ todo: todo[0] });
+    const todoInBereich = await db.select().from(todos).where(eq(todos.bereichsID, Number(id)));
+    res.json({ todo: todoInBereich });
   } catch (error) {
     res.status(500).json({ message: "DB error", error: error.message });
   }
@@ -87,9 +87,6 @@ app.delete("/todos/:id", async (req: Request, res: Response) => {
 app.put("/todos/:id", async (req: Request, res: Response) => {
   const { id } = req.params;
   const updatedTodo = req.body;
-  console.log('PUT /todos/:id body:', updatedTodo);
-
-  // Zugriff auf einzelne Werte:
   const title = updatedTodo.title;
   const userID = updatedTodo.userid;
   const bereichsID = updatedTodo.bereichsID;
