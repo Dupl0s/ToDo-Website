@@ -15,16 +15,14 @@ export const routes: Routes = [
 /* !!!Kein Zugriff ohne Login mit canActivate: [LoggedActivate],
  bitte auch bei Bereiche etc hinzufügen */
 
-{path: "sections", component: CategoriesComponent},
-{path: "todos/:id", component: TodosComponent},
-{path: "todos", component: TodosComponent},
-{ path: "dustbin", component: DustbinComponent },
 { path: '', component: HomeComponent },
 {path: 'login', component: LoginComponent},
 {path: 'registration', component: RegistrationComponent},
 {path: 'password-reset', component: PasswordResetComponent},
+{ path: "dustbin", component: DustbinComponent, canActivate: [LoggedActivate] },
 {path: 'user-edit', component: UserEditComponent, canActivate: [LoggedActivate]},
-{path: "categories", component: CategoriesComponent, canActivate: [LoggedActivate]},
+{path: "sections", component: CategoriesComponent, canActivate: [LoggedActivate]},
+{path: "todos", component: TodosComponent, canActivate: [LoggedActivate]},
 {path: "todos/:id", component: TodosComponent, canActivate: [LoggedActivate]},
 {path: 'calendar', component: CalendarComponent, canActivate: [LoggedActivate]},
 { path: 'dustbin/:id', component: DustbinComponent, canActivate: [LoggedActivate] }
