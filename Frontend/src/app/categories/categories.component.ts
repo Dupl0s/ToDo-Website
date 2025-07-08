@@ -50,7 +50,6 @@ export class CategoriesComponent {
     setTimeout(()=> this.popover?.hide(),3000);
   }
 }
-
   goToTodos(bereichId: number) {
     this.router.navigate(['/todos', bereichId]);
   }

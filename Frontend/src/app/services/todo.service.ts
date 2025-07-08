@@ -10,6 +10,7 @@ import { Bereich } from '../model/categories.type';
   providedIn: 'root',
 })
 export class TodoService {
+  
   http = inject(HttpClient);
 
   localTodos: Todo[] = [
@@ -45,7 +46,7 @@ export class TodoService {
     },
   ];
   todos = signal<Array<Todo>>(
-    JSON.parse(localStorage.getItem('todos') || '[]')
+    this.loadTodos()
   );
 
 
@@ -54,6 +55,15 @@ export class TodoService {
   }
 
   loadTodos() {
+    this.http.get<Todo[]>('https://todobackend-dupl0s-janniks-projects-e7141841.vercel.app/todos')
+      .subscribe((data) => { 
+        this.localTodos = data;
+        localStorage.setItem('todos', JSON.stringify(this.localTodos));
+        this.todos.set(this.localTodos);
+        console.log('Todos loaded from API:', this.localTodos);
+      });
+
+    
     const savedTodos = localStorage.getItem('todos');
     if (savedTodos) {
       this.localTodos = JSON.parse(savedTodos);
@@ -65,34 +75,35 @@ export class TodoService {
     return this.localTodos;
   }
 
-  getTodosFromApi(): Observable<Todo[]> {
-    const url = '../assets/todos.json';
-    console.log('Lade JSON von:', url);
-    return this.http.get<Todo[]>(url);
-    /*     return this.http.get<Array<Todo>>(url);
-     */
+  getTodosFromApi(): Observable<any> {
+    return this.http.get('https://todobackend-dupl0s-janniks-projects-e7141841.vercel.app/todos');
+  }
+
+  getTodosFromApiWithID(bereichId: number) {
+    console.log("test" + this.http.get('https://todobackend-dupl0s-janniks-projects-e7141841.vercel.app/todos/' + bereichId));
+    console.log('https://todobackend-dupl0s-janniks-projects-e7141841.vercel.app/todos/' + bereichId);
+    return this.http.get('https://todobackend-dupl0s-janniks-projects-e7141841.vercel.app/todos/' + bereichId);
+    
   }
 
   addTodo(newTodo: Todo) {
-    console.log('addTodo');
-    this.localTodos.push(newTodo);
-    localStorage.setItem('todos', JSON.stringify(this.localTodos));
-    return this.localTodos;
+    this.http.post<Todo>('https://todobackend-dupl0s-janniks-projects-e7141841.vercel.app/todos', newTodo)
+      .subscribe((todo) => {
+        this.todos.set(this.localTodos);
+        localStorage.setItem('todos', JSON.stringify(this.localTodos));
+        console.log('Todo added:', todo);
+      });
   }
 
   editTodo(updatedTodo: Todo) {
-    const index = this.localTodos.findIndex(
-      (todo) => todo.id === updatedTodo.id
-    );
-    console.log(index, localStorage.getItem('todos'));
-    if (index !== -1) {
-      this.localTodos[index] = updatedTodo;
-    }
-    localStorage.setItem('todos', JSON.stringify(this.localTodos));
-  }
-
-  clearStorage() {
-    //maybe to clear all the todos that are done?
+    this.http.put<Todo>(
+      `https://todobackend-dupl0s-janniks-projects-e7141841.vercel.app/todos/${updatedTodo.id}`,
+      updatedTodo
+    ).subscribe((todo) => {
+      // Optional: Nach dem Edit neu laden
+      this.loadTodos();
+      console.log('Todo updated:', todo);
+    });
   }
 
   dustbin = signal<Array<Todo>>(
@@ -100,21 +111,9 @@ export class TodoService {
   );
 
 
-  deleteTodo(id: number): Todo[] {
-    const current = this.localTodos;
-    const index = current.findIndex((todo) => todo.id === id);
-
-    if (index !== -1) {
-      const deletedTodo = current[index];
-      const updatedTodos = current.filter((todo) => todo.id !== id);
-
-      this.todos.set(updatedTodos);
-      localStorage.setItem('todos', JSON.stringify(updatedTodos));
-
-      this.addToDustbin(deletedTodo);
-    }
-
-    return this.localTodos;
+  deleteTodo(id: number) {
+    this.http.delete(`https://todobackend-dupl0s-janniks-projects-e7141841.vercel.app/todos/${id}`)
+    this.getTodosFromApi();
   }
 
   addToDustbin(todo: Todo) {

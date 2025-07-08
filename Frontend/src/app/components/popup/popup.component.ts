@@ -111,11 +111,11 @@ export class PopupComponent {
       }
     }
     if (this.mode() === 'default') {
-      const id = bereichId(this.bereichName());
-      const todo: Todo = {
+      const id = this.bereichId();
+      const todo: any = {
         id: Date.now(),
-        bereichsId: id,
-        userId: 1,
+        bereichsID: id,      
+        userid: 1,          
         completed: false,
         title: this.title2(),
         deadline: this.deadline(),
@@ -135,7 +135,7 @@ export class PopupComponent {
       });
     }
     if(this.mode() === 'editTodo') {
-      const id = bereichId(this.bereichName());
+      const id = this.bereichId();
       const updatedTodo: Todo = {
         id: this.currentID,
         userId: this.currentUserID,
@@ -175,11 +175,13 @@ export class PopupComponent {
   set bereichNameModel(val: string) {
     this.bereichName.set(val);
   }
-}
-function bereichId(arg0: string): any {
-  const url = new URL(arg0, window.location.href);
-  const segments = url.pathname.split('/');
+
+  bereichId(): number {
+  const segments = window.location.pathname.split('/');
   const bereichId = segments[segments.length - 1];
+  console.log('Bereich ID:', bereichId);
   return parseInt(bereichId, 10);
 }
+}
+
 
