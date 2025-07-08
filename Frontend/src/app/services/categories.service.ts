@@ -32,7 +32,7 @@ export class CategoriesService {
 
   todosInBereich(bereichId: number):boolean{
     const todos=this.todoService.loadTodos();
-    return todos.some(todo=> todo.bereichsId === bereichId);
+    return todos.some(todo=> todo.bereichsID === bereichId);
   }
   todosInBerech(bereichId:number):boolean{
     const todos= this.todoService.loadTodos();

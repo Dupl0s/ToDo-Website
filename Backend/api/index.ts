@@ -26,7 +26,7 @@ app.get("/users", async (req, res) => {
 app.post("/users", async (req: Request, res: Response) => {
   const { name } = req.body;
   try {
-    const inserted = await db.insert(users).values({ name }).returning();
+    const inserted = await db.insert(users).values({ username: name }).returning();
     res.status(201).json({ user: inserted[0] });
   } catch (error) {
     res.status(500).json({ message: "DB error", error: error.message });
@@ -131,19 +131,24 @@ app.put("/todos/:id", async (req: Request, res: Response) => {
 
 app.get("/sections", async (_req, res) => {
   try {
-    const updated = await db.update(todos)
-      .set({
-        title,
-        userID,
-        bereichsID,
-        deadline,
-        importance,
-        niveau,
-        completed
+    const allSections = await db.select().from(sections).orderBy(sections.id);
+
+    const sectionsWithCount = await Promise.all(
+      allSections.map(async (section) => {
+        const [{ count: incompleteCount }] = await db
+          .select({ count: count() })
+          .from(todos)
+          .where(
+            and(
+              eq(todos.bereichsID, section.id),
+              eq(todos.completed, false)
+            )
+          );
+        return { ...section, incompleteCount: Number(incompleteCount) };
       })
-      .where(eq(todos.id, Number(id)))
-      .returning();
-    res.status(200).json({ todo: updated[0] });
+    );
+
+    res.json(sectionsWithCount);
   } catch (error) {
     res.status(500).json({ message: "DB error", error: error.message });
   }

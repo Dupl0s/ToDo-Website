@@ -37,10 +37,10 @@ export class TodosComponent {
   constructor(
     private route: ActivatedRoute,
     private categoriesService: CategoriesService,
-    public http: HttpClient
+    public http: HttpClient,
   ) {}
 
-  constructor(private route: ActivatedRoute, private categoriesService: CategoriesService) { }
+
 
   openPopup(title: string, text: string) {
     this.popup.open(title, text, 'default');
@@ -62,10 +62,10 @@ export class TodosComponent {
       this.bereichsId = id ? Number(id) : null;
 
       if (this.bereichsId !== null) {
-        const bereich = this.categoriesService
-          .getBereiche()
-          .find((b) => b.id === this.bereichsId);
-        this.bereichName = bereich ? bereich.name : 'Unbekannter Bereich';
+        this.categoriesService.getBereiche().subscribe((bereiche) => {
+          const bereich = bereiche.find((b) => b.id === this.bereichsId);
+          this.bereichName = bereich ? bereich.name : 'Unbekannter Bereich';
+        });
       }
 
       this.applyFilterandSort();
