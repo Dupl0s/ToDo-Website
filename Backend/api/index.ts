@@ -3,12 +3,13 @@ import cors from 'cors';
 import { db } from '../src/db/index';
 import { users, todos, sections } from '../src/db/schema';
 import { eq } from 'drizzle-orm';
+import { uuid } from 'drizzle-orm/gel-core';
  
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.get("/users", async (_req, res) => {
+app.get("/users", async (req, res) => {
   try {
     const allUsers = await db.select().from(users);
     res.json({ users: allUsers });
@@ -33,9 +34,11 @@ app.listen(Port, () => {
 
 //todos
 
-app.get("/todos", async (_req, res) => {
+app.get("/todos/{userID}", async (req, res) => {
   try {
-    const allTodos = await db.select().from(todos);
+    const {userID} = req.query;
+    const allTodos = await db.select().from(todos).where(
+      userID ? eq(todos.userID, String(userID)) : undefined);
     res.json({ todos: allTodos });
   } catch (error) {
     res.status(500).json({ message: "DB error", error: error.message });
