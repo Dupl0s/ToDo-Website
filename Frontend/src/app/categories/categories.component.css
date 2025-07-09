@@ -19,7 +19,7 @@
 }
 .form-control{
   background-color: #ece8e8;
-  color: var(--text-color);
+  color: black;
 }
 .newBereiche {
   display: flex;
