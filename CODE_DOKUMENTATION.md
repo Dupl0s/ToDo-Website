@@ -42,35 +42,38 @@ ToDo-Website/
 │   │   │   ├── services/        # Angular Services
 │   │   │   │   ├── user.service.ts       # Benutzerverwaltung       --> (geschrieben von 2937506)
 │   │   │   │   ├── todo.service.ts       # Todo-Verwaltung          --> (geschrieben von 2352061 und 2937506)
-│   │   │   │   └── categories.service.ts # Kategorie-Verwaltung
+│   │   │   │   └── categories.service.ts # Kategorie-Verwaltung     --> (geschrieben von 2199855)
 │   │   │   ├── model/           # TypeScript Interfaces
-│   │   │   │   ├── user.type.ts           --> (geschrieben von 2937506)
-│   │   │   │   ├── todo.type.ts           --> (geschrieben von 2352061)
-│   │   │   │   └── categories.type.ts
-│   │   │   ├── validators/      # Custom Validators               --> (geschrieben von 2937506)
-│   │   │   ├── helpers/         # Guards und Hilfsfunktionen      --> (geschrieben von 2937506)
+│   │   │   │   ├── user.type.ts                                    --> (geschrieben von 2937506)
+│   │   │   │   ├── todo.type.ts                                    --> (geschrieben von 2352061)
+│   │   │   │   └── categories.type.ts                              --> (geschrieben von 2199855)
+│   │   │   ├── validators/      # Custom Validators                --> (geschrieben von 2937506)
+│   │   │   ├── helpers/         # Guards und Hilfsfunktionen       --> (geschrieben von 2937506)
 │   │   │   └── [pages]/         # Seiten-Komponenten
-│   │   │       ├── login/                --> (geschrieben von 2937506)
-│   │   │       ├── registration/         --> (geschrieben von 2937506)
-│   │   │       ├── categories/
-│   │   │       ├── todos/              --> (geschrieben von 2352061)
-│   │   │       ├── dustbin/
-│   │   │       ├── user-edit/          --> (geschrieben von 2937506)
-│   │   │       └── password-reset/    --> (geschrieben von 2937506)
+│   │   │       ├── login/                                          --> (geschrieben von 2937506)
+│   │   │       ├── registration/                                   --> (geschrieben von 2937506)
+│   │   │       ├── categories/                                     --> (geschrieben von 2199855) 
+│   │   │       ├── todos/                                          --> (geschrieben von 2352061)
+│   │   │       ├── dustbin/                                        --> (geschrieben von 2199855)
+│   │   │       ├── home/                                           --> (geschrieben von 2199855)
+│   │   │       ├── user-edit/                                      --> (geschrieben von 2937506)
+│   │   │       └── password-reset/                                 --> (geschrieben von 2937506)
 │   │   └── assets/              # Statische Dateien
 ├── Backend/                     # Node.js Backend
 │   ├── api/
-│   │   ├── index.ts            # Haupt-API-Datei    -->Todos CRUD: (geschrieben von 2352061)
+│   │   ├── index.ts            # Haupt-API-Datei                   --> Todos CRUD:(geschrieben von 2352061) 
+│   │   ├                                                               Kategorien CRUD: (geschrieben von 2199855)
 │   │   └── routers/            # API Router
-│   │   │   ├── user-router.ts       # User-Router     --> (geschrieben von 2937506)
+│   │   │   ├── user-router.ts       # User-Router                   --> (geschrieben von 2937506)
 │   ├── src/
-│   │   ├── db/                 # Datenbankschema und Konfiguration (geschrieben von 2352061)
-│   │   │   ├── schema.ts       # Drizzle Datenbankschema (geschrieben von 2352061)
-│   │   │   └── index.ts        # DB-Verbindung (geschrieben von 2352061)
+│   │   ├── db/                 # Datenbankschema und Konfiguration  --> (geschrieben von 2352061)
+│   │   │   ├── schema.ts       # Drizzle Datenbankschema            --> (geschrieben von 2352061)
+│   │   │   └── index.ts        # DB-Verbindung                      --> (geschrieben von 2352061)
 │   │   ├── models/             # Datenmodelle
 │   │   └── repositories/       # Repository Pattern
 │   └── tests/                  # Backend Tests
-└── .github/workflows/          # CI/CD Pipelines
+│── .github/workflows/          # CI/CD Pipelines
+└── style.CSS                   # Dark/Light Mode                    -->(geschrieben von 2199855)
 ```
 
 ## KERN-FEATURES
@@ -105,15 +108,23 @@ ToDo-Website/
 - Nach Wichtigkeit
 - Nach Datum
 
-### 3. KATEGORIEN/BEREICHE
+### 3. KATEGORIEN/BEREICHE     
 - **Bereichsverwaltung:** Erstellen, Bearbeiten, Löschen von Todo-Kategorien
-- **Navigation:** Direkte Navigation zu Todos eines Bereichs
+   - Gelöschte Kategorien können nicht wiederhergestellt werden
+-**Popups:**
+   - Erstellen: Bestätigung für neu hinzugefügte Kategorien/Bereiche
+   - Löschen: Warnung vor dem Löschen, wenn sich noch Todos im Bereich befinden
+- **Navigation:** Direkte Navigation zu den Todos beim Klicken auf eine Kategorie
+   - Todos einer Bereichs-ID zugeordnet  
+   - Nur die Todos angezeigt, die zu einer bestimmten Kategorie gehören
 - **Schutz:** Bereiche mit Todos können nicht gelöscht werden
 
 ### 4. PAPIERKORB (DUSTBIN)
-- **Soft Delete:** Gelöschte Todos werden in den Papierkorb verschoben
+- **Access:**
+   - Kann nur über die Todos-Seite aufgerufen werden
+- **Soft Delete:** Deleted Todos temporarily moved to Papierkorb
 - **Wiederherstellung:** Todos können aus dem Papierkorb wiederhergestellt werden
-- **Permanente Löschung:** Endgültige Entfernung von Todos aus dem Papierkorb
+- **Permanente Löschung:** Manuelle endgültige Entfernung von Todos aus dem Papierkorb
 
 ### 5. KALENDER-ANSICHT (geschrieben von 2352061)
 - **FullCalendar Integration:** Visuelle Darstellung der Todos
@@ -151,7 +162,8 @@ todos (
 ```sql
 sections (
   id: serial NOT NULL,
-  name: text
+  name: text,
+  userId: uuid
 )
 ```
 
@@ -173,13 +185,16 @@ sections (
 - `PUT /todos/:id` - Todo aktualisieren
 - `DELETE /todos/:id` - Todo löschen
 
-### KATEGORIEN-ENDPUNKTE
+### KATEGORIEN-ENDPUNKTE          
 - `GET /sections` - Alle Bereiche/Kategorien abrufen
+- `POST /sections` - Neues Bereuch erstellen
+- `PUT /sections/:id` - Bereich aktualisieren
+- `DELETE /sections/:id` - Bereich löschen
 
 ## ROUTING UND NAVIGATION
 
 ### GESCHÜTZTE ROUTEN (mit LoggedActivate Guard) (geschrieben von 2937506)
-- `/categories` - Kategorien-Übersicht
+- `/sections` - Kategorien-Übersicht
 - `/todos` - Todo-Liste
 - `/todos/:id` - Todos für spezifischen Bereich
 - `/calendar` - Kalender-Ansicht
@@ -188,7 +203,7 @@ sections (
 - `/user-edit` - Profil bearbeiten
 
 ### ÖFFENTLICHE ROUTEN
-- `/` - Startseite
+- `/` - Home page/Startseite
 - `/login` - Anmeldung
 - `/registration` - Registrierung
 - `/password-reset` - Passwort zurücksetzen
