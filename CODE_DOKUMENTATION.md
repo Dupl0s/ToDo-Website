@@ -36,16 +36,16 @@ ToDo-Website/
 │   ├── src/
 │   │   ├── app/
 │   │   │   ├── components/      # Wiederverwendbare Komponenten
-│   │   │   │   ├── calendar/    # Kalender-Komponente
-│   │   │   │   ├── popup/       # Modal/Popup-Komponente
+│   │   │   │   ├── calendar/    # Kalender-Komponente               -->(geschrieben von 2352061)
+│   │   │   │   ├── popup/       # Modal/Popup-Komponente            -->(geschrieben von 2352061)
 │   │   │   │   └── sort-filter-dropdown/  # Filter/Sort Dropdown    -->(geschrieben von 2937506)
 │   │   │   ├── services/        # Angular Services
 │   │   │   │   ├── user.service.ts       # Benutzerverwaltung       --> (geschrieben von 2937506)
-│   │   │   │   ├── todo.service.ts       # Todo-Verwaltung          --> (geschrieben von ... und 2937506)
+│   │   │   │   ├── todo.service.ts       # Todo-Verwaltung          --> (geschrieben von 2352061 und 2937506)
 │   │   │   │   └── categories.service.ts # Kategorie-Verwaltung
 │   │   │   ├── model/           # TypeScript Interfaces
 │   │   │   │   ├── user.type.ts           --> (geschrieben von 2937506)
-│   │   │   │   ├── todo.type.ts
+│   │   │   │   ├── todo.type.ts           --> (geschrieben von 2352061)
 │   │   │   │   └── categories.type.ts
 │   │   │   ├── validators/      # Custom Validators               --> (geschrieben von 2937506)
 │   │   │   ├── helpers/         # Guards und Hilfsfunktionen      --> (geschrieben von 2937506)
@@ -53,20 +53,20 @@ ToDo-Website/
 │   │   │       ├── login/                --> (geschrieben von 2937506)
 │   │   │       ├── registration/         --> (geschrieben von 2937506)
 │   │   │       ├── categories/
-│   │   │       ├── todos/
+│   │   │       ├── todos/              --> (geschrieben von 2352061)
 │   │   │       ├── dustbin/
 │   │   │       ├── user-edit/          --> (geschrieben von 2937506)
 │   │   │       └── password-reset/    --> (geschrieben von 2937506)
 │   │   └── assets/              # Statische Dateien
 ├── Backend/                     # Node.js Backend
 │   ├── api/
-│   │   ├── index.ts            # Haupt-API-Datei
+│   │   ├── index.ts            # Haupt-API-Datei    -->Todos CRUD: (geschrieben von 2352061)
 │   │   └── routers/            # API Router
 │   │   │   ├── user-router.ts       # User-Router     --> (geschrieben von 2937506)
 │   ├── src/
-│   │   ├── db/                 # Datenbankschema und Konfiguration
-│   │   │   ├── schema.ts       # Drizzle Datenbankschema
-│   │   │   └── index.ts        # DB-Verbindung
+│   │   ├── db/                 # Datenbankschema und Konfiguration (geschrieben von 2352061)
+│   │   │   ├── schema.ts       # Drizzle Datenbankschema (geschrieben von 2352061)
+│   │   │   └── index.ts        # DB-Verbindung (geschrieben von 2352061)
 │   │   ├── models/             # Datenmodelle
 │   │   └── repositories/       # Repository Pattern
 │   └── tests/                  # Backend Tests
@@ -87,7 +87,7 @@ ToDo-Website/
 - Passwort: Mindestens 8 Zeichen mit Regex-Validator
 - Name: Mindestens 4 Zeichen
 
-### 2. TODO-VERWALTUNG
+### 2. TODO-VERWALTUNG (geschrieben von 2352061)
 - **CRUD-Operationen:** Vollständige Todo-Verwaltung
 - **Eigenschaften pro Todo:**
   - Titel (text)
@@ -115,7 +115,7 @@ ToDo-Website/
 - **Wiederherstellung:** Todos können aus dem Papierkorb wiederhergestellt werden
 - **Permanente Löschung:** Endgültige Entfernung von Todos aus dem Papierkorb
 
-### 5. KALENDER-ANSICHT
+### 5. KALENDER-ANSICHT (geschrieben von 2352061)
 - **FullCalendar Integration:** Visuelle Darstellung der Todos
 - **Ansichten:** Monat, Woche, Tag
 - **Farbcodierung:** Grün für abgeschlossene, Rot für offene Todos
@@ -165,7 +165,7 @@ sections (
 - `POST /users/login` - Benutzer-Login
 - `POST /users/reset-password` - Passwort zurücksetzen
 
-### TODO-ENDPUNKTE
+### TODO-ENDPUNKTE (geschrieben von 2352061)
 - `GET /todos` - Todos abrufen (mit Query-Parametern für Filterung)
   - Query-Parameter: userID, bereichsID, completed, importance, niveau
 - `GET /todos/:id` - Todos nach Bereichs-ID
