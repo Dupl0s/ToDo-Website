@@ -36,16 +36,18 @@ export class TodosComponent {
   testArray: Todo[] = [];
   userId: String = "";
   user?: User | null;
-  UserService = inject(UserService);  
+  UserService = inject(UserService);
 
   justCompletedId: number | null = null;
   constructor(
     private route: ActivatedRoute,
     private categoriesService: CategoriesService,
     public http: HttpClient,
-  ) {this.UserService.user.subscribe((user) => {
-    this.user = user;
-  });}
+  ) {
+    this.UserService.user.subscribe((user) => {
+      this.user = user;
+    });
+  }
 
 
 
@@ -110,6 +112,17 @@ export class TodosComponent {
   }
 
   toggleCompleted(todo: Todo) {
+/* für Popover, wenn erledigt: */
+    if (!todo.completed) {
+      this.justCompletedId = todo.id;
+      console.log('justCompletedId gesetzt:', this.justCompletedId);
+      setTimeout(() => {
+        this.justCompletedId = null;
+      }, 2000);
+    } else {
+      this.justCompletedId = null;
+      console.log('justCompletedId zurückgesetzt');
+    }
     // Todo: PUT-Request an die API senden, um den Status zu ändern
     const updatedTodo = { ...todo, completed: !todo.completed };
     this.http
@@ -121,6 +134,7 @@ export class TodosComponent {
         this.refreshTodosFromApi();
         this.todoService.refreshCurrentRoute();
       });
+
   }
 
   deleteTodo(todoID: number) {
@@ -136,11 +150,11 @@ export class TodosComponent {
   refreshTodosFromApi(bereichId?: number) {
     if (bereichId) {
       this.bereichsId = bereichId;
-      
+
       // Query Parameters für UserID hinzufügen
       const params = new HttpParams().set('userId', (this.user?.userId ?? '').toString());
 
-      
+
       this.http
         .get<{ todos: Todo[] }>(
           `https://todobackend-dupl0s-janniks-projects-e7141841.vercel.app/todos/${bereichId}`,
@@ -160,11 +174,11 @@ export class TodosComponent {
         });
     } else {
       this.bereichsId = null;
-      
+
       // Query Parameters für UserID hinzufügen
       const params = new HttpParams().set('userId', (this.user?.userId ?? '').toString());
 
-      
+
       this.http
         .get<{ todos: Todo[] }>(
           'https://todobackend-dupl0s-janniks-projects-e7141841.vercel.app/todos',
@@ -257,10 +271,10 @@ export class TodosComponent {
 
   loadTodosByBereichId(bereichsId: number): void {
     console.log('Lade Todos für Bereichs-ID:', bereichsId);
-    
+
     // Query Parameters für UserID hinzufügen
     const params = new HttpParams().set('userId', (this.user?.userId ?? '').toString());
-    
+
     this.http
       .get<{ todos: Todo[] }>(
         `https://todobackend-dupl0s-janniks-projects-e7141841.vercel.app/todos/${bereichsId}`,
