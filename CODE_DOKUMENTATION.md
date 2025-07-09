@@ -41,7 +41,7 @@ ToDo-Website/
 │   │   │   │   └── sort-filter-dropdown/  # Filter/Sort Dropdown    -->(geschrieben von 2937506)
 │   │   │   ├── services/        # Angular Services
 │   │   │   │   ├── user.service.ts       # Benutzerverwaltung       --> (geschrieben von 2937506)
-│   │   │   │   ├── todo.service.ts       # Todo-Verwaltung          --> (geschrieben von 2352061 und 2937506)
+│   │   │   │   ├── todo.service.ts       # Todo-Verwaltung          --> (geschrieben von 2352061, 2937506, 2199855)
 │   │   │   │   └── categories.service.ts # Kategorie-Verwaltung     --> (geschrieben von 2199855)
 │   │   │   ├── model/           # TypeScript Interfaces
 │   │   │   │   ├── user.type.ts                                    --> (geschrieben von 2937506)
