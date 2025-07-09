@@ -7,7 +7,9 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { CategoriesService } from '../services/categories.service';
 import { SortFilterDropdownComponent } from '../components/sort-filter-dropdown/sort-filter-dropdown.component';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { User } from '../model/user.type';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-todos',
@@ -32,13 +34,18 @@ export class TodosComponent {
   bereichId: number | null = null;
   filteredTodos: Todo[] = [];
   testArray: Todo[] = [];
+  userId: String = "";
+  user?: User | null;
+  UserService = inject(UserService);  
 
   justCompletedId: number | null = null;
   constructor(
     private route: ActivatedRoute,
     private categoriesService: CategoriesService,
     public http: HttpClient,
-  ) {}
+  ) {this.UserService.user.subscribe((user) => {
+    this.user = user;
+  });}
 
 
 
@@ -56,7 +63,6 @@ export class TodosComponent {
   }
 
   ngOnInit() {
-    this.refreshTodosFromApi();
     this.route.paramMap.subscribe((params) => {
       const id = params.get('id');
       this.bereichsId = id ? Number(id) : null;
@@ -66,23 +72,23 @@ export class TodosComponent {
           const bereich = bereiche.find((b) => b.id === this.bereichsId);
           this.bereichName = bereich ? bereich.name : 'Unbekannter Bereich';
         });
+        // Todos für den spezifischen Bereich laden
+        this.refreshTodosFromApi(this.bereichsId);
+      } else {
+        // Alle Todos laden, wenn keine bereichsId vorhanden
+        this.refreshTodosFromApi();
       }
 
-      this.applyFilterandSort();
       //this.popup.checkForReminders();
     });
-  }
-
-  ngAfterViewInit() {
-    this.bereichId = this.popup.bereichId();
-    this.todoService.getTodosFromApiWithID(this.bereichId);
   }
 
   //Asking the method to createTask to take the Todo without the bereichsId(as it is not manually filled in by the user) and setting the bereichsid ourselves from above.
   createTask(taskData: Omit<Todo, 'bereichsId'>) {
     const newTask = {
       ...taskData,
-      bereichsId: this.bereichsId!,
+      userID: this.user?.userId || "1", // Backend erwartet userID
+      bereichsID: this.bereichsId!, // Backend erwartet bereichsID (nicht bereichsId)
     };
     console.log('New task received from popup:', newTask);
     // Todo: POST-Request an die API senden
@@ -91,9 +97,15 @@ export class TodosComponent {
         'https://todobackend-dupl0s-janniks-projects-e7141841.vercel.app/todos',
         newTask
       )
-      .subscribe(() => {
-        // Nach dem Hinzufügen neu laden
-        this.refreshTodosFromApi();
+      .subscribe({
+        next: (response) => {
+          console.log('Todo created successfully:', response);
+          // Nach dem Hinzufügen neu laden
+          this.refreshTodosFromApi();
+        },
+        error: (error) => {
+          console.error('Error creating todo:', error);
+        }
       });
   }
 
@@ -123,9 +135,15 @@ export class TodosComponent {
   refreshTodosFromApi(bereichId?: number) {
     if (bereichId) {
       this.bereichsId = bereichId;
+      
+      // Query Parameters für UserID hinzufügen
+      const params = new HttpParams().set('userId', (this.user?.userId ?? '').toString());
+
+      
       this.http
         .get<{ todos: Todo[] }>(
-          `https://todobackend-dupl0s-janniks-projects-e7141841.vercel.app/todos/${bereichId}`
+          `https://todobackend-dupl0s-janniks-projects-e7141841.vercel.app/todos/${bereichId}`,
+          { params }
         )
         .subscribe({
           next: (response) => {
@@ -141,9 +159,15 @@ export class TodosComponent {
         });
     } else {
       this.bereichsId = null;
+      
+      // Query Parameters für UserID hinzufügen
+      const params = new HttpParams().set('userId', (this.user?.userId ?? '').toString());
+
+      
       this.http
         .get<{ todos: Todo[] }>(
-          'https://todobackend-dupl0s-janniks-projects-e7141841.vercel.app/todos'
+          'https://todobackend-dupl0s-janniks-projects-e7141841.vercel.app/todos',
+          { params }
         )
         .subscribe({
           next: (response) => {
@@ -189,10 +213,9 @@ export class TodosComponent {
   }
 
   applyFilterandSort() {
+
     let todos = [...this.arrayTodos];
-    if (this.bereichsId !== null) {
-      todos = todos.filter(todo => todo.bereichsID === this.bereichsId);
-    }
+    // Backend filtert bereits nach bereichsID, keine zusätzliche Filterung nötig
 
     if (this.actualFilter === 'true' || this.actualFilter === 'false') {
       todos = this.todoService.filterBy(this.actualFilter, todos);
@@ -232,22 +255,27 @@ export class TodosComponent {
   }
 
   loadTodosByBereichId(bereichsId: number): void {
+    console.log('Lade Todos für Bereichs-ID:', bereichsId);
+    
+    // Query Parameters für UserID hinzufügen
+    const params = new HttpParams().set('userId', (this.user?.userId ?? '').toString());
+    
     this.http
       .get<{ todos: Todo[] }>(
-        `https://todobackend-dupl0s-janniks-projects-e7141841.vercel.app/todos/2`
+        `https://todobackend-dupl0s-janniks-projects-e7141841.vercel.app/todos/${bereichsId}`,
+        { params }
       )
       .subscribe({
         next: (response) => {
-          this.testArray = Array.isArray(response.todos) ? response.todos : [];
-          localStorage.setItem('todos', JSON.stringify(this.testArray));
-          // Hier kannst du weitere Aktionen machen, z.B.:
+          this.arrayTodos = Array.isArray(response.todos) ? response.todos : [];
+          localStorage.setItem('todos', JSON.stringify(this.arrayTodos));
           this.applyFilterandSort();
         },
         error: () => {
           // Fallback: LocalStorage
           const local = localStorage.getItem('todos');
           let arr = local ? JSON.parse(local) : [];
-          this.testArray = Array.isArray(arr) ? arr.filter((todo: Todo) => todo.bereichsID === bereichsId) : [];
+          this.arrayTodos = Array.isArray(arr) ? arr.filter((todo: Todo) => todo.bereichsID === bereichsId) : [];
           this.applyFilterandSort();
         }
       });

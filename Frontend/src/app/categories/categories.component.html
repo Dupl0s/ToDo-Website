@@ -20,13 +20,13 @@
   <button class="carousel-button prev" (click)="prevSlide()">‹</button>
 
   <ul class="carousel-track">
-    @for (bereich of bereiche; let i = $index; track bereich.id) {
+    @for(bereich of bereiche; let i = $index; track bereich.id) {
       <!--Traversing through the Bereiche. Whenever the next button is clicked, it set the
        currentindex to the new idex and only displays that particular Bereich-->
-      @if (i >= currentIndex && i < currentIndex + 3) {
+      @if(i >= currentIndex && i < currentIndex + 3){
         <li class="slide">
-          <button class="bereich-item" (click)="goToTodos(bereich.id)">
-            <div class="card text-black rounded-3 p-3">
+          <div class="bereich-item">
+            <div class="card text-black rounded-3 p-3" (click)="goToTodos(bereich.id)">
               <!--<span class="undone-todos" *ngIf="bereich.incompleteCount && bereich.incompleteCount>0">
                 {{bereich.incompleteCount}}
               </span>-->
@@ -39,9 +39,8 @@
               <button class="btn btn-sm btn-outline-dark me-1" #deleteBtn (click)="deletedCategories(bereich.id, deleteBtn); $event.stopPropagation()">
                 <img src="assets/delete.svg" alt="Delete" />
               </button>
+            </div>
           </div>
-          </button>
-          
         </li>
       }
     }

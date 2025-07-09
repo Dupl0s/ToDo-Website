@@ -22,4 +22,5 @@ export const todos = pgTable('todos', {
 export const sections = pgTable('sections', {
   id: serial('id').notNull(),
   name: text('name'),
+  userid: uuid('userid')
 });

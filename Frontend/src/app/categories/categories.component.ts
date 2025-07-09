@@ -13,7 +13,7 @@ import { TodosComponent } from '../todos/todos.component';
 @Component({
   selector: 'app-categories',
   standalone: true,
-  imports: [FormsModule, PopupComponent, RouterModule, CommonModule, TodosComponent],
+  imports: [FormsModule, PopupComponent, RouterModule, CommonModule],
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.css'
 })
@@ -24,7 +24,7 @@ export class CategoriesComponent {
 
   @ViewChild(PopupComponent) popup!: PopupComponent;
   private popover?:Popover;
-  @ViewChild(TodosComponent) todosComponent!: TodosComponent;
+  @ViewChild(TodosComponent) TodosComponent!: TodosComponent;
 
   get currentBereich(): Bereich | null {
     return this.bereiche.length > 0 ? this.bereiche[this.currentIndex] : null;
@@ -65,8 +65,8 @@ export class CategoriesComponent {
   }
 
   goToTodos(bereichId: number) {
-    this.todosComponent.refreshTodosFromApi(bereichId);  
     this.router.navigate(['/todos', bereichId]);
+    this.TodosComponent.loadTodosByBereichId(bereichId);
   }
 
   editCategories(updatedBereich: Bereich) {
