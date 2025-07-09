@@ -11,18 +11,22 @@ export class CategoriesService {
   private http = inject(HttpClient);
   private apiUrl = 'https://todobackend-dupl0s-janniks-projects-e7141841.vercel.app/sections';
 
-  constructor(private todoService: TodoService){}
+  constructor(private todoService: TodoService) { }
 
-  getBereiche(): Observable<Bereich[]> {
-    return this.http.get<{ sections: Bereich[] }>(this.apiUrl)
+  getBereiche(userid: string): Observable<Bereich[]> {
+    return this.http.get<{ sections: Bereich[] }>(this.apiUrl,
+      {
+        params: { userid: userid }
+      })
       .pipe(
         map(response => response.sections || [])
       );
   }
 
 
-  addBereich(name: string): Observable<Bereich> {
-    return this.http.post<{ section: Bereich }>(this.apiUrl, { name })
+  addBereich(name: string, userid: string): Observable<Bereich> {
+    const body = { name, userid };
+    return this.http.post<{ section: Bereich }>(this.apiUrl, body)
       .pipe(
         map(response => response.section)
       );
@@ -39,13 +43,13 @@ export class CategoriesService {
       );
   }
 
-  todosInBereich(bereichId: number):boolean{
-    const todos=this.todoService.loadTodos();
-    return todos.some(todo=> todo.bereichsID === bereichId);
+  todosInBereich(bereichId: number): boolean {
+    const todos = this.todoService.loadTodos();
+    return todos.some(todo => todo.bereichsID === bereichId);
   }
-  todosInBerech(bereichId:number):boolean{
-    const todos= this.todoService.loadTodos();
-    return todos.some(todo=> todo.bereichsID ===bereichId); // checks if there is at least 1 element
+  todosInBerech(bereichId: number): boolean {
+    const todos = this.todoService.loadTodos();
+    return todos.some(todo => todo.bereichsID === bereichId); // checks if there is at least 1 element
   }
 }
 
