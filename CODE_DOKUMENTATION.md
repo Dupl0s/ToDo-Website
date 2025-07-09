@@ -38,30 +38,31 @@ ToDo-Website/
 │   │   │   ├── components/      # Wiederverwendbare Komponenten
 │   │   │   │   ├── calendar/    # Kalender-Komponente
 │   │   │   │   ├── popup/       # Modal/Popup-Komponente
-│   │   │   │   └── sort-filter-dropdown/  # Filter/Sort Dropdown
+│   │   │   │   └── sort-filter-dropdown/  # Filter/Sort Dropdown    -->(geschrieben von 2937506)
 │   │   │   ├── services/        # Angular Services
-│   │   │   │   ├── user.service.ts       # Benutzerverwaltung
-│   │   │   │   ├── todo.service.ts       # Todo-Verwaltung
+│   │   │   │   ├── user.service.ts       # Benutzerverwaltung       --> (geschrieben von 2937506)
+│   │   │   │   ├── todo.service.ts       # Todo-Verwaltung          --> (geschrieben von ... und 2937506)
 │   │   │   │   └── categories.service.ts # Kategorie-Verwaltung
 │   │   │   ├── model/           # TypeScript Interfaces
-│   │   │   │   ├── user.type.ts
+│   │   │   │   ├── user.type.ts           --> (geschrieben von 2937506)
 │   │   │   │   ├── todo.type.ts
 │   │   │   │   └── categories.type.ts
-│   │   │   ├── validators/      # Custom Validators
-│   │   │   ├── helpers/         # Guards und Hilfsfunktionen
+│   │   │   ├── validators/      # Custom Validators               --> (geschrieben von 2937506)
+│   │   │   ├── helpers/         # Guards und Hilfsfunktionen      --> (geschrieben von 2937506)
 │   │   │   └── [pages]/         # Seiten-Komponenten
-│   │   │       ├── login/
-│   │   │       ├── registration/
+│   │   │       ├── login/                --> (geschrieben von 2937506)
+│   │   │       ├── registration/         --> (geschrieben von 2937506)
 │   │   │       ├── categories/
 │   │   │       ├── todos/
 │   │   │       ├── dustbin/
-│   │   │       ├── user-edit/
-│   │   │       └── password-reset/
+│   │   │       ├── user-edit/          --> (geschrieben von 2937506)
+│   │   │       └── password-reset/    --> (geschrieben von 2937506)
 │   │   └── assets/              # Statische Dateien
 ├── Backend/                     # Node.js Backend
 │   ├── api/
 │   │   ├── index.ts            # Haupt-API-Datei
 │   │   └── routers/            # API Router
+│   │   │   ├── user-router.ts       # User-Router     --> (geschrieben von 2937506)
 │   ├── src/
 │   │   ├── db/                 # Datenbankschema und Konfiguration
 │   │   │   ├── schema.ts       # Drizzle Datenbankschema
@@ -74,7 +75,7 @@ ToDo-Website/
 
 ## KERN-FEATURES
 
-### 1. BENUTZERVERWALTUNG
+### 1. BENUTZERVERWALTUNG (geschrieben von 2937506)
 - **Registrierung:** Benutzer können sich mit Name, E-Mail und Passwort registrieren
 - **Login:** Sichere Anmeldung mit E-Mail und Passwort
 - **Passwort-Reset:** E-Mail-basierte Passwort-Wiederherstellung
@@ -97,7 +98,7 @@ ToDo-Website/
   - Niveau/Schwierigkeit (1-5 Skala)
   - Abgeschlossen (boolean)
 
-**Filter- und Sortieroptionen:**
+**Filter- und Sortieroptionen:** (geschrieben von 2937506)
 - Nach Benutzer
 - Nach Kategorie/Bereich
 - Nach Abschlussstatus
@@ -156,7 +157,7 @@ sections (
 
 ## API-ENDPUNKTE
 
-### BENUTZER-ENDPUNKTE
+### BENUTZER-ENDPUNKTE (geschrieben von 2937506)
 - `GET /users` - Alle Benutzer abrufen
 - `POST /users` - Neuen Benutzer erstellen
 - `PUT /users/:id` - Benutzer aktualisieren
@@ -177,7 +178,7 @@ sections (
 
 ## ROUTING UND NAVIGATION
 
-### GESCHÜTZTE ROUTEN (mit LoggedActivate Guard)
+### GESCHÜTZTE ROUTEN (mit LoggedActivate Guard) (geschrieben von 2937506)
 - `/categories` - Kategorien-Übersicht
 - `/todos` - Todo-Liste
 - `/todos/:id` - Todos für spezifischen Bereich
