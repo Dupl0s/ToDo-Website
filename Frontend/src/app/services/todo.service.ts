@@ -1,15 +1,39 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable, signal } from '@angular/core';
+import { inject, Injectable, signal, viewChild } from '@angular/core';
 import { Todo } from '../model/todo.type';
-import { map, Observable } from 'rxjs';
+import { map, Observable, Subject } from 'rxjs';
 import todoData from '../../assets/todos.json';
 import { CategoriesService } from '../services/categories.service';
 import { Bereich } from '../model/categories.type';
+import { User } from '../model/user.type';
+import { UserService } from './user.service';
+import { TodosComponent } from '../todos/todos.component';
+import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TodoService {
+
+  userId: String = "";
+  user?: User | null;
+  UserService = inject(UserService);
+  router = inject(Router);
+  location = inject(Location);
+  
+  // Subject für Component-Communication
+  private refreshTodosSubject = new Subject<number | undefined>();
+  public refreshTodos$ = this.refreshTodosSubject.asObservable();
+  
+  private applyFilterSubject = new Subject<void>();
+  public applyFilter$ = this.applyFilterSubject.asObservable();
+
+  justCompletedId: number | null = null;
+  constructor(
+  ) {this.UserService.user.subscribe((user) => {
+    this.user = user;
+  });}
   
   http = inject(HttpClient);
 
@@ -60,21 +84,30 @@ export class TodoService {
     return this.localTodos;
   }
 
-  getTodosFromApi() {
-    //return this.http.get('https://todobackend-dupl0s-janniks-projects-e7141841.vercel.app/todos');
-  }
-
-  getTodosFromApiWithID(bereichId: number) {
-    //return this.http.get('https://todobackend-dupl0s-janniks-projects-e7141841.vercel.app/todos/' + bereichId);
-  }
-
   addTodo(newTodo: Todo) {
-    this.http.post<Todo>('https://todobackend-dupl0s-janniks-projects-e7141841.vercel.app/todos', newTodo)
-      .subscribe((todo) => {
-        this.todos.set(this.localTodos);
-        localStorage.setItem('todos', JSON.stringify(this.localTodos));
-        console.log('Todo added:', todo);
+    // Backend-kompatible Struktur erstellen
+    const todoForBackend = {
+      ...newTodo,
+      userID: this.user?.userId,
+      bereichsID: newTodo.bereichsID
+    };
+    
+    this.http.post<{ todo: Todo }>('https://todobackend-dupl0s-janniks-projects-e7141841.vercel.app/todos', todoForBackend)
+      .subscribe({
+        next: (response) => {
+          console.log('Todo added:', response.todo);
+          this.localTodos.push(response.todo);
+          this.todos.set(this.localTodos);
+          localStorage.setItem('todos', JSON.stringify(this.localTodos));
+          
+          // Router navigate um ngOnInit zu triggern
+          this.refreshComponentWithBereichId(newTodo.bereichsID);
+        },
+        error: (error) => {
+          console.error('Error adding todo:', error);
+        }
       });
+      
   }
 
   editTodo(updatedTodo: Todo) {
@@ -85,6 +118,7 @@ export class TodoService {
       // Optional: Nach dem Edit neu laden
       this.loadTodos();
       console.log('Todo updated:', todo);
+      this.refreshCurrentRoute();
     });
   }
 
@@ -95,7 +129,15 @@ export class TodoService {
 
   deleteTodo(id: number) {
     this.http.delete(`https://todobackend-dupl0s-janniks-projects-e7141841.vercel.app/todos/${id}`)
-    this.getTodosFromApi();
+      .subscribe({
+        next: () => {
+          console.log('Todo deleted successfully');
+          this.refreshCurrentRoute();
+        },
+        error: (error) => {
+          console.error('Error deleting todo:', error);
+        }
+      });
   }
 
   addToDustbin(todo: Todo) {
@@ -171,4 +213,17 @@ export class TodoService {
   this.todos.set(filtered);
   localStorage.setItem('todos', JSON.stringify(filtered));
 }
+
+  refreshComponentWithBereichId(bereichsId: number): void {
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate(['/todos', bereichsId]);
+    });
+  }
+
+  refreshCurrentRoute(): void {
+    const currentUrl = this.router.url;
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigateByUrl(currentUrl);
+    });
+  }
 }

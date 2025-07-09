@@ -20,9 +20,6 @@
           <label for="todo-deadline">Deadline <span class="info">(Fälligkeitsdatum)</span></label><br>
           <input id="todo-deadline" class="deadline" [(ngModel)]="deadline" type="date">
           <br>
-
-          <label for="todo-time">Uhrzeit <span class="info">(optional)</span></label><br>
-          <input id="todo-time" class="time" [(ngModel)]="time" type="time" placeholder="Uhrzeit">
         </div>
 
         <button (click)="save()" class="add">Hinzufügen</button>

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { Bereich } from '../model/categories.type';
 import { TodoService } from './todo.service';
 
@@ -9,17 +9,23 @@ import { TodoService } from './todo.service';
 })
 export class CategoriesService {
   private http = inject(HttpClient);
-  private apiUrl = 'https://todobackend-35fl5cgkl-janniks-projects-e7141841.vercel.app/sections';
+  private apiUrl = 'https://todobackend-dupl0s-janniks-projects-e7141841.vercel.app/sections';
 
   constructor(private todoService: TodoService){}
 
   getBereiche(): Observable<Bereich[]> {
-    return this.http.get<Bereich[]>(this.apiUrl);
+    return this.http.get<{ sections: Bereich[] }>(this.apiUrl)
+      .pipe(
+        map(response => response.sections || [])
+      );
   }
 
 
   addBereich(name: string): Observable<Bereich> {
-    return this.http.post<Bereich>(this.apiUrl, { name });
+    return this.http.post<{ section: Bereich }>(this.apiUrl, { name })
+      .pipe(
+        map(response => response.section)
+      );
   }
 
   deleteBereich(id: number): Observable<void> {
@@ -27,7 +33,10 @@ export class CategoriesService {
   }
 
   handleUpdate(bereich: Bereich): Observable<Bereich> {
-    return this.http.put<Bereich>(`${this.apiUrl}/${bereich.id}`, bereich);
+    return this.http.put<{ section: Bereich }>(this.apiUrl + '/' + bereich.id, bereich)
+      .pipe(
+        map(response => response.section)
+      );
   }
 
   todosInBereich(bereichId: number):boolean{
