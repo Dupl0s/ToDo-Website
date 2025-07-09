@@ -42,7 +42,7 @@ testem.log
 Thumbs.db
 
 #other files
-*.png
 
 #testing files
 karma.conf.js
+.vercel

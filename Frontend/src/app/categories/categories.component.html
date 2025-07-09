@@ -1,5 +1,4 @@
 
-
 <div class="newBereiche">
   <input
     [(ngModel)]="newBereich"
@@ -7,7 +6,15 @@
     class="form-control w-auto"
   />
   <button #addbtn (click)="addBereiche(addbtn)" class="btn2">Hinzufügen</button>
+   <button [routerLink]="['']" class="back-btn " style="width: 120px; height: 45px">
+  Home
+  </button>
+  <button [routerLink]="['/todos']" class="back-btn2 " style=" width: 130px;
+  height: 45px;" >
+  To-Dos
+  </button>
 </div>
+
 
 <div class="carousel-container">
   <button class="carousel-button prev" (click)="prevSlide()">‹</button>
@@ -16,15 +23,22 @@
     @for (bereich of bereiche; let i = $index; track bereich.id) {
       <!--Traversing through the Bereiche. Whenever the next button is clicked, it set the
        currentindex to the new idex and only displays that particular Bereich-->
-      @if (i === currentIndex) {
+      @if (i >= currentIndex && i < currentIndex + 3) {
         <li class="slide">
           <button class="bereich-item" (click)="goToTodos(bereich.id)">
             <div class="card text-black rounded-3 p-3">
+              <!--<span class="undone-todos" *ngIf="bereich.incompleteCount && bereich.incompleteCount>0">
+                {{bereich.incompleteCount}}
+              </span>-->
               <h5 class="card-title fw-bold">{{ bereich.name }}</h5>
             </div>
             <div class="text-center mt-2">
-              <button class="btn btn-sm btn-outline-dark" (click)="editCategories(bereich); $event.stopPropagation()">Bearbeiten</button>
-              <button class="btn btn-sm btn-outline-dark me-1" #deleteBtn (click)="deletedCategories(bereich.id, deleteBtn); $event.stopPropagation()">Löschen</button>
+              <button class="btn btn-sm btn-outline-dark" (click)="editCategories(bereich); $event.stopPropagation()">
+                <img src="assets/edit.svg" alt="Edit" />
+              </button>
+              <button class="btn btn-sm btn-outline-dark me-1" #deleteBtn (click)="deletedCategories(bereich.id, deleteBtn); $event.stopPropagation()">
+                <img src="assets/delete.svg" alt="Delete" />
+              </button>
           </div>
           </button>
           
@@ -36,4 +50,4 @@
   <button class="carousel-button next" (click)="nextSlide()">›</button>
 </div>
 
-<app-popup></app-popup>
+<app-popup (bereichEdited)="handleBereichEdit($event)" #popup></app-popup>

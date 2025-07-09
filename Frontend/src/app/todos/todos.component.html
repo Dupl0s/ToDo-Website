@@ -1,5 +1,6 @@
 <div class="container-fluid">
-  <nav class="navbar bg-body-tertiary">
+<!--COmmented out navbar because it was giving problems in dark mode--> 
+  <!--<nav class="navbar bg-body-tertiary">-->
     <div class="container-fluid-navbar d-flex align-items-center gap-3">
       <!--<h1 class="navbar-brand mb-0 h1">Projekt</h1>-->
       <button (click)="
@@ -8,7 +9,6 @@
         ToDo Hinzufügen
       </button>
       <app-popup (closed)="onPopupClosed()"></app-popup>
-      <button routerLink="/dustbin" class="btn btn-warning">Papierkorb</button>
       <app-sort-filter-dropdown [title]="'Sortieren nach'" [options]="[
       { label: 'Deadline', value: 'deadline'},
       {label: 'Priorität', value: 'importance'},
@@ -23,17 +23,18 @@
       {label: 'Zeitraum', value: 'date-range'},
       ]" [actualSort]="actualFilter" (select)="onFilter($event)" [isSortDropdown]="false">
       </app-sort-filter-dropdown>
+      <div class="right-buttons">
       <button [routerLink]="['/dustbin', bereichsId]" class="btn btn-warning dustbin-btn" *ngIf="bereichsId">
-        Papierkorb</button>
-      <button routerLink="/categories" class="btn btn-secondary back-btn">
-        Zurück
-      </button>
+  Papierkorb</button>
+       <button routerLink="/sections" class="btn btn-secondary back-btn">
+  Zurück
+</button>
+</div>
     </div>
-
-  </nav>
+  <!--</nav>-->
   <h3 class="my-3">{{ bereichName }}</h3>
   <div class="todos-container">
-    @for (item of applyFilterandSort(); track item.id) {
+    @for (item of filteredTodos; track item.id) {
     <div [appHighlightDoneTodos]="item.completed" class="arraycard" [ngClass]="{ done: item.completed }"
       style="position: relative;">
       <div *ngIf="item.id === justCompletedId" class="completed-overlay">
@@ -45,7 +46,7 @@
       <p class="card-text flex-grow-1">Deadline: {{ item.deadline }}</p>
       <p class="card-text flex-grow-1">Priorität: {{ item.importance }}</p>
       <p class="card-text flex-grow-1">Schwierigkeit: {{ item.niveau }}</p>
-      <div class="btn-toolbar" role="toolbar" *ngIf="bereichsId">
+      <div class="btn-toolbar" role="toolbar" >
         <button class="btn btn-primary" (click)="toggleCompleted(item)" type="button">
           <img src="assets/check_circle.svg" alt="Done" />
         </button>

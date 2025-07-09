@@ -10,6 +10,7 @@ import { Bereich } from '../model/categories.type';
   providedIn: 'root',
 })
 export class TodoService {
+  
   http = inject(HttpClient);
 
   localTodos: Todo[] = [
@@ -21,7 +22,7 @@ export class TodoService {
       deadline: '2025-10-15',
       niveau: 3,
       importance: 5,
-      bereichsId: 1,
+      bereichsID: 1,
     },
     {
       id: 8,
@@ -31,7 +32,7 @@ export class TodoService {
       deadline: '2025-11-20',
       niveau: 2,
       importance: 4,
-      bereichsId: 1,
+      bereichsID: 1,
     },
     {
       id: 9,
@@ -41,57 +42,50 @@ export class TodoService {
       deadline: '2025-11-20',
       niveau: 2,
       importance: 4,
-      bereichsId: 1,
+      bereichsID: 1,
     },
   ];
-  todos = signal<Array<Todo>>(
-    JSON.parse(localStorage.getItem('todos') || '[]')
+  todos = signal<Array<Todo>>([]
   );
 
-
-  connectBackend() {
-    return this.http.get<{ message: string }>('/api/backend');
-  }
-
-  loadTodos() {
-    const savedTodos = localStorage.getItem('todos');
-    if (savedTodos) {
-      this.localTodos = JSON.parse(savedTodos);
-    } else {
-      this.localTodos = todoData;
-      localStorage.setItem('todos', JSON.stringify(this.localTodos));
-    }
+  loadTodos(): Todo[] {
+    /*this.http.get<Todo[]>('https://todobackend-dupl0s-janniks-projects-e7141841.vercel.app/todos')
+      .subscribe((data) => { 
+        this.localTodos = data;
+        localStorage.setItem('todos', JSON.stringify(this.localTodos));
+        this.todos.set(this.localTodos);
+        console.log('Todos loaded from API:', this.localTodos);
+      });
+    return this.localTodos;*/
     return this.localTodos;
   }
 
-  getTodosFromApi(): Observable<Todo[]> {
-    const url = '../assets/todos.json';
-    console.log('Lade JSON von:', url);
-    return this.http.get<Todo[]>(url);
-    /*     return this.http.get<Array<Todo>>(url);
-     */
+  getTodosFromApi() {
+    //return this.http.get('https://todobackend-dupl0s-janniks-projects-e7141841.vercel.app/todos');
+  }
+
+  getTodosFromApiWithID(bereichId: number) {
+    //return this.http.get('https://todobackend-dupl0s-janniks-projects-e7141841.vercel.app/todos/' + bereichId);
   }
 
   addTodo(newTodo: Todo) {
-    console.log('addTodo');
-    this.localTodos.push(newTodo);
-    localStorage.setItem('todos', JSON.stringify(this.localTodos));
-    return this.localTodos;
+    this.http.post<Todo>('https://todobackend-dupl0s-janniks-projects-e7141841.vercel.app/todos', newTodo)
+      .subscribe((todo) => {
+        this.todos.set(this.localTodos);
+        localStorage.setItem('todos', JSON.stringify(this.localTodos));
+        console.log('Todo added:', todo);
+      });
   }
 
   editTodo(updatedTodo: Todo) {
-    const index = this.localTodos.findIndex(
-      (todo) => todo.id === updatedTodo.id
-    );
-    console.log(index, localStorage.getItem('todos'));
-    if (index !== -1) {
-      this.localTodos[index] = updatedTodo;
-    }
-    localStorage.setItem('todos', JSON.stringify(this.localTodos));
-  }
-
-  clearStorage() {
-    //maybe to clear all the todos that are done?
+    this.http.put<Todo>(
+      `https://todobackend-dupl0s-janniks-projects-e7141841.vercel.app/todos/${updatedTodo.id}`,
+      updatedTodo
+    ).subscribe((todo) => {
+      // Optional: Nach dem Edit neu laden
+      this.loadTodos();
+      console.log('Todo updated:', todo);
+    });
   }
 
   dustbin = signal<Array<Todo>>(
@@ -99,21 +93,9 @@ export class TodoService {
   );
 
 
-  deleteTodo(id: number): Todo[] {
-    const current = this.localTodos;
-    const index = current.findIndex((todo) => todo.id === id);
-
-    if (index !== -1) {
-      const deletedTodo = current[index];
-      const updatedTodos = current.filter((todo) => todo.id !== id);
-
-      this.todos.set(updatedTodos);
-      localStorage.setItem('todos', JSON.stringify(updatedTodos));
-
-      this.addToDustbin(deletedTodo);
-    }
-
-    return this.localTodos;
+  deleteTodo(id: number) {
+    this.http.delete(`https://todobackend-dupl0s-janniks-projects-e7141841.vercel.app/todos/${id}`)
+    this.getTodosFromApi();
   }
 
   addToDustbin(todo: Todo) {
@@ -133,7 +115,7 @@ export class TodoService {
   }
 
   sortBy<K extends keyof Todo>(key: K, ascending: boolean, todos?: Todo[]) {
-    const allTodos = (todos ? todos : this.loadTodos().slice());
+    const allTodos = (todos ? todos : this.localTodos.slice());
     allTodos.sort((a, b) => {
       const aValue = a[key];
       const bValue = b[key];
@@ -184,7 +166,7 @@ export class TodoService {
     })
   }
   deleteTodosByBereichsId(bereichsId: number): void {
-  const filtered = this.localTodos.filter(todo => todo.bereichsId !== bereichsId);
+  const filtered = this.localTodos.filter(todo => todo.bereichsID !== bereichsId);
   this.localTodos = filtered;
   this.todos.set(filtered);
   localStorage.setItem('todos', JSON.stringify(filtered));

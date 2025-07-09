@@ -1,12 +1,14 @@
 .carousel-container {
-  position: relative;
-  width: 100%;
-  max-width: 500px;
-  margin: .5rem auto; 
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: -20px;
+  gap: 1rem;
+  width: 100%;
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  position: relative;
+  box-sizing: border-box;
   transition-property: opacity, transform;
   transition-duration: 1500ms;
 
@@ -15,23 +17,50 @@
       transform: translateX(-10px);
   }
 }
+.form-control{
+  background-color: #ece8e8;
+  color: var(--text-color);
+}
 .newBereiche {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 20%;
+  justify-content: space-between;
+  align-items: center; 
+  width: 100%;  
   padding: 1rem;
+  gap: 1rem; 
+  box-sizing: border-box;
+}
+
+/*extra
+.undone-todos {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  min-width: 22px;
+  height: 22px;
+  line-height: 22px;
+  border-radius: 50%;
+  background: #e74c3c;
+  color: #fff;
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: bold;
+  z-index: 2;
+}*/
+.nav-buttons{
+  display: flex;
+  gap:1rem;
 }
 
 .carousel-track {
-  flex:1;
-  display: flex;
-  overflow: hidden;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
+ display: flex;
   gap: 1rem;
-  
+  overflow: hidden;
+  flex: 1;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
 }
 
 .carousel-button {
@@ -41,15 +70,16 @@
   border: none;
   font-size: 7rem;
   cursor: pointer;
-  color: #333;
+  color: var(--text-color);
   padding: 0.5rem 1rem;
   transition: transform 0.2s ease;
   z-index: 10;
-  top:-20px;
+  top:-55px;
 }
 
 .slide {
-  flex: 0 0 100%;
+  flex: 0 0 calc(33.333% - 1rem);
+  margin:0 0.5rem;
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -65,11 +95,11 @@
 }
 
 .bereich-item {
-  background-color: #ed6276;
+  background-color: var(--card-bg);
   border: none;
   color: black;
-  width: 80%;
-  height: 60vh;
+  width: 70%;
+  height: 50vh;
   border-radius: 10px;
   text-align: center;
   cursor: pointer;
@@ -77,10 +107,11 @@
   flex-direction: column;
   justify-content: flex-start; 
   padding-top: 3rem;
+  top: 50% ;
 }
 
 .bereich-item .card {
-  background-color: #ed6276;
+  background-color: var(--card-bg);
   width: 100%;
   border: none;
 }
@@ -89,15 +120,48 @@
 .bereich-item:active {
   outline: none;
   box-shadow: none;
-  background-color: #ed6276;
+  background-color: var(--card-bg);
 }
 h5{
   font-size: 28px;
 }
-.btn2 {
-  background-color: #f4e9ae;
+.back-btn{
+ background-color: var(--button-bg);
+    color: black;
+    
+    margin-right: 15px;
+    border: 0px;
+    border-radius: 8px;
+    padding: 10px 35px;
+    order:99;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    height:45px;
+    
+}
+.back-btn2 {
+  background-color: var(--button-bg);
   color: black;
-  width: auto;
+width:auto;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 35px;
+  margin-left: auto;
+  margin-right: 15px;
+  order: 98;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  height: 45px; 
+}
+
+.btn2 {
+  background-color: var(--button-bg);
+  color: black;
+  width:auto;
   border: 0px solid #b8ab5e;
   border-radius: 8px;
   padding: 10px 20px;
@@ -115,9 +179,11 @@ h5{
 }
 
 .btn {
-  background-color: #f4e9ae;
+  position:relative;
+  background-color: var(--button-bg);
   color: black;
-  width: 50%;
+  width: 35%;
+  height: 55%;
   border: 0px solid #b8ab5e;
   border-radius: 8px;
   padding: 10px 20px;
@@ -126,9 +192,9 @@ h5{
   font-weight: bold;
   cursor: pointer;
   transition: all 0.3s ease;
-  margin-top: 40px;
+  margin-top: 20px;
 }
-.btn:hover, .btn2:hover {
+.btn:hover, .btn2:hover, .back-btn:hover, .back-btn2:hover{
     background-color: #b8ab5e;
     color: white;
     border-color: #f4e9ae;

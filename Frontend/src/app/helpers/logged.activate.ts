@@ -13,10 +13,12 @@ export class LoggedActivate implements CanActivate {
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         const user = this.userService.userValue;
         if (user) {
+            console.log(user.username + " is there")
             return true;
         }
 
         this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
+        console.log("No user is there")
         return false;
     }
 }

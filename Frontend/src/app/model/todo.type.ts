@@ -6,5 +6,5 @@ export type Todo = {
   niveau: number;
   importance: number;
   id: number;
-  bereichsId: number;
+  bereichsID: number;
 };

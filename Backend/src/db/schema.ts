@@ -10,7 +10,7 @@ export const users = pgTable('users', {
 
 export const todos = pgTable('todos', {
   id: serial('id').primaryKey(),
-  userid: uuid('userid'),
+  userID: text('userID'), // <-- exakt wie in Neon, also 'userID'
   completed: boolean('completed'),
   deadline: text('deadline'),
   niveau: integer('niveau'),

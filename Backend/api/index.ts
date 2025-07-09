@@ -1,29 +1,48 @@
 import express, { Request, Response } from 'express';
+import cors from 'cors';
 import { db } from '../src/db/index';
-import { todos, sections } from '../src/db/schema';
+import { users, todos, sections } from '../src/db/schema';
+import {count, and, eq} from 'drizzle-orm';
 import { userRouter } from './routers/user-router';
-import cors from 'cors'
-import { eq } from 'drizzle-orm';
+import serverless from '@vendia/serverless-express'
 
+import { uuid } from 'drizzle-orm/gel-core';
 const app = express();
+app.use(cors());
 app.use(express.json());
 app.use(cors({
-  origin: "http://localhost:4200",
+  origin: ["http://localhost:4200", "https://dupl0s.github.io/ToDo-Website/"],
   credentials: true,
 }));
 
-const Port = 3000;
-app.listen(Port, () => {
-  console.log(`Server started at http://localhost:${Port}`);
+app.get("/users", async (req, res) => {
+  try {
+    const allUsers = await db.select().from(users);
+    res.json({ users: allUsers });
+  } catch (error) {
+    res.status(500).json({ message: "DB error", error: error.message });
+  }
+});
+app.post("/users", async (req: Request, res: Response) => {
+  const { name } = req.body;
+  try {
+    const inserted = await db.insert(users).values({ username: name }).returning();
+    res.status(201).json({ user: inserted[0] });
+  } catch (error) {
+    res.status(500).json({ message: "DB error", error: error.message });
+  }
 });
 
 //users
 app.use("/users", userRouter());
 
 //todos
-app.get("/todos", async (_req, res) => {
+
+app.get("/todos/{userID}", async (req, res) => {
   try {
-    const allTodos = await db.select().from(todos);
+    const {userID} = req.query;
+    const allTodos = await db.select().from(todos).where(
+      userID ? eq(todos.userID, String(userID)) : undefined);
     res.json({ todos: allTodos });
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
@@ -31,12 +50,130 @@ app.get("/todos", async (_req, res) => {
   }
 });
 
+app.get("/todos/:id", async (req: Request, res: Response) => {
+  const { id } = req.params;
+  try {
+    const todoInBereich = await db.select().from(todos).where(eq(todos.bereichsID, Number(id)));
+    res.json({ todo: todoInBereich });
+  } catch (error) {
+    res.status(500).json({ message: "DB error", error: error.message });
+  }
+});
 
-//bereiche / sections
+app.get("/todos/:id", async (req: Request, res: Response) => {
+  const { id } = req.params;
+  try {
+    const todoInBereich = await db.select().from(todos).where(eq(todos.bereichsID, Number(id)));
+    res.json({ todo: todoInBereich });
+  } catch (error) {
+    res.status(500).json({ message: "DB error", error: error.message });
+  }
+});
+
+app.post("/todos", async (req: Request, res: Response) => {
+  const { title, userID, bereichsID, deadline, importance, niveau, completed } = req.body;
+  try {
+    const inserted = await db.insert(todos).values({
+      title,
+      userID,       
+      bereichsID,
+      deadline,
+      importance,
+      niveau,
+      completed
+    }).returning();
+    res.status(201).json({ todo: inserted[0] });
+  } catch (error) {
+    res.status(500).json({ message: "DB error", error: error.message });
+  }
+});
+
+app.delete("/todos/:id", async (req: Request, res: Response) => {
+  const { id } = req.params;
+  try{
+    const deleted = await db.delete(todos).where(eq(todos.id, Number(id))).returning();
+    res.status(200).json({ message: "Todo deleted", todo: deleted[0] });
+  }
+  catch (error) {
+    res.status(500).json({ message: "DB error", error: error.message });
+  }
+});
+
+app.put("/todos/:id", async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const updatedTodo = req.body;
+  const title = updatedTodo.title;
+  const userID = updatedTodo.userid;
+  const bereichsID = updatedTodo.bereichsID;
+  const deadline = updatedTodo.deadline;
+  const importance = updatedTodo.importance;
+  const niveau = updatedTodo.niveau;
+  const completed = updatedTodo.completed;
+
+  try {
+    const updated = await db.update(todos)
+      .set({
+        title,
+        userID,
+        bereichsID,
+        deadline,
+        importance,
+        niveau,
+        completed
+      })
+      .where(eq(todos.id, Number(id)))
+      .returning();
+    res.status(200).json({ todo: updated[0] });
+  } catch (error) {
+    res.status(500).json({ message: "DB error", error: error.message });
+  }
+});
+
 app.get("/sections", async (_req, res) => {
   try {
-    const allSections = await db.select().from(sections);
-    res.json({ sections: allSections });
+    const allSections = await db.select().from(sections).orderBy(sections.id);
+
+    const sectionsWithCount = await Promise.all(
+      allSections.map(async (section) => {
+        const [{ count: incompleteCount }] = await db
+          .select({ count: count() })
+          .from(todos)
+          .where(
+            and(
+              eq(todos.bereichsID, section.id),
+              eq(todos.completed, false)
+            )
+          );
+        return { ...section, incompleteCount: Number(incompleteCount) };
+      })
+    );
+
+    res.json(sectionsWithCount);
+  } catch (error) {
+    res.status(500).json({ message: "DB error", error: error.message });
+  }
+});
+
+app.get("/sections", async (_req, res) => {
+  try {
+    const allSections = await db.select().from(sections).orderBy(sections.id);
+
+    /*const sectionsWithCount = await Promise.all(
+      allSections.map(async (section) => {
+        const [{ count: incompleteCount }] = await db
+          .select({ count: count() })
+          .from(todos)
+          .where(
+            and(
+              eq(todos.bereichsID, section.id),
+              eq(todos.completed, false)
+            )
+          );
+        return { ...section, incompleteCount: Number(incompleteCount) };
+      })
+    );*/
+
+    res.json( allSections );
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
     res.status(500).json({ message: "DB error", error: message });
@@ -49,8 +186,7 @@ app.post('/sections', async(req,res)=>{
     const [inserted]=await db.insert(sections).values({name}).returning();
     res.status(201).json(inserted);
   }catch(error){
-    const message = error instanceof Error ? error.message : String(error);
-    res.status(500).json({ message: "DB error", error: message });
+    res.status(500).json({ message: "DB error", error: error.message });
   }
 });
 
@@ -76,6 +212,6 @@ app.put('/sections/:id', async (req: Request, res: Response) => {
     }
   });
   
+export default app;
 /* export const handler = serverless({ app });
  */
-export default app;

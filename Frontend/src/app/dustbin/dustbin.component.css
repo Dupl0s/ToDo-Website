@@ -1,15 +1,24 @@
 .btn-dark{
-    background-color: black;
+    background-color: #413f3f;
+    border: 0px;
+    height:45px;
     color: white;
     width:auto;
     font-size:16px;
 }
+.btn-dark:hover{
+    background-color: grey;
+    color: white;
+    width:auto;
+    font-size:16px;
+    transform: translateY(-2px);
+}
 .btn-primary{
-    background-color: #f4e9ae;
+    background-color: var(--button-bg);
     color: black;
     width: auto;
     border-color: #b8ab5e;
-    border: 2px solid #b8ab5e;
+    border: 0px solid #b8ab5e;
     border-radius: 8px;
     padding: 10px 20px;
     margin: 5px;
@@ -17,6 +26,7 @@
     font-weight: bold;
     cursor: pointer;
     transition: all 0.3s ease;
+    
 }
 .btn-primary:hover {
     background-color: #b8ab5e;
@@ -29,10 +39,17 @@
   flex-wrap: wrap;
   padding: 1rem;
   gap: 21px;
+  transition-property: opacity, transform;
+  transition-duration: 1500ms;
+
+  @starting-style {
+      opacity: 0;
+      transform: translateX(-10px);
+  }
 }
 
 .dustbin-card {
-  background-color: #f8e7a2;
+  background-color: var(--papKorb-bg);
   color: black;
   padding: 20px;
   border-radius: 10px;

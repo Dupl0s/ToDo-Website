@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable, signal } from '@angular/core';
-import { map, Observable } from 'rxjs';
-import todoData from '../../assets/todos.json';
+import { Injectable, inject } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Bereich } from '../model/categories.type';
 import { TodoService } from './todo.service';
 
@@ -9,47 +8,35 @@ import { TodoService } from './todo.service';
   providedIn: 'root'
 })
 export class CategoriesService {
-  http = inject(HttpClient);
-  private bereiche: Bereich[]=[];
+  private http = inject(HttpClient);
+  private apiUrl = 'https://todobackend-35fl5cgkl-janniks-projects-e7141841.vercel.app/sections';
 
- constructor(private todoService: TodoService) {
-    const saved = localStorage.getItem('bereiche');
-    this.bereiche = saved
-      ? JSON.parse(saved)
-      : [
-          { id: 1, name: 'Exam' },
-          { id: 2, name: 'Projekt' },
-          { id: 3, name: 'Arbeit' },
-          { id: 4, name: 'Einkaufen' }
-        ]; 
+  constructor(private todoService: TodoService){}
+
+  getBereiche(): Observable<Bereich[]> {
+    return this.http.get<Bereich[]>(this.apiUrl);
   }
 
-  getBereiche(): Bereich[]{
-    return this.bereiche;
+
+  addBereich(name: string): Observable<Bereich> {
+    return this.http.post<Bereich>(this.apiUrl, { name });
   }
 
-  addBereich(name: string):void{
-    const newId =this.bereiche.length > 0
-          ? Math.max(...this.bereiche.map(b => b.id)) + 1
-          : 1;
-      this.bereiche.push({ id: newId, name });
-      localStorage.setItem('bereiche', JSON.stringify(this.bereiche));
+  deleteBereich(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 
-  deleteBereich(id: number){
-    this.bereiche= this.bereiche.filter((bereich)=>bereich.id!==id);
-    localStorage.setItem('bereiche', JSON.stringify(this.bereiche));
+  handleUpdate(bereich: Bereich): Observable<Bereich> {
+    return this.http.put<Bereich>(`${this.apiUrl}/${bereich.id}`, bereich);
   }
 
-  handleUpdate(updatedBereich: Bereich){
-    const index = this.bereiche.findIndex(b => b.id === updatedBereich.id);
-    if (index !== -1) {
-      this.bereiche[index].name = updatedBereich.name.trim();
-      localStorage.setItem('bereiche', JSON.stringify(this.bereiche));
-    }
+  todosInBereich(bereichId: number):boolean{
+    const todos=this.todoService.loadTodos();
+    return todos.some(todo=> todo.bereichsID === bereichId);
   }
   todosInBerech(bereichId:number):boolean{
     const todos= this.todoService.loadTodos();
-    return todos.some(todo=> todo.bereichsId ===bereichId); // checks if there is at least 1 element
+    return todos.some(todo=> todo.bereichsID ===bereichId); // checks if there is at least 1 element
   }
 }
+

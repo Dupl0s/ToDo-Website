@@ -25,7 +25,7 @@ export class DustbinComponent {
 
   get dustbinTodos(): Todo[] {
     return this.todoService.dustbin()
-      .filter(todo => todo.bereichsId === this.bereichsId)
+      .filter(todo => todo.bereichsID === this.bereichsId)
       .slice()
       .sort((a, b) => Number(a.completed) - Number(b.completed));
   }

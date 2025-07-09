@@ -10,24 +10,19 @@ import { UserEditComponent } from './user-edit/user-edit.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
 import { CategoriesComponent } from './categories/categories.component';
 
-export const routes: Routes = [/*{
-    path: 'todos',
-    loadComponent: () => {
-        return import('./todos/todos.component').then((m) => m.TodosComponent)
-    }
-}*/
+export const routes: Routes = [
 
 /* !!!Kein Zugriff ohne Login mit canActivate: [LoggedActivate],
  bitte auch bei Bereiche etc hinzufügen */
 
-{path: "todos", component: TodosComponent, canActivate: [LoggedActivate]},
-{ path: "dustbin", component: DustbinComponent, canActivate: [LoggedActivate] },
 { path: '', component: HomeComponent },
 {path: 'login', component: LoginComponent},
 {path: 'registration', component: RegistrationComponent},
 {path: 'password-reset', component: PasswordResetComponent},
+{ path: "dustbin", component: DustbinComponent, canActivate: [LoggedActivate] },
 {path: 'user-edit', component: UserEditComponent, canActivate: [LoggedActivate]},
-{path: "categories", component: CategoriesComponent, canActivate: [LoggedActivate]},
+{path: "sections", component: CategoriesComponent, canActivate: [LoggedActivate]},
+{path: "todos", component: TodosComponent, canActivate: [LoggedActivate]},
 {path: "todos/:id", component: TodosComponent, canActivate: [LoggedActivate]},
 {path: 'calendar', component: CalendarComponent, canActivate: [LoggedActivate]},
 { path: 'dustbin/:id', component: DustbinComponent, canActivate: [LoggedActivate] }
