@@ -7,21 +7,23 @@
 </div>
 
 <div class="dustbin-container">
-  @for (todo of dustbinTodos; track todo.id) {
-    <div class="dustbin-card" [ngClass]="{ 'done': todo.completed }">
-      <h4>{{ todo.title }}</h4>
-      <p>Deadline: {{ todo.deadline }}</p>
-      <p>Schwierigkeit: {{ todo.niveau }}</p>
-      <p>Priorität: {{ todo.importance }}</p>
-      <div class="btn-toolbar">
-        <button (click)="restore(todo.id)" class="btn btn-dark">Wiederherstellen</button>
-        <button (click)="deletePermanently(todo.id)" class="btn btn-dark">Löschen</button>
+  @if (dustbinTodos.length > 0) {
+    @for (todo of dustbinTodos; track todo.id) {
+      <div class="dustbin-card" [ngClass]="{ 'done': todo.completed }">
+        <h4>{{ todo.title }}</h4>
+        <p>Deadline: {{ todo.deadline }}</p>
+        <p>Schwierigkeit: {{ todo.niveau }}</p>
+        <p>Priorität: {{ todo.importance }}</p>
+        <div class="btn-toolbar">
+          <button (click)="restore(todo.id)" class="btn btn-dark">Wiederherstellen</button>
+          <button (click)="deletePermanently(todo.id)" class="btn btn-dark">Löschen</button>
+        </div>
       </div>
+    }
+  } @else {
+    <div class="no-todos">
+      <h5>Keine gelöschten Todos in diesem Bereich.</h5>
     </div>
   }
 </div>
 
-
-<ng-template #empty>
-  <p>Keine gelöschten Todos.</p>
-</ng-template>

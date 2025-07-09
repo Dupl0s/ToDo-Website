@@ -17,6 +17,7 @@ export const todos = pgTable('todos', {
   importance: integer('importance'),
   bereichsID: integer('bereichsID'),
   title: text('title'),
+  deleted: boolean('deleted').default(false),
 });
 
 export const sections = pgTable('sections', {

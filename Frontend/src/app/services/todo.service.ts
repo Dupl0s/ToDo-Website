@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable, signal, viewChild } from '@angular/core';
 import { Todo } from '../model/todo.type';
 import { map, Observable, Subject } from 'rxjs';
@@ -73,14 +73,29 @@ export class TodoService {
   );
 
   loadTodos(): Todo[] {
-    /*this.http.get<Todo[]>('https://todobackend-dupl0s-janniks-projects-e7141841.vercel.app/todos')
-      .subscribe((data) => { 
-        this.localTodos = data;
-        localStorage.setItem('todos', JSON.stringify(this.localTodos));
-        this.todos.set(this.localTodos);
-        console.log('Todos loaded from API:', this.localTodos);
+    // Aktive Todos laden (deleted = false oder null)
+    const params = new HttpParams()
+      .set('userId', (this.user?.userId ?? '').toString());
+
+    this.http.get<{ todos: Todo[] }>('https://todobackend-dupl0s-janniks-projects-e7141841.vercel.app/todos', { params })
+      .subscribe({
+        next: (response) => {
+          this.localTodos = response.todos;
+          localStorage.setItem('todos', JSON.stringify(this.localTodos));
+          this.todos.set(this.localTodos);
+          console.log('Active todos loaded from API:', this.localTodos);
+        },
+        error: (error) => {
+          console.error('Error loading todos:', error);
+          // Fallback: LocalStorage mit Filterung für aktive Todos
+          const stored = localStorage.getItem('todos');
+          if (stored) {
+            const parsed = JSON.parse(stored);
+            this.localTodos = parsed.filter((todo: Todo) => !todo.deleted);
+            this.todos.set(this.localTodos);
+          }
+        }
       });
-    return this.localTodos;*/
     return this.localTodos;
   }
 
@@ -122,9 +137,32 @@ export class TodoService {
     });
   }
 
-  dustbin = signal<Array<Todo>>(
-    JSON.parse(localStorage.getItem('dustbin') || '[]')
-  );
+  dustbin = signal<Array<Todo>>([]);
+
+  loadDustbin() {
+    // Gelöschte Todos laden mit API
+    const params = new HttpParams()
+      .set('deleted', 'true')
+      .set('userId', (this.user?.userId ?? '').toString());
+      
+    this.http.get<{ todos: Todo[] }>('https://todobackend-dupl0s-janniks-projects-e7141841.vercel.app/todos', { params })
+      .subscribe({
+        next: (response) => {
+          this.dustbin.set(response.todos);
+          localStorage.setItem('dustbin', JSON.stringify(response.todos));
+          console.log('Dustbin todos loaded:', response.todos);
+        },
+        error: (error) => {
+          console.error('Error loading dustbin:', error);
+          // Fallback: LocalStorage mit Filterung für gelöschte Todos
+          const stored = localStorage.getItem('dustbin');
+          if (stored) {
+            const parsed = JSON.parse(stored);
+            this.dustbin.set(parsed.filter((todo: Todo) => todo.deleted === true));
+          }
+        }
+      });
+  }
 
 
   deleteTodo(id: number) {
@@ -141,10 +179,42 @@ export class TodoService {
   }
 
   addToDustbin(todo: Todo) {
-    const currentDustbin = this.dustbin();
-    const updatedDustbin = [...currentDustbin, todo];
-    this.dustbin.set(updatedDustbin);
-    localStorage.setItem('dustbin', JSON.stringify(updatedDustbin));
+    // Todo mit deleted: true markieren und API-Call senden
+    const deletedTodo = { 
+      ...todo, 
+      deleted: true,
+      userID: this.user?.userId || todo.userId // userID für Backend
+    };
+    
+    console.log('Moving to dustbin:', deletedTodo); // Debug log
+    
+    this.http.put<{ todo: Todo }>(
+      `https://todobackend-dupl0s-janniks-projects-e7141841.vercel.app/todos/${todo.id}`,
+      deletedTodo
+    ).subscribe({
+      next: (response) => {
+        console.log('Todo marked as deleted:', response.todo);
+        
+        // Todo aus aktiver Liste entfernen
+        this.localTodos = this.localTodos.filter(t => t.id !== todo.id);
+        this.todos.set(this.localTodos);
+        localStorage.setItem('todos', JSON.stringify(this.localTodos));
+        
+        // Dustbin neu laden
+        this.loadDustbin();
+        
+        this.refreshCurrentRoute();
+      },
+      error: (error) => {
+        console.error('Error marking todo as deleted:', error);
+        
+        // Fallback: Local handling
+        const currentDustbin = this.dustbin();
+        const updatedDustbin = [...currentDustbin, deletedTodo];
+        this.dustbin.set(updatedDustbin);
+        localStorage.setItem('dustbin', JSON.stringify(updatedDustbin));
+      }
+    });
   }
 
   getDustbin(): Todo[] {
@@ -182,6 +252,9 @@ export class TodoService {
       if (key === 'title' && typeof aValue === 'string' && typeof bValue === 'string') {
         return ascending ? aValue.toLowerCase().localeCompare(bValue.toLowerCase()) : bValue.toLowerCase().localeCompare(aValue.toLowerCase());
       }
+      if (aValue === undefined && bValue === undefined) return 0;
+      if (aValue === undefined) return ascending ? 1 : -1;
+      if (bValue === undefined) return ascending ? -1 : 1;
       if (aValue > bValue) return ascending ? -1 : 1;
       if (aValue < bValue) return ascending ? 1 : -1;
 

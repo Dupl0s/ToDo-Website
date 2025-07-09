@@ -7,4 +7,5 @@ export type Todo = {
   importance: number;
   id: number;
   bereichsID: number;
+  deleted?: boolean;
 };

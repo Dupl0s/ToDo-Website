@@ -138,13 +138,11 @@ export class TodosComponent {
   }
 
   deleteTodo(todoID: number) {
-    this.http
-      .delete(
-        `https://todobackend-dupl0s-janniks-projects-e7141841.vercel.app/todos/${todoID}`
-      )
-      .subscribe(() => {
-        this.todoService.refreshCurrentRoute();
-      });
+    // Todo ins Dustbin verschieben statt permanent löschen
+    const todoToDelete = this.arrayTodos.find(todo => todo.id === todoID);
+    if (todoToDelete) {
+      this.todoService.addToDustbin(todoToDelete);
+    }
   }
 
   refreshTodosFromApi(bereichId?: number) {
@@ -168,7 +166,9 @@ export class TodosComponent {
           error: () => {
             const local = localStorage.getItem('todos');
             let arr = local ? JSON.parse(local) : [];
-            this.arrayTodos = Array.isArray(arr) ? arr.filter((todo: Todo) => todo.bereichsID === bereichId) : [];
+            this.arrayTodos = Array.isArray(arr) ? arr.filter((todo: Todo) => 
+              todo.bereichsID === bereichId && !todo.deleted
+            ) : [];
             this.applyFilterandSort();
           },
         });
@@ -192,7 +192,7 @@ export class TodosComponent {
           error: () => {
             const local = localStorage.getItem('todos');
             let arr = local ? JSON.parse(local) : [];
-            this.arrayTodos = Array.isArray(arr) ? arr : [];
+            this.arrayTodos = Array.isArray(arr) ? arr.filter((todo: Todo) => !todo.deleted) : [];
             this.applyFilterandSort();
           },
         });

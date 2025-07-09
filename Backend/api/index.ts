@@ -2,7 +2,7 @@ import express, { Request, Response } from 'express';
 import cors from 'cors';
 import { db } from '../src/db/index';
 import { users, todos, sections } from '../src/db/schema';
-import { eq, and } from 'drizzle-orm';
+import { eq, and, or, isNull } from 'drizzle-orm';
 import { uuid } from 'drizzle-orm/gel-core';
 import { userRouter } from './routers/user-router';
 
@@ -35,17 +35,34 @@ if (process.env.NODE_ENV !== 'production') {
 
 app.get("/todos", async (req, res) => {
   try {
-    const { userId } = req.query;
+    const { userId, deleted } = req.query;
 
     let allTodos;
 
-    if (userId) {
-      // Mit UserID filtern
-      allTodos = await db.select().from(todos)
-        .where(eq(todos.userID, String(userId)));
+    if (userId && deleted === 'true') {
+      // Nur gelöschte Todos für User
+      allTodos = await db.select().from(todos).where(
+        and(
+          eq(todos.userID, String(userId)),
+          eq(todos.deleted, true)
+        )
+      );
+    } else if (userId) {
+      // Nur aktive Todos für User (deleted = false oder null)
+      allTodos = await db.select().from(todos).where(
+        and(
+          eq(todos.userID, String(userId)),
+          or(eq(todos.deleted, false), isNull(todos.deleted))
+        )
+      );
+    } else if (deleted === 'true') {
+      // Alle gelöschten Todos
+      allTodos = await db.select().from(todos).where(eq(todos.deleted, true));
     } else {
-      // Alle Todos ohne Filter
-      allTodos = await db.select().from(todos);
+      // Alle aktiven Todos
+      allTodos = await db.select().from(todos).where(
+        or(eq(todos.deleted, false), isNull(todos.deleted))
+      );
     }
 
     res.json({ todos: allTodos });
@@ -56,22 +73,45 @@ app.get("/todos", async (req, res) => {
 
 app.get("/todos/:id", async (req: Request, res: Response) => {
   const { id } = req.params;
-  const { userId } = req.query; // Query Parameter hinzufügen
+  const { userId, deleted } = req.query;
 
   try {
     let todoInBereich;
 
-    if (userId) {
-      // Mit UserID filtern
-      todoInBereich = await db.select().from(todos)
-        .where(and(
+    if (userId && deleted === 'true') {
+      // Gelöschte Todos für User und Bereich
+      todoInBereich = await db.select().from(todos).where(
+        and(
           eq(todos.bereichsID, Number(id)),
-          eq(todos.userID, String(userId))
-        ));
+          eq(todos.userID, String(userId)),
+          eq(todos.deleted, true)
+        )
+      );
+    } else if (userId) {
+      // Aktive Todos für User und Bereich
+      todoInBereich = await db.select().from(todos).where(
+        and(
+          eq(todos.bereichsID, Number(id)),
+          eq(todos.userID, String(userId)),
+          or(eq(todos.deleted, false), isNull(todos.deleted))
+        )
+      );
+    } else if (deleted === 'true') {
+      // Alle gelöschten Todos für Bereich
+      todoInBereich = await db.select().from(todos).where(
+        and(
+          eq(todos.bereichsID, Number(id)),
+          eq(todos.deleted, true)
+        )
+      );
     } else {
-      // Nur nach bereichsID filtern
-      todoInBereich = await db.select().from(todos)
-        .where(eq(todos.bereichsID, Number(id)));
+      // Alle aktiven Todos für Bereich
+      todoInBereich = await db.select().from(todos).where(
+        and(
+          eq(todos.bereichsID, Number(id)),
+          or(eq(todos.deleted, false), isNull(todos.deleted))
+        )
+      );
     }
 
     res.json({ todos: todoInBereich });
@@ -90,7 +130,8 @@ app.post("/todos", async (req: Request, res: Response) => {
       deadline,
       importance,
       niveau,
-      completed
+      completed,
+      deleted: false
     }).returning();
     res.status(201).json({ todo: inserted[0] });
   } catch (error) {
@@ -113,12 +154,13 @@ app.put("/todos/:id", async (req: Request, res: Response) => {
   const { id } = req.params;
   const updatedTodo = req.body;
   const title = updatedTodo.title;
-  const userID = updatedTodo.userid;
+  const userID = updatedTodo.userID || updatedTodo.userid;
   const bereichsID = updatedTodo.bereichsID;
   const deadline = updatedTodo.deadline;
   const importance = updatedTodo.importance;
   const niveau = updatedTodo.niveau;
   const completed = updatedTodo.completed;
+  const deleted = updatedTodo.deleted !== undefined ? updatedTodo.deleted : false;
 
   try {
     const updated = await db.update(todos)
@@ -129,7 +171,8 @@ app.put("/todos/:id", async (req: Request, res: Response) => {
         deadline,
         importance,
         niveau,
-        completed
+        completed,
+        deleted
       })
       .where(eq(todos.id, Number(id)))
       .returning();
