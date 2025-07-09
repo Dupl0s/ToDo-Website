@@ -143,7 +143,7 @@ export class TodosComponent {
         `https://todobackend-dupl0s-janniks-projects-e7141841.vercel.app/todos/${todoID}`
       )
       .subscribe(() => {
-        this.refreshTodosFromApi();
+        this.todoService.refreshCurrentRoute();
       });
   }
 
