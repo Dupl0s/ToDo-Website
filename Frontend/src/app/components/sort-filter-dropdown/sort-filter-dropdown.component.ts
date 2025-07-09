@@ -43,8 +43,8 @@ export class SortFilterDropdownComponent {
   applyDateRange() {
     if (this.dateFrom && this.dateTo) {
       this.select.emit({ from: this.dateFrom, to: this.dateTo });
-/*       this.showDateRange = false;
- */    }
+      this.showDateRange = false;
+    }
   }
   
   get actualLabel(): string | undefined {

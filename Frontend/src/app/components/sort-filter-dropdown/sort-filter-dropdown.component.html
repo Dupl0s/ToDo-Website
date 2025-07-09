@@ -27,10 +27,12 @@
 
         </span>
         <!-- Zeitraum auswählen -->
-        <div *ngIf="showDateRange">
-            <label>Von: <input type="date" [(ngModel)]="dateFrom"></label>
-            <label>Bis: <input type="date" [(ngModel)]="dateTo"></label>
-            <button class="btn btn-secondary" type="button" (click)="applyDateRange()">✔️</button>
+        <div *ngIf="showDateRange" class="custom-modal">
+            <div class="custom-modal-content">
+                <label>Von: <input type="date" [(ngModel)]="dateFrom"></label>
+                <label>Bis: <input type="date" [(ngModel)]="dateTo"></label>
+                <button class="btn btn-secondary" type="button" (click)="applyDateRange()">✔️</button>
+            </div>
         </div>
     </div>
 </div>
