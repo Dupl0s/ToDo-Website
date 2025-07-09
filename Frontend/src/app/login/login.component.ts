@@ -32,7 +32,7 @@ export class LoginComponent {
             alert(
               "Hallo " + user.username + "!"
             );
-            // Zur ToDo-Seite navigieren:
+            // Zur Bereich-Seite navigieren:
             this.router.navigate(['/sections']);
           }
         },
