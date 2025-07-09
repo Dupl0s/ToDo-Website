@@ -52,13 +52,22 @@ export const userRouter = () => {
         const { success, data, error } = createUserSchema.safeParse(req.body);
         if (success) {
             try {
-                console.log(data);
-                const userWithId = { ...data, userId: randomUUID() };
-                const newUserArray = await db.insert(users).values(userWithId).returning();
-                const newUser = newUserArray[0];
-                res.status(201).json({
-                    message: "User wurde erstellt: ", user: newUser
-                });
+                const result = await db.select().from(users).where(eq(users.email, data.email));
+                const user = result[0];
+                if (!user) {
+                    const userWithId = { ...data, userId: randomUUID() };
+                    const newUserArray = await db.insert(users).values(userWithId).returning();
+                    const newUser = newUserArray[0];
+                    res.status(201).json({
+                        message: "User wurde erstellt: ", user: newUser
+                    });
+                }
+                if (user) {
+                    res.status(400).json({
+                        message: "Konto mit Mailadresse gefunden. Keine Registrierung mehr möglich.",
+                    });
+                }
+
             } catch (error) {
                 const message = error instanceof Error ? error.message : String(error);
                 res.status(500).json({ message: "DB error", error: message });

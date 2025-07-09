@@ -212,4 +212,6 @@ app.put('/sections/:id', async (req: Request, res: Response) => {
     }
   });
   
-export const handler = serverless({ app });
+export default app;
+/* export const handler = serverless({ app });
+ */

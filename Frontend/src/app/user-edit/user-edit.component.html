@@ -34,8 +34,17 @@
                 </div>
             </div>
             <button type="submit" class="btn btn-primary">Ändern</button>
-            <button type="button" class="btn btn-primary" (click)="delete()">
+            <button type="button" class="btn btn-primary" (click)="confirmdelete()">
                 Konto löschen</button>
+            <div *ngIf="del" class="custom-modal">
+                <div class="custom-modal-content">
+                    <p>Bist du sicher, dass du dein Konto löschen möchtest?</p>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" (click)="canceldelete()">Abbrechen</button>
+                        <button type="button" class="btn btn-danger" (click)="delete()">Löschen</button>
+                    </div>
+                </div>
+            </div>
         </fieldset>
     </form>
 </div>
