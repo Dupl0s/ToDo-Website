@@ -119,6 +119,7 @@ export class TodosComponent {
       )
       .subscribe(() => {
         this.refreshTodosFromApi();
+        this.todoService.refreshCurrentRoute();
       });
   }
 
