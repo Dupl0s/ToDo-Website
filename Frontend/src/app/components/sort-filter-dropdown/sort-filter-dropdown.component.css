@@ -88,3 +88,30 @@ button:hover {
 .btn-tag span {
     padding: -2px 2px;
 }
+
+.custom-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    /* dunkler Overlay-Hintergrund */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1050;
+}
+
+.custom-modal-content {
+    background: #f1f1f1;
+    /* dunkler Hintergrund */
+    color: #f0f0f0;
+    /* heller Text */
+    padding: 20px;
+    border-radius: 12px;
+    min-width: 300px;
+    max-width: 90%;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}

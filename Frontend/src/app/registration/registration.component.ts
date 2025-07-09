@@ -35,7 +35,7 @@ export class RegistrationComponent {
         next: (user) => {
           if (user) {
             alert(
-              "Hallo " + user.username + ", du bist schon mit " + user.email + " registriert!"
+              "Hallo, du bist schon mit mit dieser Mailadresse registriert!"
             );
           } 
         },
