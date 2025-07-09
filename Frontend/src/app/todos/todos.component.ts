@@ -70,7 +70,7 @@ export class TodosComponent {
       this.bereichsId = id ? Number(id) : null;
 
       if (this.bereichsId !== null) {
-        this.categoriesService.getBereiche().subscribe((bereiche) => {
+        this.categoriesService.getBereiche(String(this.user?.userId)).subscribe((bereiche) => {
           const bereich = bereiche.find((b) => b.id === this.bereichsId);
           this.bereichName = bereich ? bereich.name : 'Unbekannter Bereich';
         });
