@@ -216,17 +216,6 @@ sections (
 - **Error Handling:** Strukturierte Fehlerbehandlung
 - **CORS:** Konfiguriert für spezifische Domains
 
-### CONTENT SECURITY POLICY
-```html
-<meta http-equiv="Content-Security-Policy"
-      content="default-src 'self'; 
-      script-src 'self' 'unsafe-inline'; 
-      style-src 'self' 'unsafe-inline'; 
-      img-src 'self' data:; 
-      font-src 'self' data:;
-      connect-src 'self' https://todobackend-35fl5cgkl-janniks-projects-e7141841.vercel.app;">
-```
-
 ## CI/CD UND DEPLOYMENT
 
 ### GITHUB ACTIONS WORKFLOWS
@@ -261,16 +250,11 @@ sections (
 - **Coverage:** Unit Tests für API-Endpunkte
 - **Beispiel-Test:** `index.test.ts` mit grundlegenden Assertions
 
-### FRONTEND TESTS
-- **Framework:** Jasmine + Karma
-- **Komponenten-Tests:** Spec-Dateien für alle Komponenten
-- **Services-Tests:** Mocking von HTTP-Calls mit HttpClientTestingModule
-
 ## BESONDERE FEATURES
 
 ### POPUP-KOMPONENTE
 - **Zweck:** Universelles Modal für Todo-Bearbeitung und Bereich-Verwaltung
-- **Modi:** 'edit', 'reminder', 'bereich-edit'
+- **Modi:** 'default', 'edit', 'reminder', 'bereich-edit'
 - **Features:** Dynamische Inhalte, Event-Emitter für Parent-Communication
 
 ### SORT-FILTER-DROPDOWN
@@ -285,40 +269,6 @@ sections (
 - **Synchronisation:** Automatische Sync bei verfügbarer Internetverbindung
 - **Fallback:** Funktioniert auch ohne Backend-Verbindung
 
-## DEVELOPMENT WORKFLOW
-
-### SETUP
-```bash
-# Projekt klonen und dependencies installieren
-npm install
-
-# Development starten (beide Server)
-npm run dev
-
-# Einzeln starten:
-# Frontend: npm run start --prefix Frontend
-# Backend: npm run dev --prefix Backend
-```
-
-### BUILD
-```bash
-# Alles bauen
-npm run build
-
-# Einzeln bauen:
-# Frontend: npm run build --prefix Frontend  
-# Backend: npm run build --prefix Backend
-```
-
-### TESTING
-```bash
-# Backend Tests
-npm run test --prefix Backend
-
-# Frontend Tests  
-npm run test --prefix Frontend
-```
-
 ## ARCHITEKTUR-PRINZIPIEN
 
 ### FRONTEND
@@ -329,64 +279,12 @@ npm run test --prefix Frontend
 - **Guards:** Route-Protection mit canActivate
 
 ### BACKEND
-- **REST-API:** Klare HTTP-Verben und Statuscodes
+- **REST-API**
 - **Repository Pattern:** Abstraktion der Datenzugriffe
 - **Middleware:** Express-Middleware für CORS, JSON-Parsing
-- **Error Handling:** Zentrale Fehlerbehandlung
 - **Serverless:** Optimiert für Vercel Functions
-
-## ZUKUNFTIGE ERWEITERUNGEN
-
-### GEPLANTE FEATURES
-- **Real-time Updates:** WebSocket-Integration
-- **Push-Notifications:** Deadline-Erinnerungen
-- **Kollaboration:** Geteilte Todo-Listen
-- **Export/Import:** CSV/JSON-Export von Todos
-- **Dark Mode:** Theme-Switcher
-- **Mobile App:** Progressive Web App (PWA)
-
-### TECHNISCHE VERBESSERUNGEN
-- **Caching:** Redis für Backend-Caching
-- **Database Migrations:** Automatisierte Schema-Updates
-- **Logging:** Strukturiertes Logging mit Winston
-- **Monitoring:** Application Performance Monitoring
-- **Rate Limiting:** API-Schutz vor Missbrauch
-
-## BEKANNTE PROBLEME/LIMITIERUNGEN
-
-1. **Local Storage Limitation:** Begrenzte Speicherkapazität
-2. **Error Boundaries:** Fehlende globale Fehlerbehandlung im Frontend
-3. **Optimistic Updates:** Keine optimistische UI-Updates bei API-Calls
-4. **Image Uploads:** Keine Datei-Upload-Funktionalität
-5. **Responsive Design:** Eingeschränkte Mobile-Optimierung
 
 ## PERFORMANCE-OPTIMIERUNGEN
 
-### FRONTEND
-- **Lazy Loading:** Route-basiertes Code-Splitting
-- **OnPush Strategy:** Change Detection Optimierung
-- **Signals:** Moderne Reactive State Management
-- **Build Optimization:** Angular CLI Optimierungen
-
 ### BACKEND
-- **Database Indexing:** Optimierte Query-Performance
-- **Compression:** Gzip-Komprimierung für Responses
-- **Caching Headers:** Browser-Caching für statische Assets
 - **Serverless Optimierung:** Cold-Start Minimierung
-
-## WARTUNG UND UPDATES
-
-### DEPENDENCY MANAGEMENT
-- **Regelmäßige Updates:** Monatliche Dependency-Updates
-- **Security Patches:** Automatische Sicherheitsupdates
-- **Breaking Changes:** Versionierung und Migration-Guides
-
-### MONITORING
-- **Error Tracking:** Fehler-Logging und -Tracking
-- **Performance Monitoring:** Response-Zeit-Überwachung
-- **Usage Analytics:** Benutzer-Verhalten-Analyse
-
-=====================================
-Dokumentation erstellt am: $(date)
-Projekt-Version: 1.0.50 (Backend), 0.0.0 (Frontend)
-=====================================
