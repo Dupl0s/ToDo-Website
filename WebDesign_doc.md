@@ -45,7 +45,7 @@ Theme-Variablen neu gesetzt.
     - Kein externes Karussell-Plugin notwendig.
 
 
-### Todo Komponente
+### Todo Komponente                                         ### Matr. Nr: 2352061
 -**Verwendete Technologien:**
     - Angular
     - Reactive Forms (FormsBuilder)
@@ -67,7 +67,7 @@ Theme-Variablen neu gesetzt.
     - Flexibles Layout (display: flex, gap).
     - Adaptive Styles basierend auf dem Farbmodus (durch CSS-Variablen).
 
-### Kalender Komponente
+### Kalender Komponente                                     ### Matr. Nr: 2352061
 -**Technologie:**
     - Angular
     - FullCalendar (Integration via @fullcalendar/core)
