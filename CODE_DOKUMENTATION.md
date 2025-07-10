@@ -7,6 +7,7 @@
 - **Backend-URL:** https://todobackend-35fl5cgkl-janniks-projects-e7141841.vercel.app
 - **Github-Namen und Matr.Nr.:** JojoArchiv: 2937506
                                  Duplo / Jannik / Jannik Haase: 2352061
+                                 Sribriddhi: 2199855
                                   
 
 ## TECHNOLOGIE-STACK
