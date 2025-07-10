@@ -9,6 +9,7 @@ import { LoggedActivate } from './helpers/logged.activate';
 import { UserEditComponent } from './user-edit/user-edit.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
 import { CategoriesComponent } from './categories/categories.component';
+import { AboutusComponent } from './components/aboutus/aboutus.component';
 
 export const routes: Routes = [
 
@@ -25,5 +26,6 @@ export const routes: Routes = [
 {path: "todos", component: TodosComponent, canActivate: [LoggedActivate]},
 {path: "todos/:id", component: TodosComponent, canActivate: [LoggedActivate]},
 {path: 'calendar', component: CalendarComponent, canActivate: [LoggedActivate]},
-{ path: 'dustbin/:id', component: DustbinComponent, canActivate: [LoggedActivate] }
+{ path: 'dustbin/:id', component: DustbinComponent, canActivate: [LoggedActivate] },
+{path: 'aboutus', component: AboutusComponent},
 ];

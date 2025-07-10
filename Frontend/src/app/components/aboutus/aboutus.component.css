@@ -1,0 +1,86 @@
+.aboutus-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  background: rgba(250, 238, 203, 0.85);
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(52,58,64,0.08);
+  padding: 2rem 2.5rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  border: 2px solid #ede4b5;
+  backdrop-filter: blur(2px);
+}
+
+.aboutus-section {
+  margin-bottom: 2.5rem;
+}
+
+.aboutus-section h2 {
+  color: #343a40;
+  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.team-list {
+  display: flex;
+  gap: 2rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+.team-member {
+  text-align: center;
+  flex: 1;
+  min-width: 180px;
+  background: rgba(237, 98, 118, 0.15);
+  border-radius: 12px;
+  padding: 1rem 0.5rem;
+  border: 2px solid #ed6276;
+  margin-bottom: 1rem;
+}
+
+.team-member img {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 0.5rem;
+  border: 2px solid #ed6276;
+  background: #fff;
+}
+
+.aboutus-section ul {
+  padding-left: 1.2rem;
+}
+
+.aboutus-section li {
+  margin-bottom: 0.5rem;
+}
+
+blockquote {
+  background: #faeecb;
+  border-left: 4px solid #ed6276;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  font-style: italic;
+  color: #23272b;
+}
+
+blockquote span {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0.95em;
+  color: #343a40;
+}
+
+.aboutus-section a {
+  color: #c94a5e;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.2s;
+}
+
+.aboutus-section a:hover {
+  text-decoration: underline;
+  color: #c94a5e;
+}

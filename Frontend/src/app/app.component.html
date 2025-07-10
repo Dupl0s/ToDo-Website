@@ -9,7 +9,7 @@
       <a routerLink="/sections" routerLinkActive="active">Bereiche</a>
       <a routerLink="/todos" routerLinkActive="active">To-Do</a>
       <a routerLink="/calendar" routerLinkActive="active">Kalender</a>
-      <a routerLink="/about" routerLinkActive="active" href="/aboutus">About Us</a>
+      <a routerLink="/aboutus" routerLinkActive="active" href="/aboutus">About Us</a>
       <a *ngIf="!user" routerLink="/login" routerLinkActive="active">Login</a>
       <a *ngIf="user" routerLink="/" (click)="logout(); $event.preventDefault()">Logout</a>
       <button (click)="toggleTheme()">
